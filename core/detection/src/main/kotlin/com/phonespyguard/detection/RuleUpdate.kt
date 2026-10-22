@@ -23,8 +23,51 @@ public data class TrustConfig(
     val keys: List<TrustedKey>,
     val threshold: Int,
 ) {
+    init {
+        validate(keys, threshold)
+    }
+
     public companion object {
         private val json = Json { ignoreUnknownKeys = true }
+
+        /**
+         * Development keys whose private halves were kept next to the code and
+         * have been rotated out (security review H6). They are refused here even
+         * if a trust file lists them, so no build — and no fetched update — can
+         * ever trust them again. These are the base64 X.509 SubjectPublicKeyInfo
+         * encodings; they match REVOKED_KEYS in the desktop Rust verifier so all
+         * three platforms refuse the same keys.
+         */
+        private val REVOKED_KEYS: Set<String> = setOf(
+            "MCowBQYDK2VwAyEAPLV2Dk5hwc2ugW7RzGg3G5aMZKdcOVKCtMqZdHzcmXE=",
+            "MCowBQYDK2VwAyEAX0dJ10X/B16/Y31cicRNqzhZkt6Yl8E26g/YFHDgiYc=",
+            "MCowBQYDK2VwAyEAcJvqgASL7C/W7RQdqK+bdcLzgZy44g3pPytVr5umJi0=",
+        )
+
+        private fun spkiBase64(key: TrustedKey): String =
+            Base64.getEncoder().encodeToString(key.publicKey.encoded)
+
+        /**
+         * A trust set is usable only if the 2-of-3 threshold can be met by
+         * distinct, non-revoked keys under distinct ids — the same rule the
+         * desktop Rust `check_trust_set` enforces, so the platforms cannot drift.
+         */
+        private fun validate(keys: List<TrustedKey>, threshold: Int) {
+            if (threshold < 2) throw BundleRejected("trusted-keys threshold must be at least 2")
+            val seenIds = HashSet<String>()
+            val seenKeys = HashSet<String>()
+            for (k in keys) {
+                val spki = spkiBase64(k)
+                if (spki in REVOKED_KEYS) {
+                    throw BundleRejected("trusted key ${k.keyId} is a revoked development key")
+                }
+                if (!seenIds.add(k.keyId)) throw BundleRejected("trusted key id ${k.keyId} is listed twice")
+                if (!seenKeys.add(spki)) throw BundleRejected("trusted key ${k.keyId} repeats another key")
+            }
+            if (keys.size < threshold) {
+                throw BundleRejected("trusted-keys lists ${keys.size} keys but needs a threshold of $threshold")
+            }
+        }
 
         /** Parse a `trusted-keys.json`. Throws [BundleRejected] on any malformed field. */
         public fun parse(text: String): TrustConfig {
@@ -32,7 +75,6 @@ public data class TrustConfig(
                 .getOrElse { throw BundleRejected("trusted-keys is not a JSON object") }
             val threshold = root["threshold"]?.jsonPrimitive?.longOrNull?.toInt()
                 ?: throw BundleRejected("trusted-keys has no integer 'threshold'")
-            if (threshold < 1) throw BundleRejected("trusted-keys threshold must be at least 1")
             val keyArray = root["keys"]?.jsonArray
                 ?: throw BundleRejected("trusted-keys has no 'keys' array")
             val keys = keyArray.map { el ->
@@ -46,9 +88,7 @@ public data class TrustConfig(
                 runCatching { TrustedKey.fromX509(keyId, der) }
                     .getOrElse { throw BundleRejected("trusted key $keyId is not an Ed25519 public key") }
             }
-            if (keys.size < threshold) {
-                throw BundleRejected("trusted-keys lists ${keys.size} keys but needs a threshold of $threshold")
-            }
+            // The TrustConfig init validates threshold, revoked keys and duplicates.
             return TrustConfig(keys, threshold)
         }
     }

@@ -1,17 +1,18 @@
 {
+  "_note": "The release trust set for signed over-the-air rule updates (2-of-3 Ed25519). These are the current build keys shared with the desktop app (desktop/rules/trusted-keys.json); the old release-1/2/3 keys were the H6 development keys whose private halves sat beside the code, so they are permanently revoked (see REVOKED_KEYS in TrustConfig and desktop psg-core verifier.rs) and refused here even if listed. A store release replaces this file with the keys from the offline key ceremony (desktop/rules/KEY-CEREMONY.md); until then the update endpoint is blank and no over-the-air update is fetched.",
   "threshold": 2,
   "keys": [
     {
-      "keyId": "release-1",
-      "publicKey": "MCowBQYDK2VwAyEAPLV2Dk5hwc2ugW7RzGg3G5aMZKdcOVKCtMqZdHzcmXE="
+      "keyId": "build-f71609a3-1",
+      "publicKey": "MCowBQYDK2VwAyEA6Fpab7Eoqtaphn2aOviN4zYWeP1Ok2NWHdnaXFD0F08="
     },
     {
-      "keyId": "release-2",
-      "publicKey": "MCowBQYDK2VwAyEAX0dJ10X/B16/Y31cicRNqzhZkt6Yl8E26g/YFHDgiYc="
+      "keyId": "build-e254460e-2",
+      "publicKey": "MCowBQYDK2VwAyEAsZ8RNbvbkC7fx8Z8abgJdnvMp/sSW7HFn0kz8HHmDIU="
     },
     {
-      "keyId": "release-3",
-      "publicKey": "MCowBQYDK2VwAyEAcJvqgASL7C/W7RQdqK+bdcLzgZy44g3pPytVr5umJi0="
+      "keyId": "build-fa79d3f7-3",
+      "publicKey": "MCowBQYDK2VwAyEAhNq7LTAg6eWZwGXTu/9vwSxsl+uotVslWNxvk1D3vwQ="
     }
   ]
 }

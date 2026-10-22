@@ -3,6 +3,7 @@ package com.phonespyguard.detection
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.security.KeyPair
@@ -132,6 +133,28 @@ class RuleUpdateServiceTest {
         val config = TrustConfig.parse(text)
         assertEquals(2, config.threshold)
         assertEquals(3, config.keys.size)
+    }
+
+    @Test
+    fun `a trust file listing a revoked development key is refused (H6)`() {
+        // The three H6 dev keys whose private halves leaked. Even a well-formed
+        // 2-of-3 trust file is refused if it lists one, so a fetched update signed
+        // with a leaked key can never be trusted.
+        val revoked = """
+            {"threshold":2,"keys":[
+              {"keyId":"release-1","publicKey":"MCowBQYDK2VwAyEAPLV2Dk5hwc2ugW7RzGg3G5aMZKdcOVKCtMqZdHzcmXE="},
+              {"keyId":"release-2","publicKey":"MCowBQYDK2VwAyEAX0dJ10X/B16/Y31cicRNqzhZkt6Yl8E26g/YFHDgiYc="},
+              {"keyId":"release-3","publicKey":"MCowBQYDK2VwAyEAcJvqgASL7C/W7RQdqK+bdcLzgZy44g3pPytVr5umJi0="}
+            ]}
+        """.trimIndent()
+        val ex = assertThrows(BundleRejected::class.java) { TrustConfig.parse(revoked) }
+        assertTrue(ex.message!!.contains("revoked"), ex.message)
+    }
+
+    @Test
+    fun `a trust file below a 2-of-3 threshold is refused`() {
+        val text = readResource("/rules/trusted-keys.json").replace("\"threshold\": 2", "\"threshold\": 1")
+        assertThrows(BundleRejected::class.java) { TrustConfig.parse(text) }
     }
 
     @Test
