@@ -11,7 +11,17 @@ Read the known-product row with care: the product names below were written by th
 | Known products: monitoring | 29 of 29 identified (100%) |
 | Known products: oversight | 20 of 20 identified (100%) |
 | Known products: remote_access | 26 of 26 identified (100%) |
-| Unknown setups caught by behaviour alone | 10 of 10 (100%), plus 1 known limit(s) listed below |
+| Unknown setups caught by behaviour alone | 14 of 14 (100%), plus 1 known limit(s) listed below |
+| Stalkerware families with server names (of 131 imported from Echap) | 109 |
+| A program connected to a family's server | 109 of 109 Confirmed (100%) |
+| A family's server in the DNS cache only | 99 of 99 Very likely or higher (100%) |
+| Known installer files (.apk) in Downloads | 3228 of 3228 found (100%) |
+| Everyday host names looked up and connected to | 170 names, 0 findings |
+| Windows' own deep start-up entries and signed vendor add-ins | 0 findings |
+
+Families whose only server names are also their shop's website, so a DNS lookup alone reads as a shop visit (Possible); a program other than a browser connecting there is still Confirmed: AndroidPolice, eagleSPY, OneLocator, PhoneMonitor, RealtimeSpy, ShadySpy, SmartKeylogger, SpyNote, Trackji, WheresMyDroid.
+
+Echap lists some openly sold parental-control apps as stalkerware (Bark, for example). A visit to their websites is rated Possible, with wording that says it may be innocent.
 
 ## Unknown setups
 
@@ -27,6 +37,10 @@ Read the known-product row with care: the product names below were written by th
 | Defender switched off with an exclusion for a hidden folder | VERY_LIKELY |
 | Unlisted remote-access tool from a scam call, plus a new admin account | POSSIBLE |
 | Administrator account hidden from the sign-in screen | VERY_LIKELY |
+| Unsigned DLL loaded into every program (AppInit_DLLs) | VERY_LIKELY |
+| Unsigned password filter in the LSA (reads every new password) | VERY_LIKELY |
+| COM hijack for this user to an unsigned DLL in AppData | VERY_LIKELY |
+| Windows tool restarted whenever spyware is closed (SilentProcessExit) | POSSIBLE |
 | Signed, unlisted commercial monitoring app in Program Files (known limit) | UNLIKELY |
 
 The known limit is real: a signed commercial monitoring product that is not on the list, installed in Program Files and doing nothing else unusual, looks like any other program. Only the indicator list, a hash match, or the camera/microphone and network records catch it. Keeping the list current matters as much as the rules.

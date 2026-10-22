@@ -3,13 +3,15 @@ package com.phonespyguard.app
 import android.app.Application
 import com.phonespyguard.app.detect.EncryptedBundleStore
 import com.phonespyguard.app.detect.RuleBundleProvider
+import com.phonespyguard.app.detect.RuleUpdateScheduler
 import com.phonespyguard.app.watch.AlertNotifier
 import com.phonespyguard.app.watch.ChangeWatchScheduler
 
 /**
  * The application entry point. Sets up the alert channel, lets the rule engine
- * pick up any verified downloaded update, and schedules the change watch on
- * first launch; the boot receiver re-arms it after a reboot.
+ * pick up any verified downloaded update, schedules the daily signed-rule-update
+ * check and the change watch on first launch; the boot receiver re-arms the
+ * watch after a reboot.
  */
 public class PhoneSpyGuardApp : Application() {
     override fun onCreate() {
@@ -19,5 +21,6 @@ public class PhoneSpyGuardApp : Application() {
         RuleBundleProvider.attachUpdateStore(EncryptedBundleStore(this))
         AlertNotifier(this).ensureChannel()
         ChangeWatchScheduler.schedule(this)
+        RuleUpdateScheduler.schedule(this)
     }
 }

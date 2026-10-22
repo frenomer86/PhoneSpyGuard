@@ -16,8 +16,6 @@
   </header>
   <nav class="tabs" role="tablist" aria-label="Sections">
     <button role="tab" data-tab="check" aria-selected="true">Device check</button>
-    <button role="tab" data-tab="message">Message check</button>
-    <button role="tab" data-tab="accounts">Accounts</button>
     <button role="tab" data-tab="timeline">Evidence</button>
     <button role="tab" data-tab="safety">Safety</button>
   </nav>
@@ -45,17 +43,10 @@
       <div id="progress" class="progress" hidden>
         <div class="spinner" aria-hidden="true"></div>
         <span id="progressText">Checking this PC…</span>
+        <button class="btn text" id="btnCancelDeep" hidden>Cancel deep check</button>
       </div>
       <p class="small" id="lastRun"></p>
       <div id="guidance" hidden>
-        <article class="card">
-          <h3>If you are in danger right now</h3>
-          <p>If you feel unsafe, contact your local emergency number straight away. This app gives general safety information; it is not a substitute for help from the police or a trained advocate.</p>
-        </article>
-        <article class="card">
-          <h3>Removing spyware can tip the person off</h3>
-          <p>When monitoring software is removed, the person watching often notices — the alerts stop. If they are someone who could become dangerous, that moment can be risky. Plan removal with a domestic-abuse advocate before you act.</p>
-        </article>
         <article class="card">
           <h3>Save the proof before you clean up</h3>
           <p>Export your evidence timeline and take screenshots first. Once a program is removed, the proof it was there can be gone, and you may need it for the police, a court or your bank.</p>
@@ -71,30 +62,6 @@
         <p class="small muted">Which programs used them, from Windows' own privacy records.</p>
         <div id="cammic"></div>
       </div>
-      <p class="small muted footnote">The check only reads. It changes nothing, sends nothing anywhere, and takes a minute or two. The deep check also reads Defender exclusions, WMI start-up triggers and every user's start-up entries, which Windows only shows to an administrator.</p>
-    </section>
-
-    <!-- Message check -->
-    <section id="tab-message" class="tab" role="tabpanel" hidden>
-      <h1>Check a message or link</h1>
-      <p class="lead">Paste a text, chat message or email you're unsure about. It's checked on this PC and never sent anywhere.</p>
-      <form id="messageForm">
-        <div class="field">
-          <label for="messageText">Paste the message</label>
-          <textarea id="messageText" rows="5" maxlength="20000" spellcheck="false"></textarea>
-        </div>
-        <button class="btn filled block" type="submit" id="btnCheckMessage">Check it</button>
-      </form>
-      <div id="messageResult"></div>
-    </section>
-
-    <!-- Accounts -->
-    <section id="tab-accounts" class="tab" role="tabpanel" hidden>
-      <h1>Account checkup</h1>
-      <p class="lead">Work through these in each app or website. This app can't see your accounts — you check and tell it what you find. Your answers are not saved.</p>
-      <div id="pcAccounts"></div>
-      <div id="auditSummary" class="card"></div>
-      <div id="auditSteps"></div>
     </section>
 
     <!-- Evidence -->
@@ -196,10 +163,12 @@
       <article class="card">
         <ul class="plain">
           <li>It only reads this PC. It never installs a driver, never changes settings on its own, and only asks for administrator rights for the deep check you start.</li>
-          <li>It never sends your findings, timeline, messages or answers anywhere. Its only network use is downloading rule updates, which sends nothing about you; the update server can see this PC's internet address, as any website can. If your network may be watched, turn automatic rules off and install rule files instead.</li>
+          <li>It never sends your findings, timeline or answers anywhere. Its only network use is downloading rule updates, which sends nothing about you; the update server can see this PC's internet address, as any website can. If your network may be watched, turn automatic rules off and install rule files instead.</li>
           <li>Detection rules are used only if two of three release keys signed them; compare the rules' fingerprint above with the public rule log.</li>
           <li>Answers that lower a finding ("I set this up", turning the watch off) need Windows Hello or your password, and are written to the timeline. Someone who knows your PIN or password can still give them.</li>
           <li>It has no feature to watch anyone else. It checks the PC it runs on, for the person who uses it.</li>
+          <li>The network check only sees what Windows still remembers: web addresses from roughly the last few hours and connections open right now. Not finding a stalkerware server is not proof there is none.</li>
+          <li>Stalkerware server and installer lists come from the Echap stalkerware indicators (CC BY 4.0), by Julien Voisin, Tek and the Echap non-profit.</li>
         </ul>
       </article>
       <h2>Your data</h2>

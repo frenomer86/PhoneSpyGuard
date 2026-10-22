@@ -180,3 +180,45 @@ public class RuleUpdateService(
         parser.parse(s.payload.toString(Charsets.UTF_8)).version
     }.getOrNull()
 }
+
+/**
+ * Fetches the two files an update is made of — the bundle payload and its
+ * detached signatures — over whatever [UpdateTransport] the platform provides.
+ * The transport returns raw bytes for a URL and nothing else: no identifier,
+ * cookie or account is attached, so an update check reveals only that *some*
+ * device asked for the current public rule file (market-scan item 2: "nothing
+ * identifying sent").
+ */
+public interface UpdateTransport {
+    /** GET the bytes at [url], or throw if it cannot be fetched. */
+    public fun get(url: String): ByteArray
+}
+
+/**
+ * Downloads a signed rule update and hands it to [RuleUpdateService] to verify
+ * and install (market-scan item 2). The download is the only new trust surface,
+ * and it is covered: the bytes are useless unless they carry a 2-of-3 signature
+ * over exactly those bytes, so a hostile mirror or a man-in-the-middle can only
+ * cause an update to be *refused*, never a forged rule set to be applied.
+ */
+public class RuleUpdateFetcher(
+    private val service: RuleUpdateService,
+    private val transport: UpdateTransport,
+    private val payloadUrl: String,
+    private val signaturesUrl: String,
+) {
+    /**
+     * Fetch and try to install. [shippedVersion] is the version baked into the
+     * app, the floor for the non-rollback check. Any download or parse failure
+     * is reported as [InstallResult.Refused] — the app keeps the rules it has.
+     */
+    public fun fetchAndInstall(shippedVersion: Int): InstallResult {
+        val payload = runCatching { transport.get(payloadUrl) }
+            .getOrElse { return InstallResult.Refused("Could not download the rule bundle: ${it.message}") }
+        val sigText = runCatching { transport.get(signaturesUrl) }
+            .getOrElse { return InstallResult.Refused("Could not download the signatures: ${it.message}") }
+        val signatures = runCatching { SignatureFile.parse(sigText.toString(Charsets.UTF_8)) }
+            .getOrElse { return InstallResult.Refused("Signature file is malformed: ${it.message}") }
+        return service.tryInstall(payload, signatures, shippedVersion)
+    }
+}

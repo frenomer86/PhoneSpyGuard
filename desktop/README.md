@@ -2,14 +2,13 @@
 
 The desktop app from Phase 2 of the spec: a **Rust core with a Tauri
 interface** that checks the owner's own Windows PC for monitoring software,
-keyloggers, remote-access tools left behind by scammers, risky browser
-extensions, interception settings and camera/microphone use, and keeps the
-same tamper-evident evidence timeline as the phone app. It also has the
-phone app's **Message check** (is this text, chat message or email a scam?)
-and **Account checkup**, with the same rules, wording and look: the window
-uses the phone app's Material 3 colours, Roboto, its tab names (Device check,
-Message check, Accounts, Evidence, Safety) and its shield icon, and switches
-to the same plain grey gear in discreet mode.
+keyloggers, remote-access tools left behind by scammers, contact with known
+stalkerware servers, stalkerware installer files, risky browser extensions,
+interception settings and camera/microphone use, and keeps the
+same tamper-evident evidence timeline as the phone app. The window has three
+tabs, Device check, Evidence and Safety, in the phone app's look (Material 3
+colours, Roboto, the same wording and shield icon, and the same plain grey
+gear in discreet mode).
 
 It holds the same line as the phone app: it **only reads** the PC it runs on,
 asks for administrator rights only for the optional deep check the owner
@@ -23,12 +22,12 @@ which the owner can switch off), and has no feature for watching anyone else.
 | --- | --- |
 | `crates/psg-core` | The Rust twin of the Kotlin `core:detection` and `core:evidence`: facts, signed rule bundles (Ed25519, 2-of-3), the bounded interpreter, the four-level scoring, and the hash-chained signed evidence log. No OS code; builds and tests anywhere. |
 | `crates/psg-windows` | Reading Windows (registry, PowerShell for scheduled tasks / Defender / admins / DNS / WMI / Authenticode, browser profile files), turning it into subjects and facts, folding every sighting of a known product into one card, and the 15-minute change watch. Only `collect/registry.rs` and `collect/shell.rs` are Windows-specific; everything else is tested on any OS. |
-| `crates/psg-scam` | The message check: a rule-for-rule port of the phone app's `core:scam` (link extraction and de-obfuscation, brand look-alikes, mobile-money and code-request wording), with the same brand list and the same 70 labelled test messages (0 of 40 genuine messages flagged, 30 of 30 scams caught). Runs on the PC only. |
 | `crates/psg-tools` | `psg-sign` (the 3-holder key ceremony, signing, verifying, the public rule log), `psg-verify` (check an exported timeline and any checkpoints, as a police officer or lawyer would), `psg-scan` (run a check from the command line) and `psg-codesign` (Authenticode signing for the release build). |
-| `app/` | The Tauri app: `src-tauri/` (window, tray, watch timer, storage, device key, the account checkup steps shared with the phone app) and `ui/` (plain HTML/CSS/JS, no framework, no network; Roboto is bundled under the Apache License 2.0, see `ui/ROBOTO-LICENSE.txt`). |
-| `rules/` | `desktop-bundle.json` (version 2, 32 rules; 24 monitoring products, 24 remote-access tools, 25 parental-control and employee-monitoring products), its signatures, the trusted public keys compiled into the app, the public rule log, `update-source.json` (where the app downloads rule updates from) and `KEY-CEREMONY.md`. |
+| `app/` | The Tauri app: `src-tauri/` (window, tray, watch timer, storage, device key) and `ui/` (plain HTML/CSS/JS, no framework, no network; Roboto is bundled under the Apache License 2.0, see `ui/ROBOTO-LICENSE.txt`). |
+| `rules/` | `desktop-bundle.json` (version 3, 42 rules; 25 monitoring products, 24 remote-access tools, 25 parental-control and employee-monitoring products, and 131 stalkerware families from Echap with 929 server names, 53 server addresses, 628 sales websites and 3,228 installer hashes), its signatures, the trusted public keys compiled into the app, the public rule log, `update-source.json` (where the app downloads rule updates from) and `KEY-CEREMONY.md`. |
 | `conformance/` | Shared fixtures both engines must pass, plus `kotlin/RustConformanceTest.kt` for the Kotlin side. |
-| `eval/` | The measured evaluation: 256 common programs for false alarms, 75 known-product installs, 11 unknown setups. Results in `eval/RESULTS.md`. |
+| `rules/echap/` | The Echap stalkerware indicator files the bundle's stalkerware list is built from (`ioc.yaml`, `samples.csv`, from commit 426156175adc) and `import_echap.py`, which rebuilds that list. |
+| `eval/` | The measured evaluation: 256 common programs and 170 everyday web addresses for false alarms, 75 known-product installs, every Echap family's servers and all 3,228 installer hashes, 15 unknown setups, and Windows' own deep start-up entries. Results in `eval/RESULTS.md`. |
 
 ## Build and run on Windows
 
@@ -87,10 +86,12 @@ timeline's length are in Windows Credential Manager under `PhoneSpyGuard`.
 | --- | --- |
 | FR-DSK-01 accounts audit | Every local account: enabled accounts hidden from the sign-in screen (rated Very likely), the built-in Administrator or Guest switched on, automatic sign-in and a stored sign-in password, and administrator accounts besides the owner's. The watch reports an account that appears or is switched on. |
 | FR-DSK-02 monitoring software, keyloggers, RATs | Installed programs, running processes, services and start-up entries matched by name (word-start match), Authenticode signer / publisher, and SHA-256 against the signed indicator list in the rule bundle. A match is **Confirmed**. |
-| FR-DSK-03 every autostart location | Run / RunOnce / Policies Run keys (HKCU, HKLM, 32-bit), start-up folders (shortcuts resolved), automatic services (svchost DLLs resolved), scheduled tasks, WMI event subscriptions (deep check), Image File Execution Options hijacks and Winlogon shell changes. Flags unsigned entries in user-writable folders, and new ones since the last check. |
+| FR-DSK-03 every autostart location | Run / RunOnce / RunServices / RunOnceEx / Policies Run keys and the old `load`/`run` values (HKCU, HKLM, 32-bit, every user in the deep check), start-up folders (shortcuts resolved), automatic services (svchost DLLs resolved), scheduled tasks, WMI event subscriptions (deep check), Image File Execution Options hijacks, Winlogon shell, Userinit, Taskman and per-user or policy shells, and the deeper places Autoruns covers: AppInit_DLLs, AppCertDlls, LSA authentication / notification / security packages, Winlogon Notify and GINA, BootExecute, SilentProcessExit, netsh helpers, Command Processor AutoRun, print monitors, Active Setup, ShellServiceObjectDelayLoad and ShellExecuteHooks, browser helper objects, Remote Desktop start-up programs, and per-user COM class registrations that override the machine's (COM hijacks). Unsigned files loaded into Windows itself are rated Very likely; another publisher's file there, and unsigned add-ins elsewhere, Possible. Also flags unsigned entries in user-writable folders, and new ones since the last check. |
 | FR-DSK-04 remote-access tools | 24 tools (AnyDesk, TeamViewer, ScreenConnect, RustDesk, …), plus 25 parental-control and employee-monitoring products (Qustodio, Teramind, ActivTrak, …) rated Possible on the owner's own PC unless the PC is managed by an employer or school. A tool with a service set to start on its own is rated "lets someone in without you"; the card carries removal steps and a prompt to call the bank. |
 | FR-DSK-05 browser extensions | Chrome, Edge, Brave, Vivaldi, Opera and Firefox profiles. Flags extensions that can read every site, more strongly if they came from outside the store or are forced on by policy. |
 | FR-DSK-06 interception and control | Root certificates added to the user store, proxy and proxy scripts (a certificate plus a proxy is rated together as interception), unusual DNS servers, hosts-file redirects of bank / email / security sites, Remote Desktop, extra administrator accounts, Defender off with no other antivirus, Defender disabled by policy, Defender exclusions (deep check). |
+| Stalkerware servers (Echap) | The DNS client cache (names looked up in roughly the last few hours), open TCP connections with the program that owns each, and the hosts file, matched against every Echap stalkerware family's server names (a name and everything under it, never a shared parent such as `firebaseio.com`), server addresses (Cloudflare's shared ranges are dropped at import) and sales websites. A program other than a browser connected to a server is **Confirmed**; a server in the DNS cache or a browser on it (the buyer's dashboard) is Very likely; an address-only match, a sales-site visit or a hosts entry pointing a server somewhere is Possible. Names the hosts file blocks are not counted as contact. |
+| Stalkerware installer files (Echap) | `.apk` files in the owner's Downloads, Desktop and Documents (wherever they have been moved), up to 6 folders deep, never following links or junctions and never downloading cloud-only OneDrive files, hashed with SHA-256 against Echap's 3,228 known samples. A match is Very likely: someone downloaded stalkerware to put on a phone. |
 | FR-DSK-07 camera and microphone | Windows' CapabilityAccessManager records: which program used which device and when. Unsigned programs, especially from user folders, are flagged, and new use by a flagged program raises a notification. |
 | FR-DSK-08 watch | Every 15 minutes while the app is open or in the tray: added / removed / changed items are written to the timeline as CHANGE entries, new findings as FINDING entries, and gaps in the watch as WATCH_GAP entries (telling "PC was off" from "watch was stopped while the PC was on"). |
 
@@ -154,7 +155,12 @@ Kotlin side, copy that file into `core/evidence/src/test/kotlin/` and run
 
 ## Changing the rules
 
-Edit `rules/desktop-bundle.json` and bump its `version`. Releases are signed
+Edit `rules/desktop-bundle.json` and bump its `version`. To refresh the
+stalkerware list from Echap, put their latest `ioc.yaml` and `samples.csv` in
+a folder and run `python3 -I rules/echap/import_echap.py <folder>
+rules/desktop-bundle.json` (needs PyYAML); it replaces only that list and
+prints what it dropped. The Echap data is CC BY 4.0: keep the credit in the
+bundle comment and in the app's Safety tab. Releases are signed
 by the three key holders, each on their own offline machine, as set out in
 `rules/KEY-CEREMONY.md`. Then the builder checks and logs it:
 
@@ -216,7 +222,7 @@ the last step, check what you will hand out; this fails if anything is not
 validly signed:
 
 ```powershell
-psg-codesign --verify "target\release\bundle\nsis\Phone Spy Guard_0.3.0_x64-setup.exe" target\release\psg-scan.exe target\release\psg-verify.exe
+psg-codesign --verify "target\release\bundle\nsis\Phone Spy Guard_0.4.0_x64-setup.exe" target\release\psg-scan.exe target\release\psg-verify.exe
 ```
 
 (Tauri signs the copy of the app it packs into the installer and puts the
@@ -261,8 +267,12 @@ project owner can provide.
   ECDSA P-256, not the Ed25519 the phone and desktop timelines share, so
   this needs a new evidence format version on all three platforms. Today
   the key is protected by DPAPI and checkpoints are the defence.
-- **Hash indicators**: the format and matching are in place, but the
-  `sha256` lists are empty until an open indicator feed is chosen.
+- **Windows program hashes**: stalkerware installer hashes come from
+  Echap, but the monitoring and remote-access lists still match Windows
+  programs by name, publisher and signer only; their `sha256` lists are
+  empty until an open feed of Windows samples is chosen.
+- **Checking a phone from the PC** (USB, Android debugging or an iPhone
+  backup) and an optional hash-reputation lookup are not in this release.
 - **macOS** (FR-DSK-09), **phone–PC linking** (FR-DSK-10) and Linux
   (FR-DSK-11).
 - Timing and memory budgets (NFR-DSK-01/02) need measuring on a real

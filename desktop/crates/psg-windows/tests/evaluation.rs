@@ -11,6 +11,13 @@
 //! 3. Unknown setups: products not on any list, set up the way stalkerware
 //!    and remote-access scams usually are. These test the behaviour rules
 //!    alone, the desktop analogue of the spec's held-out families.
+//! 4. Stalkerware indicators: every Echap family's servers seen in the DNS
+//!    cache and in a program's connection, every one of the 3,228 installer
+//!    hashes as a file in Downloads, and 170 everyday host names (including
+//!    other apps on the same cloud hosts) that must not match.
+//! 5. Windows' own deep start-up entries (LSA packages, print monitors,
+//!    netsh helpers, Active Setup) and signed vendor add-ins, which must not
+//!    be flagged.
 //!
 //! These are synthetic inventories, not installs on real PCs: they measure
 //! the matching and scoring, not the collectors. `PSG_WRITE_EVAL=1` rewrites
@@ -20,9 +27,10 @@ use std::collections::BTreeMap;
 use std::path::PathBuf;
 
 use psg_core::{Confidence, DetectionEngine, RuleBundleParser};
+use psg_windows::network::{NetIndex, Role};
 use psg_windows::raw::{
-    AutostartEntry, CameraMicUse, CertInfo, ExtensionRecord, InstalledProgram, ProcessInfo, ServiceInfo,
-    SignatureInfo,
+    AutostartEntry, CameraMicUse, CertInfo, DnsRecord, ExtensionRecord, FoundFile, InstalledProgram, NetConnection,
+    ProcessInfo, ServiceInfo, SignatureInfo,
 };
 use psg_windows::{evaluate, RawInventory, Report};
 use serde_json::Value;
@@ -68,6 +76,7 @@ fn add_program(raw: &mut RawInventory, name: &str, publisher: &str, path: &str, 
     let exe = path.rsplit('\\').next().unwrap_or(path);
     raw.processes.push(ProcessInfo { name: exe.into(), path: path.into(), pid: 1000 + raw.processes.len() as u32 });
     raw.autostarts.push(AutostartEntry {
+        since_coverage: 0,
         location: "run_key".into(),
         place: "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run".into(),
         name: name.into(),
@@ -172,6 +181,151 @@ fn known_products(engine: &DetectionEngine) -> Known {
     out
 }
 
+// --- 4. stalkerware indicators --------------------------------------------------------
+
+struct Echap {
+    families: usize,
+    with_servers: usize,
+    connection_confirmed: usize,
+    lookup_very_likely: usize,
+    /// Families whose every server name is also their shop's name, so a
+    /// lookup can only count as a shop visit.
+    shop_named_only: Vec<String>,
+    misses: Vec<String>,
+    hashes: usize,
+    hashes_found: usize,
+    benign_names: usize,
+    benign_flags: Vec<String>,
+}
+
+fn finding_for<'a>(report: &'a Report, id: &str) -> Option<&'a psg_windows::Finding> {
+    report.findings.iter().find(|f| f.subject.id == id)
+}
+
+fn echap(engine: &DetectionEngine) -> Echap {
+    let families = &engine.bundle().indicators.stalkerware;
+    let index = NetIndex::new(families);
+    let mut out = Echap {
+        families: families.len(),
+        with_servers: 0,
+        connection_confirmed: 0,
+        lookup_very_likely: 0,
+        shop_named_only: Vec::new(),
+        misses: Vec::new(),
+        hashes: 0,
+        hashes_found: 0,
+        benign_names: 0,
+        benign_flags: Vec::new(),
+    };
+    let spy = "C:\\Users\\owner\\AppData\\Roaming\\WinSvc\\svchelper.exe";
+    for f in families.iter().filter(|f| !f.domains.is_empty()) {
+        out.with_servers += 1;
+        let id = format!("network:{}", f.id);
+        let unshadowed = f.domains.iter().find(|d| matches!(index.host(d), Some((_, Role::Server, _))));
+        let server = unshadowed.unwrap_or(&f.domains[0]);
+        let lookup = DnsRecord { name: server.clone(), data: "198.51.100.20".into(), record_type: 1 };
+
+        let mut raw = clean_pc();
+        raw.processes.push(ProcessInfo { name: "svchelper.exe".into(), path: spy.into(), pid: 4242 });
+        raw.dns_cache = Some(vec![lookup.clone()]);
+        raw.connections = Some(vec![NetConnection {
+            remote_address: "198.51.100.20".into(),
+            remote_port: 443,
+            state: "Established".into(),
+            pid: 4242,
+        }]);
+        match finding_for(&run(&raw, engine), &id).map(|x| x.confidence()) {
+            Some(Confidence::Confirmed) => out.connection_confirmed += 1,
+            got => out.misses.push(format!("{} connection to {server}: {got:?}", f.name)),
+        }
+
+        if unshadowed.is_none() {
+            out.shop_named_only.push(f.name.clone());
+            continue;
+        }
+        let mut raw = clean_pc();
+        raw.dns_cache = Some(vec![lookup]);
+        match finding_for(&run(&raw, engine), &id).map(|x| x.confidence()) {
+            Some(c) if c <= Confidence::VeryLikely => out.lookup_very_likely += 1,
+            got => out.misses.push(format!("{} lookup of {server}: {got:?}", f.name)),
+        }
+    }
+
+    // Every installer hash, each as its own file in Downloads, on one PC.
+    let mut raw = clean_pc();
+    for (i, h) in families.iter().flat_map(|f| &f.sha256).enumerate() {
+        raw.apk_files.push(FoundFile {
+            path: format!("C:\\Users\\owner\\Downloads\\app-{i}.apk"),
+            size: 1_000_000,
+            sha256: h.to_uppercase(),
+            modified_millis: Some(NOW),
+        });
+    }
+    out.hashes = raw.apk_files.len();
+    let report = run(&raw, engine);
+    out.hashes_found = report
+        .findings
+        .iter()
+        .filter(|f| f.subject.id.starts_with("file:") && f.confidence() <= Confidence::VeryLikely)
+        .count();
+
+    // Everyday names, looked up and connected to by a browser and by an app.
+    let set = load("benign-domains.json");
+    let names: Vec<&str> = set["domains"].as_array().unwrap().iter().map(|d| d.as_str().unwrap()).collect();
+    out.benign_names = names.len();
+    let mut raw = clean_pc();
+    raw.processes.push(ProcessInfo { name: "chrome.exe".into(), path: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe".into(), pid: 10 });
+    raw.processes.push(ProcessInfo { name: "Teams.exe".into(), path: "C:\\Program Files\\Teams\\Teams.exe".into(), pid: 11 });
+    let mut dns = Vec::new();
+    let mut conns = Vec::new();
+    for (i, n) in names.iter().enumerate() {
+        let ip = format!("198.18.{}.{}", i / 250, i % 250 + 1);
+        dns.push(DnsRecord { name: n.to_string(), data: ip.clone(), record_type: 1 });
+        for pid in [10, 11] {
+            conns.push(NetConnection { remote_address: ip.clone(), remote_port: 443, state: "Established".into(), pid });
+        }
+    }
+    raw.dns_cache = Some(dns);
+    raw.connections = Some(conns);
+    out.benign_flags = flagged(&run(&raw, engine)).into_iter().map(|(id, c)| format!("{id} {}", c.as_str())).collect();
+    out
+}
+
+// --- 5. Windows' own deep start-up entries -----------------------------------------------
+
+fn deep_defaults_pc() -> RawInventory {
+    let mut raw = clean_pc();
+    let sys = "C:\\Windows\\System32\\";
+    let mut add = |location: &str, name: &str, path: &str, signer: &str| {
+        raw.autostarts.push(AutostartEntry {
+            since_coverage: 1,
+            location: location.into(),
+            place: format!("eval\\{location}"),
+            name: name.into(),
+            command: path.into(),
+            path: path.into(),
+        });
+        raw.signatures.insert(path.to_lowercase(), SignatureInfo { status: "signed".into(), signer: signer.into() });
+    };
+    for m in ["msv1_0", "kerberos", "schannel", "wdigest", "tspkg", "pku2u", "cloudap", "scecli"] {
+        add("lsa", m, &format!("{sys}{m}.dll"), "Microsoft Windows");
+    }
+    for (n, d) in [("Local Port", "localspl.dll"), ("Standard TCP/IP Port", "tcpmon.dll"), ("USB Monitor", "usbmon.dll"), ("WSD Port", "WSDMon.dll")] {
+        add("print_monitor", n, &format!("{sys}{d}"), "Microsoft Windows");
+    }
+    add("print_monitor", "HP Standard TCP/IP Port", &format!("{sys}hpinkcom.dll"), "HP Inc.");
+    for (n, d) in [("2", "ifmon.dll"), ("4", "rasmontr.dll"), ("authfwcfg", "authfwcfg.dll"), ("dhcpclient", "dhcpcmonitor.dll"), ("wlancfg", "wlancfg.dll")] {
+        add("netsh", n, &format!("{sys}{d}"), "Microsoft Windows");
+    }
+    add("active_setup", "Windows Media Player", &format!("{sys}unregmp2.exe"), "Microsoft Windows");
+    add("active_setup", "Google Chrome", "C:\\Program Files\\Google\\Chrome\\Application\\120.0\\Installer\\chrmstp.exe", "Google LLC");
+    add("shell_extension", "OneDrive", "C:\\Users\\owner\\AppData\\Local\\Microsoft\\OneDrive\\FileSyncShell64.dll", "Microsoft Corporation");
+    add("com_hijack", "OneDrive sync", "C:\\Users\\owner\\AppData\\Local\\Microsoft\\OneDrive\\FileCoAuthLib64.dll", "Microsoft Corporation");
+    add("bho", "Adobe Acrobat", "C:\\Program Files\\Adobe\\Acrobat DC\\Acrobat\\AcroIEHelperShim.dll", "Adobe Inc.");
+    add("boot_execute", "BootExecute", &format!("{sys}aswBoot.exe"), "Avast Software s.r.o.");
+    raw
+}
+
 // --- 3. unknown setups ----------------------------------------------------------------
 
 struct Setup {
@@ -239,6 +393,7 @@ fn unknown_setups() -> Vec<Setup> {
 
     let mut r = clean_pc();
     r.autostarts.push(AutostartEntry {
+        since_coverage: 0,
         location: "wmi".into(),
         place: "root\\subscription".into(),
         name: "SCM Event Log Consumer".into(),
@@ -249,6 +404,7 @@ fn unknown_setups() -> Vec<Setup> {
 
     let mut r = clean_pc();
     r.autostarts.push(AutostartEntry {
+        since_coverage: 0,
         location: "ifeo".into(),
         place: "HKLM\\...\\Image File Execution Options\\sethc.exe".into(),
         name: "sethc.exe".into(),
@@ -279,6 +435,40 @@ fn unknown_setups() -> Vec<Setup> {
     }]);
     r.settings.hidden_from_sign_in = vec!["support".into()];
     v.push(Setup { name: "Administrator account hidden from the sign-in screen", raw: r, known_limit: false });
+
+    let hook = |location: &str, name: &str, path: &str, status: &str, signer: &str| {
+        let mut r = clean_pc();
+        r.autostarts.push(AutostartEntry {
+            since_coverage: 1,
+            location: location.into(),
+            place: format!("eval\\{location}"),
+            name: name.into(),
+            command: path.into(),
+            path: path.into(),
+        });
+        r.signatures.insert(path.to_lowercase(), SignatureInfo { status: status.into(), signer: signer.into() });
+        r
+    };
+    v.push(Setup {
+        name: "Unsigned DLL loaded into every program (AppInit_DLLs)",
+        raw: hook("appinit", "AppInit_DLLs", "C:\\ProgramData\\WinSvc\\inject.dll", "unsigned", ""),
+        known_limit: false,
+    });
+    v.push(Setup {
+        name: "Unsigned password filter in the LSA (reads every new password)",
+        raw: hook("lsa", "pwfilter", "C:\\Windows\\System32\\pwfilter.dll", "unsigned", ""),
+        known_limit: false,
+    });
+    v.push(Setup {
+        name: "COM hijack for this user to an unsigned DLL in AppData",
+        raw: hook("com_hijack", "Thumbnail Cache", "C:\\Users\\owner\\AppData\\Roaming\\thumbcache.dll", "unsigned", ""),
+        known_limit: false,
+    });
+    v.push(Setup {
+        name: "Windows tool restarted whenever spyware is closed (SilentProcessExit)",
+        raw: hook("silent_exit", "runs when monitor.exe exits", "C:\\Windows\\System32\\cmd.exe", "signed", "Microsoft Windows"),
+        known_limit: false,
+    });
 
     let mut r = clean_pc();
     let signed = "C:\\Program Files\\FamilyView\\fview.exe";
@@ -311,6 +501,8 @@ fn evaluation() {
     let engine = engine();
     let fa = false_alarms(&engine);
     let known = known_products(&engine);
+    let ec = echap(&engine);
+    let deep_defaults = flagged(&run(&deep_defaults_pc(), &engine));
     let setups = unknown_setups();
     let mut unknown_rows = Vec::new();
     let (mut caught, mut expected_catchable) = (0, 0);
@@ -342,10 +534,47 @@ fn evaluation() {
         md.push_str(&format!("| Known products: {list} | {ok} of {n} identified ({:.0}%) |\n", pct(*ok, *n)));
     }
     md.push_str(&format!(
-        "| Unknown setups caught by behaviour alone | {caught} of {expected_catchable} ({:.0}%), plus {} known limit(s) listed below |\n\n",
+        "| Unknown setups caught by behaviour alone | {caught} of {expected_catchable} ({:.0}%), plus {} known limit(s) listed below |\n",
         pct(caught, expected_catchable),
         setups.iter().filter(|s| s.known_limit).count()
     ));
+    md.push_str(&format!(
+        "| Stalkerware families with server names (of {} imported from Echap) | {} |\n",
+        ec.families, ec.with_servers
+    ));
+    let testable = ec.with_servers - ec.shop_named_only.len();
+    md.push_str(&format!(
+        "| A program connected to a family's server | {} of {} Confirmed ({:.0}%) |\n",
+        ec.connection_confirmed,
+        ec.with_servers,
+        pct(ec.connection_confirmed, ec.with_servers)
+    ));
+    md.push_str(&format!(
+        "| A family's server in the DNS cache only | {} of {testable} Very likely or higher ({:.0}%) |\n",
+        ec.lookup_very_likely,
+        pct(ec.lookup_very_likely, testable)
+    ));
+    md.push_str(&format!(
+        "| Known installer files (.apk) in Downloads | {} of {} found ({:.0}%) |\n",
+        ec.hashes_found,
+        ec.hashes,
+        pct(ec.hashes_found, ec.hashes)
+    ));
+    md.push_str(&format!(
+        "| Everyday host names looked up and connected to | {} names, {} findings |\n",
+        ec.benign_names,
+        ec.benign_flags.len()
+    ));
+    md.push_str(&format!(
+        "| Windows' own deep start-up entries and signed vendor add-ins | {} findings |\n\n",
+        deep_defaults.len()
+    ));
+    if !ec.shop_named_only.is_empty() {
+        md.push_str(&format!(
+            "Families whose only server names are also their shop's website, so a DNS lookup alone reads as a shop visit (Possible); a program other than a browser connecting there is still Confirmed: {}.\n\nEchap lists some openly sold parental-control apps as stalkerware (Bark, for example). A visit to their websites is rated Possible, with wording that says it may be innocent.\n\n",
+            ec.shop_named_only.join(", ")
+        ));
+    }
     if !fa.any_flag.is_empty() {
         md.push_str("## Programs from the common set that were flagged\n\n");
         for (n, why) in &fa.any_flag {
@@ -378,4 +607,12 @@ fn evaluation() {
     assert!(fa.high.is_empty(), "{:?}", fa.high);
     assert!(pct(fa.any_flag.len(), fa.programs) < 1.0, "{:?}", fa.any_flag);
     assert!(pct(caught, expected_catchable) >= 80.0, "{unknown_rows:?}");
+    // Every testable Echap family and every installer hash is found, and
+    // no everyday name or Windows default is flagged.
+    assert!(ec.misses.is_empty(), "{:?}", ec.misses);
+    assert_eq!(ec.connection_confirmed, ec.with_servers);
+    assert_eq!(ec.hashes_found, ec.hashes);
+    assert!(ec.hashes >= 3000, "the full Echap sample set is in the bundle");
+    assert!(ec.benign_flags.is_empty(), "{:?}", ec.benign_flags);
+    assert!(deep_defaults.is_empty(), "{deep_defaults:?}");
 }

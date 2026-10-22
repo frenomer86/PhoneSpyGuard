@@ -30,7 +30,44 @@ pub struct RawInventory {
     pub signatures: BTreeMap<String, SignatureInfo>,
     /// SHA-256 of executables, keyed by lower-case path.
     pub hashes: BTreeMap<String, String>,
+    /// Windows' DNS client cache: names this PC looked up recently. None
+    /// when it could not be read, so no card claims "nothing contacted".
+    pub dns_cache: Option<Vec<DnsRecord>>,
+    /// Open TCP connections to other machines, with the owning process.
+    pub connections: Option<Vec<NetConnection>>,
+    /// Android app files (.apk) found in the owner's own folders, hashed.
+    pub apk_files: Vec<FoundFile>,
     pub gaps: Vec<Gap>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct DnsRecord {
+    /// The name looked up.
+    pub name: String,
+    /// The answer: an address for A/AAAA records, a name for CNAME.
+    pub data: String,
+    /// 1 A, 5 CNAME, 28 AAAA (DNS record type numbers).
+    pub record_type: u16,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct NetConnection {
+    pub remote_address: String,
+    pub remote_port: u16,
+    /// `Established`, `SynSent`, ...
+    pub state: String,
+    pub pid: u32,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct FoundFile {
+    pub path: String,
+    pub size: u64,
+    pub sha256: String,
+    pub modified_millis: Option<i64>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -66,6 +103,9 @@ pub struct AutostartEntry {
     pub command: String,
     /// The program it runs, resolved from the command.
     pub path: String,
+    /// The collector coverage version that started reading this place
+    /// (see `watch::COVERAGE`); 0 for the places read from the start.
+    pub since_coverage: u32,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]

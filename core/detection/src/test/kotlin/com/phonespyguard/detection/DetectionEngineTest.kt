@@ -155,6 +155,28 @@ class DetectionEngineTest {
     }
 
     @Test
+    fun `an APK whose file hash matches a sample is confirmed (item 4)`() {
+        val facts = Facts.builder()
+            .text("app.package", "com.renamed.helper")
+            .bool("app.known_stalkerware_file_match", true)
+            .build()
+        val eval = engine.evaluate("com.renamed.helper", facts)
+        assertEquals(Confidence.CONFIRMED, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-KNOWN-003" })
+    }
+
+    @Test
+    fun `a known watchware product is possible (item 4)`() {
+        val facts = Facts.builder()
+            .text("app.package", "com.wondershare.famisafe")
+            .bool("app.watchware_match", true)
+            .build()
+        val eval = engine.evaluate("com.wondershare.famisafe", facts)
+        assertEquals(Confidence.POSSIBLE, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-RISK-060" })
+    }
+
+    @Test
     fun `mercenary indicator match is confirmed (FR-DEV-08)`() {
         val facts = Facts.builder()
             .bool("app.mercenary_indicator_match", true)
@@ -191,6 +213,17 @@ class DetectionEngineTest {
     }
 
     @Test
+    fun `an app disguised as a system component is very likely (item 5)`() {
+        val facts = Facts.builder()
+            .text("app.package", "com.android.systemservice")
+            .bool("app.poses_as_system", true)
+            .build()
+        val eval = engine.evaluate("com.android.systemservice", facts)
+        assertEquals(Confidence.VERY_LIKELY, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-BEH-060" })
+    }
+
+    @Test
     fun `a certificate change on update is very likely (M2)`() {
         val facts = Facts.builder()
             .bool("app.cert_changed_on_update", true)
@@ -198,6 +231,104 @@ class DetectionEngineTest {
         val eval = engine.evaluate("com.x", facts)
         assertEquals(Confidence.VERY_LIKELY, eval.verdict.confidence)
         assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-BEH-040" })
+    }
+
+    @Test
+    fun `a hidden app granted three surveillance permission groups is very likely (item 3)`() {
+        // No icon, not a system app, and granted microphone + camera + location.
+        // None of the four special-access powers are held, so this is caught only
+        // because the engine now scores the granted dangerous permissions.
+        val facts = Facts.builder()
+            .text("app.package", "com.sneaky.recorder")
+            .bool("app.has_launcher_icon", false)
+            .bool("app.is_system_app", false)
+            .textList("app.granted_surveillance_permissions", listOf("microphone", "camera", "location"))
+            .number("app.granted_surveillance_permission_count", 3)
+            .number("app.surveillance_power_count", 0)
+            .build()
+        val eval = engine.evaluate("com.sneaky.recorder", facts)
+        assertEquals(Confidence.VERY_LIKELY, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-BEH-050" })
+    }
+
+    @Test
+    fun `a sideloaded app granted three surveillance permission groups is possible (item 3)`() {
+        val facts = Facts.builder()
+            .text("app.package", "com.side.load")
+            .text("app.install_source", "sideload")
+            .bool("app.is_system_app", false)
+            .bool("app.has_launcher_icon", true)
+            .textList("app.granted_surveillance_permissions", listOf("sms", "contacts", "location"))
+            .number("app.granted_surveillance_permission_count", 3)
+            .build()
+        val eval = engine.evaluate("com.side.load", facts)
+        assertEquals(Confidence.POSSIBLE, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-RISK-050" })
+    }
+
+    @Test
+    fun `an app reading texts and call history but not the sms app is possible (item 3)`() {
+        val facts = Facts.builder()
+            .text("app.package", "com.reads.both")
+            .bool("app.is_system_app", false)
+            .bool("app.default_sms", false)
+            .textList("app.granted_surveillance_permissions", listOf("sms", "call_log"))
+            .number("app.granted_surveillance_permission_count", 2)
+            .build()
+        val eval = engine.evaluate("com.reads.both", facts)
+        assertEquals(Confidence.POSSIBLE, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-RISK-051" })
+    }
+
+    @Test
+    fun `a mainstream store app with camera mic and location is not flagged (item 3)`() {
+        // A chat app from the store legitimately holds camera, microphone and
+        // location. Because it is store-installed and visible, the broad-access
+        // rules must not fire — scoring granted permissions must not turn into
+        // flagging every social app.
+        val facts = Facts.builder()
+            .text("app.package", "com.popular.chat")
+            .text("app.install_source", "play")
+            .bool("app.is_system_app", false)
+            .bool("app.has_launcher_icon", true)
+            .bool("app.default_sms", false)
+            .textList("app.granted_surveillance_permissions", listOf("camera", "microphone", "location"))
+            .number("app.granted_surveillance_permission_count", 3)
+            .build()
+        val eval = engine.evaluate("com.popular.chat", facts)
+        assertEquals(Confidence.UNLIKELY, eval.verdict.confidence)
+        assertTrue(eval.verdict.concerning.isEmpty())
+    }
+
+    @Test
+    fun `a watchware app that uploads while screen off is elevated to very likely (item 6)`() {
+        // Watchware alone is only "Possible"; uploading while the screen is off
+        // elevates it — a monitoring product quietly reporting back.
+        val facts = Facts.builder()
+            .text("app.package", "com.wondershare.famisafe")
+            .bool("app.watchware_match", true)
+            .bool("app.uploads_screen_off", true)
+            .build()
+        val eval = engine.evaluate("com.wondershare.famisafe", facts)
+        assertEquals(Confidence.VERY_LIKELY, eval.verdict.confidence)
+        assertTrue(eval.verdict.signals.any { it.ruleId == "PSG-BEH-022" })
+    }
+
+    @Test
+    fun `a visible store app uploading while screen off is not flagged (item 6)`() {
+        // Background sync from a normal store app you can see must not be a strong
+        // signal — the screen-off upload needs a concerning companion trait.
+        val facts = Facts.builder()
+            .text("app.package", "com.popular.mail")
+            .text("app.install_source", "play")
+            .bool("app.is_system_app", false)
+            .bool("app.has_launcher_icon", true)
+            .bool("app.uploads_screen_off", true)
+            .number("app.granted_surveillance_permission_count", 1)
+            .build()
+        val eval = engine.evaluate("com.popular.mail", facts)
+        assertEquals(Confidence.UNLIKELY, eval.verdict.confidence)
+        assertTrue(eval.verdict.concerning.isEmpty())
     }
 
     @Test

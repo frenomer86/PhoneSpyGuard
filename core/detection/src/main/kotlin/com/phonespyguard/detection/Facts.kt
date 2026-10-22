@@ -84,8 +84,27 @@ public object FactKeys {
     public const val INSTALL_SOURCE_MISMATCH: String = "app.install_source_mismatch"
     public const val CERT_CHANGED_ON_UPDATE: String = "app.cert_changed_on_update"
 
+    // The app claims a reserved system/vendor package namespace (android.*,
+    // com.android.*, com.google.android.*, …) but is NOT a genuine system-
+    // partition app and did not come from a store — i.e. a sideloaded app
+    // wearing a system component's name to hide in the app list (market-scan
+    // item 5; the classic `com.android.systemservice` disguise).
+    public const val POSES_AS_SYSTEM: String = "app.poses_as_system"
+
     // Derived count of surveillance-grade powers this app holds (FR-DEV-02)
     public const val SURVEILLANCE_POWER_COUNT: String = "app.surveillance_power_count"
+
+    // Dangerous runtime permissions the app has actually been *granted* (not
+    // merely requested), collapsed to the surveillance groups a stalkerware
+    // product leans on: microphone, camera, sms, call_log, location, contacts.
+    // Scoring the granted set — not just the four special-access powers above —
+    // is what lets the engine weigh an app that quietly holds the microphone,
+    // camera and location at once (market-scan item 3).
+    public const val GRANTED_SURVEILLANCE_PERMISSIONS: String = "app.granted_surveillance_permissions"
+
+    // Distinct count of the groups in [GRANTED_SURVEILLANCE_PERMISSIONS].
+    public const val GRANTED_SURVEILLANCE_PERMISSION_COUNT: String =
+        "app.granted_surveillance_permission_count"
 
     // Surveillance-grade powers (FR-DEV-02)
     public const val ACCESSIBILITY_ENABLED: String = "app.accessibility_enabled"
@@ -118,4 +137,16 @@ public object FactKeys {
     public const val KNOWN_STALKERWARE_MATCH: String = "app.known_stalkerware_match"
     public const val MERCENARY_INDICATOR_MATCH: String = "app.mercenary_indicator_match"
     public const val PROOF_TEST_FIRED: String = "app.proof_test_fired"
+
+    // The installed APK's own SHA-256 matches a published stalkerware sample
+    // hash (Echap samples.csv, market-scan item 4). An exact file match is as
+    // definitive as a package/cert match — a renamed sample that was not
+    // recompiled still hashes identically.
+    public const val KNOWN_STALKERWARE_FILE_MATCH: String = "app.known_stalkerware_file_match"
+
+    // Matches a known *watchware* product — commercial child/employee monitoring
+    // that is legal to install on your own device but is routinely repurposed to
+    // spy on a partner (Echap watchware.yaml, market-scan item 4). Dual-use, so
+    // it is a risk to review, not a confirmed attack.
+    public const val WATCHWARE_MATCH: String = "app.watchware_match"
 }

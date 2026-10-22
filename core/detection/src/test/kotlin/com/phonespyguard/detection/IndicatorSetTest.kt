@@ -81,6 +81,49 @@ class IndicatorSetTest {
     }
 
     @Test
+    fun `an APK file-hash match is a confirmed sample regardless of package or cert (item 4)`() {
+        val hashed = IndicatorSet(
+            fileHashes = setOf("2f3bc9ebe8c249f0416f5b0367f34b4b8f6aaa7d351dc5b4912fe2558491b6b7"),
+        )
+        // The sample hash matches even though the package is unknown and renamed.
+        assertTrue(
+            hashed.classify(
+                "com.freshly.renamed",
+                certSha1 = null,
+                isSystemApp = false,
+                fileSha256 = "2F3BC9EBE8C249F0416F5B0367F34B4B8F6AAA7D351DC5B4912FE2558491B6B7",
+            ).knownStalkerwareFile,
+        )
+        // A different hash, or none, is not a file match.
+        assertFalse(hashed.classify("com.x", null, false, fileSha256 = "deadbeef").knownStalkerwareFile)
+        assertFalse(hashed.classify("com.x", null, false, fileSha256 = null).knownStalkerwareFile)
+    }
+
+    @Test
+    fun `watchware matches on package or cert and carries the product name (item 4)`() {
+        val ww = IndicatorSet(
+            watchware = listOf(
+                AppIndicator("com.wondershare.famisafe", name = "FamiSafe"),
+                AppIndicator(certSha1 = "ee55", name = "WiseMo"),
+            ),
+        )
+        val byPkg = ww.classify("com.wondershare.famisafe", null, isSystemApp = false)
+        assertTrue(byPkg.watchwareMatch)
+        assertEquals("FamiSafe", byPkg.watchwareName)
+        assertTrue(ww.classify("com.renamed", "EE55", isSystemApp = false).watchwareMatch)
+        assertFalse(ww.classify("com.unrelated", "ffff", isSystemApp = false).watchwareMatch)
+    }
+
+    @Test
+    fun `C2 matching is case-insensitive on domains and exact on IPs (item 4)`() {
+        val net = NetworkIndicators(domains = setOf("panel24.org"), ips = setOf("203.0.113.9"))
+        assertTrue(net.matches("Panel24.org"))
+        assertTrue(net.matches("203.0.113.9"))
+        assertFalse(net.matches("example.com"))
+        assertFalse(net.matches(""))
+    }
+
+    @Test
     fun `parsed from the shipped bundle`() {
         val text = requireNotNull(javaClass.getResourceAsStream("/rules/launch-bundle.json"))
             .readBytes().toString(Charsets.UTF_8)

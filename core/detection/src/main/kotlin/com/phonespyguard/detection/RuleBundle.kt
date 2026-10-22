@@ -36,12 +36,18 @@ public class BundleRejected(message: String) : RuntimeException(message)
 
 /** Limits on bundle shape, enforced at parse time (NFR-SEC-16). */
 public data class BundleLimits(
-    val maxBytes: Int = 256 * 1024,
+    // Raised from 256 KiB: the signed bundle now also carries the Echap sample
+    // file-hash set (~3,200 SHA-256) and the C2 host list (market-scan item 4).
+    val maxBytes: Int = 1024 * 1024,
     val maxRules: Int = 1024,
     val maxConditionNodes: Int = 256,
     val maxDepth: Int = 16,
     val maxExplains: Int = 64,
     val maxIndicators: Int = 8192,
+    /** Cap on the sample file-hash set (item 4). */
+    val maxFileHashes: Int = 32768,
+    /** Cap on C2 domains + IPs combined (item 4). */
+    val maxNetworkIndicators: Int = 32768,
 ) {
     public companion object {
         public val DEFAULT: BundleLimits = BundleLimits()
@@ -126,17 +132,50 @@ public class RuleBundleParser(private val limits: BundleLimits = BundleLimits.DE
         if (node == null || node is JsonNull) return IndicatorSet()
         val obj = node as? JsonObject
             ?: throw BundleRejected("'indicators' is not an object")
+        val fileHashes = obj.hexHashSet("file_sha256")
+        if (fileHashes.size > limits.maxFileHashes) {
+            throw BundleRejected("Bundle has ${fileHashes.size} file hashes, limit ${limits.maxFileHashes}")
+        }
+        val network = parseNetwork(obj["c2"])
+        if (network.size > limits.maxNetworkIndicators) {
+            throw BundleRejected("Bundle has ${network.size} C2 indicators, limit ${limits.maxNetworkIndicators}")
+        }
         val set = IndicatorSet(
             stalkerware = obj.indicatorList("stalkerware"),
             mercenary = obj.indicatorList("mercenary"),
             screenReaders = obj.indicatorList("screen_readers"),
             parentalControl = obj.indicatorList("parental_control"),
             knownGoodKeyboards = obj.indicatorList("known_good_keyboards"),
+            watchware = obj.indicatorList("watchware"),
+            fileHashes = fileHashes,
+            network = network,
         )
         if (set.size > limits.maxIndicators) {
             throw BundleRejected("Bundle has ${set.size} indicators, limit ${limits.maxIndicators}")
         }
         return set
+    }
+
+    /** A set of lower-cased hex strings (SHA-256 sample hashes). Non-strings are rejected. */
+    private fun JsonObject.hexHashSet(key: String): Set<String> {
+        val arr = this[key] as? JsonArray ?: return emptySet()
+        return arr.mapTo(LinkedHashSet()) { element ->
+            val s = (element as? JsonPrimitive)?.takeIf { it.isString }?.content
+                ?: throw BundleRejected("A '$key' entry is not a string")
+            s.lowercase()
+        }
+    }
+
+    private fun parseNetwork(node: JsonElement?): NetworkIndicators {
+        if (node == null || node is JsonNull) return NetworkIndicators()
+        val obj = node as? JsonObject ?: throw BundleRejected("'c2' is not an object")
+        return NetworkIndicators(
+            domains = obj.hexHashSet("domains"),
+            ips = (obj["ips"] as? JsonArray)?.mapTo(LinkedHashSet()) {
+                (it as? JsonPrimitive)?.takeIf { p -> p.isString }?.content
+                    ?: throw BundleRejected("A 'c2.ips' entry is not a string")
+            } ?: emptySet(),
+        )
     }
 
     private fun JsonObject.indicatorList(key: String): List<AppIndicator> {

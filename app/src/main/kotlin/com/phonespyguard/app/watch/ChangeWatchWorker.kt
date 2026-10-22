@@ -6,6 +6,7 @@ import androidx.work.WorkerParameters
 import com.phonespyguard.app.AppSettings
 import com.phonespyguard.app.collect.AppFactsCollector
 import com.phonespyguard.app.collect.DeviceSettingsCollector
+import com.phonespyguard.app.collect.ScreenOffTrafficCollector
 import com.phonespyguard.app.detect.RuleBundleProvider
 import com.phonespyguard.evidence.EntryType
 import com.phonespyguard.watch.ChangeDetector
@@ -38,8 +39,12 @@ public class ChangeWatchWorker(
 
         val now = System.currentTimeMillis()
 
+        // With usage access granted, measure what each app uploaded while the
+        // screen was off; otherwise this is empty and the signal stays off (item 6).
+        val screenOffBytes = ScreenOffTrafficCollector(applicationContext).collect()
+
         // The snapshot is the installed apps plus one device-wide subject.
-        val current = HashMap(collector.collect(baselineStore.priorCerts()))
+        val current = HashMap(collector.collect(baselineStore.priorCerts(), screenOffBytes))
         val (deviceSubject, deviceFacts) = deviceCollector.collect()
         current[deviceSubject] = deviceFacts
 

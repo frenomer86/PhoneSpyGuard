@@ -65,7 +65,36 @@ public data class AppClassification(
     val isScreenReader: Boolean,
     val isParentalControl: Boolean,
     val isKnownGoodKeyboard: Boolean,
+    /** The app's own APK file hash matched a published stalkerware sample (item 4). */
+    val knownStalkerwareFile: Boolean = false,
+    /** Matched a known watchware (dual-use monitoring) product (item 4). */
+    val watchwareMatch: Boolean = false,
+    /** The watchware product name, when [watchwareMatch]. */
+    val watchwareName: String? = null,
 )
+
+/**
+ * Known command-and-control infrastructure published for stalkerware and
+ * watchware (Echap `c2:` blocks, market-scan item 4). A phone cannot watch
+ * another app's network traffic without a VPN this app deliberately avoids
+ * holding, so this set is not matched live on Android; it is carried in the
+ * signed bundle so the evidence export states how many servers are on file and
+ * can be checked against a network capture taken elsewhere, and so the desktop
+ * core — which does capture traffic — matches against the identical list.
+ */
+public data class NetworkIndicators(
+    val domains: Set<String> = emptySet(),
+    val ips: Set<String> = emptySet(),
+) {
+    public val size: Int get() = domains.size + ips.size
+    public val isEmpty: Boolean get() = domains.isEmpty() && ips.isEmpty()
+
+    /** True when [host] is a known C2 domain (case-insensitive) or IP. */
+    public fun matches(host: String): Boolean {
+        val h = host.trim().lowercase()
+        return h.isNotEmpty() && (h in domains || h in ips)
+    }
+}
 
 /**
  * The set of indicators shipped *inside the rule bundle* (security review
@@ -88,14 +117,22 @@ public data class IndicatorSet(
     val screenReaders: List<AppIndicator> = emptyList(),
     val parentalControl: List<AppIndicator> = emptyList(),
     val knownGoodKeyboards: List<AppIndicator> = emptyList(),
+    /** Known watchware (dual-use monitoring) products, matched like known-bad (item 4). */
+    val watchware: List<AppIndicator> = emptyList(),
+    /** SHA-256 of published stalkerware APK samples, lower-case hex (item 4). */
+    val fileHashes: Set<String> = emptySet(),
+    /** Known command-and-control infrastructure (item 4). */
+    val network: NetworkIndicators = NetworkIndicators(),
 ) {
     public val isEmpty: Boolean
         get() = stalkerware.isEmpty() && mercenary.isEmpty() && screenReaders.isEmpty() &&
-            parentalControl.isEmpty() && knownGoodKeyboards.isEmpty()
+            parentalControl.isEmpty() && knownGoodKeyboards.isEmpty() &&
+            watchware.isEmpty() && fileHashes.isEmpty() && network.isEmpty
 
+    /** Count of app-identity indicators (packages + certs); hashes and C2 are counted separately. */
     public val size: Int
         get() = stalkerware.size + mercenary.size + screenReaders.size +
-            parentalControl.size + knownGoodKeyboards.size
+            parentalControl.size + knownGoodKeyboards.size + watchware.size
 
     /**
      * @param certSha1 the SHA-1 of the app's signing certificate, or null.
@@ -103,9 +140,18 @@ public data class IndicatorSet(
      *   (`FLAG_SYSTEM`/`FLAG_UPDATED_SYSTEM_APP`), which a sideload cannot fake.
      *   An unpinned allow-list entry is honoured only for such an app, never on
      *   a claimed install source (review N2 / round-3 spoofed-source finding).
+     * @param fileSha256 the SHA-256 of the app's own installed APK, or null when
+     *   it could not be read. A match against [fileHashes] is a confirmed sample
+     *   (item 4).
      */
-    public fun classify(pkg: String, certSha1: String?, isSystemApp: Boolean): AppClassification {
+    public fun classify(
+        pkg: String,
+        certSha1: String?,
+        isSystemApp: Boolean,
+        fileSha256: String? = null,
+    ): AppClassification {
         val known = stalkerware.firstOrNull { it.matchesKnownBad(pkg, certSha1) }
+        val watch = watchware.firstOrNull { it.matchesKnownBad(pkg, certSha1) }
         return AppClassification(
             knownStalkerware = known != null,
             stalkerwareName = known?.name,
@@ -113,6 +159,9 @@ public data class IndicatorSet(
             isScreenReader = screenReaders.any { it.matchesAllowList(pkg, certSha1, isSystemApp) },
             isParentalControl = parentalControl.any { it.matchesAllowList(pkg, certSha1, isSystemApp) },
             isKnownGoodKeyboard = knownGoodKeyboards.any { it.matchesAllowList(pkg, certSha1, isSystemApp) },
+            knownStalkerwareFile = fileSha256 != null && fileSha256.lowercase() in fileHashes,
+            watchwareMatch = watch != null,
+            watchwareName = watch?.name,
         )
     }
 }

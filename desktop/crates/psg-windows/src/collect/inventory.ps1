@@ -106,6 +106,23 @@ Section 'dns' {
         ForEach-Object { $_.ServerAddresses } | Sort-Object -Unique)
 }
 
+# Names this PC looked up recently (matched against stalkerware servers).
+Section 'dnsCache' {
+    @(Get-DnsClientCache -ErrorAction Stop | ForEach-Object {
+        [ordered]@{ entry = [string]$_.Entry; name = [string]$_.Name; data = [string]$_.Data; type = [int]$_.Type }
+    })
+}
+
+# Open connections to other machines and the process that owns each.
+Section 'connections' {
+    @(Get-NetTCPConnection -ErrorAction Stop |
+        Where-Object { $_.State -ne 'Listen' -and $_.State -ne 'Bound' -and $_.RemoteAddress -notin @('0.0.0.0', '::') } |
+        ForEach-Object {
+            [ordered]@{ remoteAddress = [string]$_.RemoteAddress; remotePort = [int]$_.RemotePort;
+                        state = [string]$_.State; pid = [int]$_.OwningProcess }
+        })
+}
+
 Section 'partOfDomain' {
     $cs = Get-CimInstance Win32_ComputerSystem -ErrorAction Stop
     $azure = $false

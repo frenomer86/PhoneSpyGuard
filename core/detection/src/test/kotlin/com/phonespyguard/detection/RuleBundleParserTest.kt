@@ -13,7 +13,7 @@ class RuleBundleParserTest {
     fun `parses the shipped launch bundle`() {
         val text = readResource("/rules/launch-bundle.json")
         val bundle = parser.parse(text)
-        assertEquals(2, bundle.version)
+        assertEquals(4, bundle.version)
         assertTrue(bundle.rules.size >= 7)
         val hidden = bundle.rules.first { it.id == "PSG-BEH-014" }
         assertEquals(Severity.HIGH, hidden.severity)
@@ -22,6 +22,12 @@ class RuleBundleParserTest {
         // The signed indicator set is parsed alongside the rules (C1).
         assertTrue(bundle.indicators.stalkerware.isNotEmpty())
         assertTrue(bundle.indicators.screenReaders.isNotEmpty())
+        // Item 4: sample file hashes, watchware and the C2 list are carried too.
+        assertTrue(bundle.indicators.fileHashes.size > 1000)
+        assertTrue(bundle.indicators.watchware.isNotEmpty())
+        assertTrue(bundle.indicators.network.domains.isNotEmpty())
+        // All sample hashes are lower-case 64-char hex.
+        assertTrue(bundle.indicators.fileHashes.all { it.length == 64 && it == it.lowercase() })
         // An innocent rule carries the ids it explains (H5).
         val innocent = bundle.rules.first { it.id == "PSG-INNOCENT-001" }
         assertTrue(innocent.explains.contains("PSG-RISK-040"))

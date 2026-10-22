@@ -152,9 +152,6 @@ main { max-width: 920px; margin: 0 auto; padding: 0 1.5rem 3rem; }
 .VERY_LIKELY.badge, .chip.VERY_LIKELY { color: var(--likely); background: var(--likely-bg); }
 .POSSIBLE.badge, .chip.POSSIBLE { color: var(--possible); background: var(--possible-bg); }
 .UNLIKELY.badge, .chip.UNLIKELY { color: var(--unlikely); background: var(--unlikely-bg); }
-.LIKELY_SCAM.badge { color: var(--confirmed); background: var(--confirmed-bg); }
-.CAUTION.badge { color: var(--possible); background: var(--possible-bg); }
-.LIKELY_SAFE.badge, .NO_LINK.badge { color: var(--unlikely); background: var(--unlikely-bg); }
 
 .summary { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1rem 0; }
 .chip { border-radius: 8px; padding: .3rem .8rem; font-size: .875rem; font-weight: 500; }
@@ -173,7 +170,6 @@ ul.bullets li { margin: .2rem 0; }
 .removal { background: var(--surface-container); border-radius: 8px; padding: .6rem .85rem; }
 .trusted-note { color: var(--unlikely); font-size: .9rem; }
 .stale-note { color: var(--likely); }
-.next-step { font-weight: 500; }
 details { margin-top: .5rem; }
 summary { cursor: pointer; color: var(--primary); font-size: .9rem; font-weight: 500; }
 dl.evidence { display: grid; grid-template-columns: minmax(8rem, max-content) 1fr; gap: .2rem .8rem; font-size: .85rem; margin: .5rem 0; }
@@ -190,6 +186,7 @@ input[type="search"] {
 .notice { border-radius: 12px; padding: .9rem 1.1rem; margin: .75rem 0; }
 .notice.error { background: var(--error-container); color: var(--on-error-container); }
 .notice.ok { background: var(--unlikely-bg); color: var(--on-surface); }
+.progress #progressText { flex: 1; }
 .progress { display: flex; align-items: center; gap: .9rem; padding: 1rem 1.25rem; background: var(--surface-container); border-radius: 12px; margin: .75rem 0; }
 .spinner { width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 3px solid var(--secondary-container); border-top-color: var(--primary); animation: spin .9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -253,11 +250,6 @@ tr + tr td { border-top: 1px solid var(--outline-variant); }
 .empty { padding: 1.5rem; color: var(--on-surface-variant); background: var(--surface-container); border-radius: 12px; }
 .trusted-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .3rem 0; }
 
-/* --- account checkup --- */
-.service { font-size: .75rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--primary); }
-.step-line { margin: .25rem 0; font-size: .9rem; }
-.step-line b { font-weight: 500; }
-
 /* --- lock screen --- */
 .lock { position: fixed; inset: 0; z-index: 50; background: var(--surface); padding: 3rem; }
 .lock h1 { margin-top: 0; }
@@ -270,5 +262,3 @@ tr + tr td { border-top: 1px solid var(--outline-variant); }
   .entry { grid-template-columns: 1fr; gap: .2rem; }
   .btn.wide { min-width: 0; width: 100%; }
 }
-.verdict.LIKELY_SCAM { color: var(--confirmed); }
-.verdict.CAUTION { color: var(--possible); }

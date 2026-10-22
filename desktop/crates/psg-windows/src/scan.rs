@@ -58,11 +58,14 @@ pub fn build_subjects(raw: &RawInventory, bundle: &RuleBundle, ctx: &Context<'_>
     subjects.extend(settings(raw));
     subjects.extend(camera_mic(raw));
     subjects.extend(programs(raw));
+    subjects.extend(crate::network::subjects(raw, &bundle.indicators.stalkerware));
+    subjects.extend(stalkerware_files(raw, bundle));
 
     for s in &mut subjects {
         if let Some(baseline) = ctx.baseline {
-            // Inventory-only kinds and volatile ones don't get "new" flags.
-            if !matches!(s.kind, SubjectKind::Process | SubjectKind::CameraMic) {
+            // Volatile kinds and camera use don't get "new" flags, nor do
+            // things the baseline's collectors never read.
+            if !s.kind.is_volatile() && s.kind != SubjectKind::CameraMic && baseline.covers(s) {
                 s.facts.set_bool(keys::NEW_SINCE_BASELINE, !baseline.contains(&s.id));
             }
         }
@@ -191,10 +194,22 @@ fn file_name(path: &str, fallback: &str) -> String {
 
 // --- autostart (FR-DSK-03) ----------------------------------------------------
 
+/// Places that load code into Windows itself or into every program, as
+/// Autoruns lists them. Anything there not signed by Microsoft is unusual.
+pub const DEEP_LOCATIONS: &[&str] = &[
+    "appinit", "appcert", "lsa", "winlogon_notify", "boot_execute", "silent_exit", "cmd_autorun",
+    "com_hijack", "print_monitor", "netsh", "shell_extension", "bho", "active_setup", "terminal_server",
+];
+
+fn is_microsoft_signed(raw: &RawInventory, path: &str) -> bool {
+    let (status, signer) = sig_of(raw, path);
+    status == "signed" && signer.to_lowercase().starts_with("microsoft ")
+}
+
 fn autostarts(raw: &RawInventory) -> Vec<Subject> {
     let mut out = Vec::new();
     let mut seen = BTreeSet::new();
-    let mut push = |location: &str, place: &str, name: &str, command: &str, path: &str| {
+    let mut push = |location: &str, place: &str, name: &str, command: &str, path: &str, since: u32| {
         let id = format!("autostart:{location}:{}:{}", name.to_lowercase(), path.to_lowercase());
         if !seen.insert(id.clone()) {
             return;
@@ -210,16 +225,62 @@ fn autostarts(raw: &RawInventory) -> Vec<Subject> {
         if location == "wmi" {
             s.facts.set_bool(keys::WMI_SUBSCRIPTION, true);
         }
+        // Only here, so adding the fact doesn't change the fingerprint of
+        // every older autostart the owner already vouched for.
+        if DEEP_LOCATIONS.contains(&location) {
+            s.facts.set_bool(keys::MICROSOFT_SIGNED, is_microsoft_signed(raw, path));
+        }
+        s.since_coverage = since;
         out.push(s);
     };
     for a in &raw.autostarts {
-        push(&a.location, &a.place, &a.name, &a.command, &a.path);
+        push(&a.location, &a.place, &a.name, &a.command, &a.path, a.since_coverage);
     }
     for svc in raw.services.iter().filter(|s| s.start == 2 && !s.driver) {
         let place = format!("Service {} ({})", svc.name, svc.display_name);
-        push("service", &place, &svc.name, &svc.path, &svc.path);
+        push("service", &place, &svc.name, &svc.path, &svc.path, 0);
     }
     out
+}
+
+// --- stalkerware installer files ------------------------------------------------
+
+/// Android app files in the owner's folders whose hash is a known stalkerware
+/// sample. On a PC that means someone downloaded spyware to put on a phone.
+fn stalkerware_files(raw: &RawInventory, bundle: &RuleBundle) -> Vec<Subject> {
+    let by_hash: BTreeMap<&str, &Indicator> = bundle
+        .indicators
+        .stalkerware
+        .iter()
+        .flat_map(|f| f.sha256.iter().map(move |h| (h.as_str(), f)))
+        .collect();
+    raw.apk_files
+        .iter()
+        .filter_map(|file| {
+            let family = by_hash.get(file.sha256.to_lowercase().as_str())?;
+            let mut s = Subject::new(
+                format!("file:{}", file.path.to_lowercase()),
+                SubjectKind::File,
+                format!("{} stalkerware installer", family.name),
+            )
+            .detail(file.path.clone())
+            .evidence("file hash (SHA-256)", file.sha256.to_lowercase())
+            .evidence("size", format!("{} bytes", file.size))
+            .evidence("source", format!("{} sample in the Echap stalkerware indicators (CC BY 4.0)", family.name));
+            if let Some(t) = file.modified_millis {
+                s.evidence.insert("last changed (ms since 1970)".into(), t.to_string());
+            }
+            let f = &mut s.facts;
+            f.set_text(keys::NAME, family.name.clone());
+            f.set_text(keys::MATCHED_INDICATOR, family.id.clone());
+            f.set_bool(keys::STALKERWARE_FILE, true);
+            f.set_text(keys::PATH, file.path.clone());
+            f.set_text(keys::SHA256, file.sha256.to_lowercase());
+            f.set_bool(keys::USER_WRITABLE_PATH, is_user_writable_path(&file.path));
+            s.since_coverage = 1;
+            Some(s)
+        })
+        .collect()
 }
 
 // --- processes ----------------------------------------------------------------
@@ -560,10 +621,19 @@ pub fn score(
         .iter()
         .chain(&bundle.indicators.remote_access)
         .chain(&bundle.indicators.oversight)
+        .chain(&bundle.indicators.stalkerware)
         .map(|i| (i.id.as_str(), i.removal.as_str()))
         .collect();
 
+    // What was read but only matched, not scored one by one.
     let mut checked: BTreeMap<String, usize> = BTreeMap::new();
+    if let Some(dns) = &raw.dns_cache {
+        checked.insert("dns_name".into(), dns.iter().map(|r| r.name.to_lowercase()).collect::<BTreeSet<_>>().len());
+    }
+    if let Some(c) = &raw.connections {
+        checked.insert("connection".into(), c.len());
+    }
+    checked.insert("apk_file".into(), raw.apk_files.len());
     let mut camera_mic: Vec<Subject> = Vec::new();
     let mut findings = Vec::new();
     for subject in subjects {

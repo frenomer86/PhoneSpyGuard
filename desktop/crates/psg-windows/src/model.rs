@@ -25,6 +25,10 @@ pub enum SubjectKind {
     Setting,
     /// A program's camera or microphone use (FR-DSK-07).
     CameraMic,
+    /// Contact with a stalkerware family's servers or sales sites.
+    Network,
+    /// A file on disk that is a known stalkerware installer.
+    File,
 }
 
 impl SubjectKind {
@@ -37,7 +41,16 @@ impl SubjectKind {
             SubjectKind::Extension => "extension",
             SubjectKind::Setting => "setting",
             SubjectKind::CameraMic => "camera_mic",
+            SubjectKind::Network => "network",
+            SubjectKind::File => "file",
         }
+    }
+
+    /// Kinds that come and go on their own (running programs, recent network
+    /// contact). They are scored and logged but are not part of the baseline,
+    /// so their passing is not reported as a change.
+    pub fn is_volatile(self) -> bool {
+        matches!(self, SubjectKind::Process | SubjectKind::Network)
     }
 }
 
@@ -60,6 +73,10 @@ pub struct Subject {
     /// for when they answer "I set this up".
     #[serde(default)]
     pub fingerprint: String,
+    /// The collector coverage version that first read this sort of subject.
+    /// A baseline taken before then never saw it, so it is not "new".
+    #[serde(default)]
+    pub since_coverage: u32,
 }
 
 impl Subject {
@@ -74,6 +91,7 @@ impl Subject {
             facts,
             evidence: BTreeMap::new(),
             fingerprint: String::new(),
+            since_coverage: 0,
         }
     }
 
