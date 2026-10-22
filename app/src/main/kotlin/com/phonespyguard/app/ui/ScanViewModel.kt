@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.phonespyguard.app.collect.AppFactsCollector
 import com.phonespyguard.app.collect.DeviceSettingsCollector
+import com.phonespyguard.app.collect.ScreenOffTrafficCollector
 import com.phonespyguard.app.detect.RuleBundleProvider
 import com.phonespyguard.app.watch.EvidenceStore
 import com.phonespyguard.detection.Confidence
@@ -55,7 +56,11 @@ public class ScanViewModel(app: Application) : AndroidViewModel(app) {
     private fun scan(): ScanState.Done {
         val bundle = RuleBundleProvider.bundle()
         val engine = DetectionEngine(bundle)
-        val snapshot = HashMap(AppFactsCollector(getApplication(), bundle.indicators).collect())
+        val screenOffBytes = ScreenOffTrafficCollector(getApplication()).collect()
+        val snapshot = HashMap(
+            AppFactsCollector(getApplication(), bundle.indicators)
+                .collect(screenOffBytes = screenOffBytes),
+        )
         val (deviceSubject, deviceFacts) = DeviceSettingsCollector(getApplication()).collect()
         snapshot[deviceSubject] = deviceFacts
 

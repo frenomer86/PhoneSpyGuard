@@ -4,14 +4,13 @@ members = [
     "crates/psg-core",
     "crates/psg-windows",
     "crates/psg-tools",
-    "crates/psg-scam",
     "app/src-tauri",
 ]
 
 [workspace.package]
-version = "0.3.0"
+version = "0.5.2"
 edition = "2021"
-license = "UNLICENSED"
+license = "MIT"
 rust-version = "1.77"
 
 [workspace.dependencies]
@@ -24,7 +23,6 @@ time = { version = "0.3", features = ["parsing", "formatting", "macros"] }
 rand_core = { version = "0.6", features = ["getrandom"] }
 psg-core = { path = "crates/psg-core" }
 psg-windows = { path = "crates/psg-windows" }
-psg-scam = { path = "crates/psg-scam" }
 
 [profile.release]
 # Keeps the installer well under the 20 MB budget (NFR-DSK-01).

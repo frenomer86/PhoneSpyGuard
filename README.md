@@ -11,9 +11,14 @@ It does one job and is built to be trusted with it:
   certificate (614 package names and 473 certificate fingerprints across about
   149 families from the public Echap `stalkerware-indicators` dataset, plus
   mercenary‑spyware indicators from Amnesty's MVT project), so a renamed copy
-  signed by the same key is still caught. Unknown tools are caught by
+  signed by the same key is still caught. Sample files are matched by
+  SHA‑256 (3,228 known stalkerware APK hashes), "watchware" monitoring
+  products are recognised (44), and apps contacting known stalkerware
+  command‑and‑control servers (993 domains, 66 IP addresses) are flagged.
+  Unknown tools are caught by
   behaviour: hidden apps holding accessibility, device‑admin, notification or
-  SMS powers, sideloaded installs, and new powers that appear between checks.
+  SMS powers, sideloaded installs, new powers that appear between checks,
+  and apps that upload data while the screen is off.
 - **Explain.** Every finding has one of four confidence levels (*Confirmed*,
   *Very likely*, *Possible*, *Unlikely*), checks for an innocent explanation
   (a parental‑control app, a screen reader, a work profile) before accusing,
@@ -63,7 +68,7 @@ log identically.
 | --- | --- |
 | `core:detection` | Device facts, signed rule bundles, the bounded interpreter, four‑level scoring, signed rule updates. No Android dependencies, so it tests on any JVM. |
 | `core:evidence` | The hash‑chained, signed evidence timeline, signed checkpoints, portable export and off‑device verification, and Keystore attestation‑chain checks. |
-| `core:watch` | The change watcher: what gained a surveillance power, hid its icon or was sideloaded since the last check, and any gap when the watch itself was stopped. |
+| `core:watch` | The change watcher: what gained a surveillance power, hid its icon or was sideloaded since the last check, apps that upload while the screen is off, and any gap when the watch itself was stopped. |
 | `core:safety` | Safety‑planning guidance and verified support resources shown before any removal step. |
 | `core:eval` | Detection evaluation over an independent app set (known stalkerware caught, no high‑risk false alarm on real Play apps). |
 | `core:conformance` | Runs the shared cross‑engine fixtures in `desktop/conformance/`. |

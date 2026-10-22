@@ -20,6 +20,12 @@ const VOLATILE: &[&str] = &[
     keys::OWNER_TRUST_STALE,
 ];
 
+/// What the collectors read, as a version. Raise it when a check starts
+/// reading a new sort of thing, and set [`Subject::since_coverage`] on those
+/// subjects, so the first check after an update doesn't call all of them new.
+/// 1: deeper autostart places, stalkerware installer files (0.5.0).
+pub const COVERAGE: u32 = 1;
+
 /// What the PC looked like at the last check.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
@@ -30,14 +36,16 @@ pub struct Baseline {
     pub titles: BTreeMap<String, String>,
     /// Camera / microphone subject id -> last-use time.
     pub last_use: BTreeMap<String, i64>,
+    /// [`COVERAGE`] when the baseline was taken; 0 before it was recorded.
+    pub coverage: u32,
 }
 
 impl Baseline {
     pub fn from_subjects(subjects: &[Subject], taken_millis: i64) -> Self {
-        let mut b = Baseline { taken_millis, ..Default::default() };
+        let mut b = Baseline { taken_millis, coverage: COVERAGE, ..Default::default() };
         for s in subjects {
-            if s.kind == SubjectKind::Process {
-                continue; // processes come and go; not part of the baseline
+            if s.kind.is_volatile() {
+                continue; // come and go on their own; not part of the baseline
             }
             b.fingerprints.insert(s.id.clone(), fingerprint(s));
             b.titles.insert(s.id.clone(), s.title.clone());
@@ -50,6 +58,12 @@ impl Baseline {
 
     pub fn contains(&self, id: &str) -> bool {
         self.fingerprints.contains_key(id)
+    }
+
+    /// True if this baseline was taken by collectors that could have seen
+    /// the subject, so its absence from the baseline means it is new.
+    pub fn covers(&self, s: &Subject) -> bool {
+        s.since_coverage <= self.coverage
     }
 }
 
@@ -94,6 +108,8 @@ impl Change {
             SubjectKind::Extension => "Browser extension",
             SubjectKind::Setting => "Setting",
             SubjectKind::CameraMic => "Camera/microphone use",
+            SubjectKind::Network => "Stalkerware server contact",
+            SubjectKind::File => "Stalkerware installer file",
         };
         match self.kind {
             ChangeKind::Added => format!("{what} added: {}", self.title),
@@ -110,7 +126,7 @@ pub fn diff(baseline: &Baseline, subjects: &[Subject]) -> Vec<Change> {
     let mut changes = Vec::new();
     let mut current = BTreeMap::new();
     for s in subjects {
-        if s.kind == SubjectKind::Process {
+        if s.kind.is_volatile() {
             continue;
         }
         current.insert(s.id.as_str(), s);
@@ -122,7 +138,8 @@ pub fn diff(baseline: &Baseline, subjects: &[Subject]) -> Vec<Change> {
             detail: s.detail.clone(),
         };
         match baseline.fingerprints.get(&s.id) {
-            None => changes.push(change(ChangeKind::Added)),
+            None if baseline.covers(s) => changes.push(change(ChangeKind::Added)),
+            None => {}
             Some(fp) if *fp != fingerprint(s) => changes.push(change(ChangeKind::Modified)),
             _ => {}
         }
@@ -155,6 +172,8 @@ fn kind_from_id(id: &str) -> SubjectKind {
         "setting" => SubjectKind::Setting,
         "cammic" => SubjectKind::CameraMic,
         "process" => SubjectKind::Process,
+        "network" => SubjectKind::Network,
+        "file" => SubjectKind::File,
         _ => SubjectKind::Program,
     }
 }
@@ -237,6 +256,22 @@ mod tests {
                 (ChangeKind::Modified, "setting:rdp".into()),
             ]
         );
+    }
+
+    #[test]
+    fn what_an_older_baseline_could_not_see_is_not_added() {
+        let mut deep = subject("autostart:lsa:x:c:\\x.dll", SubjectKind::Autostart, "C:\\x.dll");
+        deep.since_coverage = COVERAGE;
+        let old = Baseline { coverage: 0, ..Baseline::from_subjects(&[], 1) };
+        assert!(diff(&old, &[deep.clone()]).is_empty(), "first check after an update reads it for the first time");
+        let current = Baseline::from_subjects(&[], 1);
+        assert_eq!(diff(&current, &[deep.clone()])[0].kind, ChangeKind::Added);
+
+        // Network contact comes and goes; it is never in the baseline.
+        let net = subject("network:SW-X", SubjectKind::Network, "");
+        let b = Baseline::from_subjects(&[net.clone()], 1);
+        assert!(b.fingerprints.is_empty());
+        assert!(diff(&b, &[net]).is_empty());
     }
 
     #[test]

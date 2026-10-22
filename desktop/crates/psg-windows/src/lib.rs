@@ -13,6 +13,7 @@ pub mod collect;
 pub mod fixtures;
 pub mod indicators;
 pub mod model;
+pub mod network;
 pub mod raw;
 pub mod scan;
 pub mod watch;

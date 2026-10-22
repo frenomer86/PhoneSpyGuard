@@ -122,6 +122,7 @@ mod tests {
             sha256: vec!["ab".repeat(32)],
             services: vec!["xremotesvc".into()],
             removal: String::new(),
+            ..Default::default()
         };
         assert_eq!(
             match_indicator(&ind, &["renamed.exe"], "", Some(&"AB".repeat(32))),

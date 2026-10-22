@@ -40,8 +40,14 @@ public class AppFactsCollector(
     /**
      * @param priorCerts the signing-cert hash seen for each package at the last
      *   scan, used to flag a certificate change on update (security review M2).
+     * @param screenOffBytes bytes each package uploaded while the screen was off,
+     *   from [ScreenOffTrafficCollector] when the owner has granted usage access;
+     *   empty otherwise, which leaves the screen-off signal off (market-scan item 6).
      */
-    public fun collect(priorCerts: Map<String, String> = emptyMap()): Snapshot {
+    public fun collect(
+        priorCerts: Map<String, String> = emptyMap(),
+        screenOffBytes: Map<String, Long> = emptyMap(),
+    ): Snapshot {
         val accessibilityPkgs = enabledComponentPackages(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
         val notificationPkgs = enabledComponentPackages("enabled_notification_listeners")
         val adminPkgs = activeDeviceAdminPackages()
@@ -60,6 +66,7 @@ public class AppFactsCollector(
                     appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0
                 )
             val requested = info.requestedPermissions?.toSet().orEmpty()
+            val grantedGroups = grantedSurveillanceGroups(info)
             val certBytes = signingCertBytes(pkg)
             val cert = certBytes?.let { hash(it, "SHA-256") }
             val certSha1 = certBytes?.let { hash(it, "SHA-1") }
@@ -78,7 +85,11 @@ public class AppFactsCollector(
             // `adb install -i com.android.vending` fakes a Play install (review
             // N2 / round-3 spoofed-source finding). FLAG_SYSTEM cannot be faked
             // by a sideload, so isSystem is the only source-free fallback.
-            val cls = indicators.classify(pkg, certSha1, isSystemApp = isSystem)
+            // Hash the installed APK only for non-system apps: a stalkerware
+            // sample never ships on the system partition, and hashing every
+            // framework APK would waste the scan's time budget (item 4).
+            val fileSha256 = if (!isSystem) hashApkFile(appInfo?.sourceDir) else null
+            val cls = indicators.classify(pkg, certSha1, isSystemApp = isSystem, fileSha256 = fileSha256)
             val isKeyboard = pkg in keyboardPkgs
 
             val builder = Facts.builder()
@@ -94,12 +105,21 @@ public class AppFactsCollector(
                 .bool(FactKeys.DEFAULT_SMS, isDefaultSms)
                 .bool(FactKeys.DEFAULT_DIALER, pkg == defaultDialer)
                 .number(FactKeys.SURVEILLANCE_POWER_COUNT, powerCount.toLong())
+                .textList(FactKeys.GRANTED_SURVEILLANCE_PERMISSIONS, grantedGroups)
+                .number(FactKeys.GRANTED_SURVEILLANCE_PERMISSION_COUNT, grantedGroups.size.toLong())
                 .bool(FactKeys.THIRD_PARTY_KEYBOARD, isKeyboard)
                 // A keyboard is "known good" when it is a recognised vendor or a
                 // system component — those are not flagged (security review H3).
                 .bool(FactKeys.IS_KNOWN_GOOD_KEYBOARD, cls.isKnownGoodKeyboard || (isKeyboard && isSystem))
                 .bool(FactKeys.INSTALL_SOURCE_MISMATCH, installSourceMismatch(pkg, isSystem))
+                .bool(FactKeys.POSES_AS_SYSTEM, posesAsSystem(pkg, isSystem, source))
+                .bool(
+                    FactKeys.UPLOADS_SCREEN_OFF,
+                    com.phonespyguard.watch.ScreenOffTraffic.isSignificant(screenOffBytes[pkg] ?: 0L),
+                )
                 .bool(FactKeys.KNOWN_STALKERWARE_MATCH, cls.knownStalkerware)
+                .bool(FactKeys.KNOWN_STALKERWARE_FILE_MATCH, cls.knownStalkerwareFile)
+                .bool(FactKeys.WATCHWARE_MATCH, cls.watchwareMatch)
                 .bool(FactKeys.MERCENARY_INDICATOR_MATCH, cls.mercenaryMatch)
                 .bool(FactKeys.IS_SCREEN_READER, cls.isScreenReader)
                 .bool(FactKeys.IS_PARENTAL_CONTROL, cls.isParentalControl)
@@ -112,6 +132,42 @@ public class AppFactsCollector(
             snapshot[pkg] = builder.build()
         }
         return snapshot
+    }
+
+    /**
+     * The surveillance permission *groups* this app has actually been granted,
+     * read from the per-permission grant flags rather than what the manifest
+     * merely requests (market-scan item 3). A permission that is requested but
+     * the owner has denied, or that a modern OS has auto-revoked, does not count
+     * — only a live grant does. The groups are the ones a monitoring product
+     * leans on; a single group is returned at most once however many of its
+     * permissions are held, so the count reflects breadth of access.
+     */
+    private fun grantedSurveillanceGroups(info: android.content.pm.PackageInfo): List<String> {
+        val names = info.requestedPermissions ?: return emptyList()
+        val flags = info.requestedPermissionsFlags
+        val groups = linkedSetOf<String>()
+        for (i in names.indices) {
+            val granted = flags != null && i < flags.size &&
+                (flags[i] and android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0
+            if (!granted) continue
+            SURVEILLANCE_PERMISSION_GROUPS[names[i]]?.let { groups += it }
+        }
+        return groups.toList()
+    }
+
+    /**
+     * True when a sideloaded (or unknown-source) app wears a reserved system or
+     * vendor package name but is not a genuine system-partition app (item 5).
+     * A real framework component is always a system app, and a legitimate store
+     * app in the Google namespace arrives from the store; so a non-system,
+     * non-store app in these namespaces is impersonating a system component.
+     */
+    private fun posesAsSystem(pkg: String, isSystem: Boolean, source: String): Boolean {
+        if (isSystem) return false
+        if (source == "play" || source == "system") return false
+        val p = pkg.lowercase()
+        return SYSTEM_NAMESPACES.any { p == it.trimEnd('.') || p.startsWith(it) }
     }
 
     /** Where the app was installed from: system / play / sideload / unknown. */
@@ -185,6 +241,28 @@ public class AppFactsCollector(
         MessageDigest.getInstance(algorithm).digest(bytes)
             .joinToString("") { "%02x".format(it) }
 
+    /**
+     * SHA-256 of an installed APK file, streamed so a large base.apk never has
+     * to be held in memory (item 4). Returns null when the path is missing or the
+     * file cannot be read — a hash we cannot compute simply yields no file match,
+     * which fails safe.
+     */
+    private fun hashApkFile(sourceDir: String?): String? {
+        if (sourceDir.isNullOrEmpty()) return null
+        return runCatching {
+            val digest = MessageDigest.getInstance("SHA-256")
+            java.io.File(sourceDir).inputStream().use { input ->
+                val buffer = ByteArray(64 * 1024)
+                while (true) {
+                    val n = input.read(buffer)
+                    if (n < 0) break
+                    digest.update(buffer, 0, n)
+                }
+            }
+            digest.digest().joinToString("") { "%02x".format(it) }
+        }.getOrNull()
+    }
+
     private fun enabledComponentPackages(setting: String): Set<String> {
         val value = Settings.Secure.getString(context.contentResolver, setting) ?: return emptySet()
         return value.split(':')
@@ -204,6 +282,39 @@ public class AppFactsCollector(
 
     private companion object {
         const val SHELL = "com.android.shell"
+
+        // Reserved framework / first-party-vendor package namespaces. A genuine
+        // app in these is a system app or a store install; a sideloaded one is a
+        // disguise (item 5). Kept deliberately tight to avoid flagging an
+        // unrelated third-party app that merely starts with one of these.
+        val SYSTEM_NAMESPACES = listOf(
+            "android.",
+            "com.android.",
+            "com.google.android.",
+            "com.sec.android.",
+            "com.samsung.android.",
+        )
+
+        // Dangerous runtime permissions mapped to the surveillance group they
+        // give access to (market-scan item 3). Only permissions that let an app
+        // capture a person's private life are listed; a renamed permission in a
+        // future OS simply won't match, which fails safe (it under-counts, never
+        // over-accuses).
+        val SURVEILLANCE_PERMISSION_GROUPS: Map<String, String> = mapOf(
+            "android.permission.RECORD_AUDIO" to "microphone",
+            "android.permission.CAMERA" to "camera",
+            "android.permission.READ_SMS" to "sms",
+            "android.permission.RECEIVE_SMS" to "sms",
+            "android.permission.RECEIVE_MMS" to "sms",
+            "android.permission.SEND_SMS" to "sms",
+            "android.permission.READ_CALL_LOG" to "call_log",
+            "android.permission.WRITE_CALL_LOG" to "call_log",
+            "android.permission.PROCESS_OUTGOING_CALLS" to "call_log",
+            "android.permission.ACCESS_FINE_LOCATION" to "location",
+            "android.permission.ACCESS_COARSE_LOCATION" to "location",
+            "android.permission.ACCESS_BACKGROUND_LOCATION" to "location",
+            "android.permission.READ_CONTACTS" to "contacts",
+        )
 
         // Real app-store installers only. com.google.android.feedback is dropped:
         // it has been used to launder a sideloaded install as a Play one (H4).

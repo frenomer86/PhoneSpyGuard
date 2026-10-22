@@ -22,5 +22,17 @@
       "build-bc17f3d0-3"
     ],
     "version": 2
+  },
+  {
+    "expires": "2027-10-01T00:00:00Z",
+    "logged": "2026-10-22",
+    "rules": 42,
+    "sha256": "c734e64e3f0517eb683d700f039675a8c870e24db87255a8f00ae5cdfde293f5",
+    "signedBy": [
+      "build-f71609a3-1",
+      "build-e254460e-2",
+      "build-fa79d3f7-3"
+    ],
+    "version": 3
   }
 ]

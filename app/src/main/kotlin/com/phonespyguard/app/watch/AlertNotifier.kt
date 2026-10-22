@@ -57,7 +57,12 @@ public class AlertNotifier(private val context: Context) {
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setAutoCancel(true)
             .build()
-        NotificationManagerCompat.from(context).notify(FIXED_ID, notification)
+        // The permission was checked above, but it can be revoked at any moment.
+        try {
+            NotificationManagerCompat.from(context).notify(FIXED_ID, notification)
+        } catch (_: SecurityException) {
+            // Revoked between the check and the post: the finding waits in the app.
+        }
     }
 
     /** True if any app holds notification-listener access (so could read alerts). */

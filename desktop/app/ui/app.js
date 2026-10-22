@@ -14,28 +14,6 @@ const LABELS = {
   UNLIKELY: "Unlikely",
 };
 
-const SCAM_LABELS = {
-  LIKELY_SCAM: "Likely a scam",
-  CAUTION: "Be careful",
-  LIKELY_SAFE: "No scam signs found",
-  NO_LINK: "No link in this message",
-};
-
-const RISK_LABELS = {
-  ACT_NOW: "Act now — a serious problem was found",
-  ATTENTION: "Needs attention",
-  INCOMPLETE: "Keep going — not everything is checked",
-  CLEAR: "All clear so far",
-};
-
-const SERVICES = {
-  WHATSAPP: "WhatsApp", TELEGRAM: "Telegram", SIGNAL: "Signal", FACEBOOK: "Facebook", INSTAGRAM: "Instagram",
-  GOOGLE: "Google", APPLE: "Apple", MICROSOFT: "Microsoft", EMAIL: "Email",
-};
-
-// Findings shown on the Accounts tab as well as the device check.
-const PC_ACCOUNT_SUBJECTS = ["setting:accounts", "setting:admins", "setting:rdp"];
-
 const KIND_NAMES = {
   product: "Known product",
   program: "Installed program",
@@ -44,6 +22,12 @@ const KIND_NAMES = {
   extension: "Browser extension",
   setting: "Setting",
   camera_mic: "Camera / microphone",
+  network: "Stalkerware server contact",
+  file: "Stalkerware installer file",
+  // Counted in "Everything checked" but matched, not scored one by one.
+  dns_name: "Recent web address",
+  connection: "Open connection",
+  apk_file: "Phone app file (.apk)",
 };
 
 const AUTOSTART_PLACES = {
@@ -54,11 +38,25 @@ const AUTOSTART_PLACES = {
   wmi: "WMI trigger",
   ifeo: "Program replacement (IFEO)",
   winlogon: "Sign-in shell",
+  appinit: "Loaded into every program (AppInit)",
+  appcert: "Loaded into every program (AppCert)",
+  lsa: "Password and sign-in system (LSA)",
+  winlogon_notify: "Sign-in add-in",
+  boot_execute: "Runs before Windows starts",
+  silent_exit: "Runs when a program closes",
+  cmd_autorun: "Runs in every Command Prompt",
+  com_hijack: "Replaces a Windows component",
+  print_monitor: "Print system add-in",
+  netsh: "Network tool add-in",
+  shell_extension: "Explorer add-in",
+  bho: "Internet Explorer add-in",
+  active_setup: "Runs at next sign-in (Active Setup)",
+  terminal_server: "Runs in Remote Desktop sessions",
 };
 
 // Rule step ids -> what the owner does, and a Windows page to open for it.
 const STEPS = {
-  read_safety_guidance: ["Read the safety note above before removing anything someone else may notice."],
+  read_safety_guidance: ["Read the Safety tab before removing anything someone else may notice."],
   export_evidence: ["Export the evidence timeline first and keep a copy somewhere safe.", "timeline"],
   uninstall_program: ["Uninstall it from Settings > Apps.", "apps"],
   change_passwords: ["From a different, trusted device, change the passwords for email, banking and social accounts, and turn on two-step sign-in."],
@@ -82,6 +80,9 @@ const STEPS = {
   turn_on_defender: ["Turn real-time protection back on in Windows Security.", "defender"],
   remove_exclusion: ["Remove exclusions you didn't add in Windows Security > Virus & threat protection settings.", "defender"],
   block_camera_mic: ["Turn off camera or microphone access for that program.", "camera"],
+  check_phone: ["Check your phone too. Stalkerware like this is installed on phones and controlled from a website, so run Phone Spy Guard on your phone, or ask an advocate to help you check it."],
+  keep_installer_file: ["Don't open or delete the file yet: it is evidence of what was downloaded and when. Leave it where it is until you have spoken to an advocate or the police."],
+  remove_hook: ["A technician can remove this entry safely once the evidence is exported; removing the wrong one can stop Windows from starting."],
 };
 
 const PAGE_LABELS = {
@@ -102,8 +103,6 @@ let status = null;
 let report = null;
 let trusted = new Set();
 let changes = [];
-let auditSteps = null;
-let auditAnswers = {};
 
 // --- tiny DOM helper --------------------------------------------------------
 
@@ -156,7 +155,6 @@ function showTab(name) {
   for (const s of document.querySelectorAll(".tab")) s.hidden = s.id !== `tab-${name}`;
   window.scrollTo(0, 0);
   if (name === "timeline") loadTimeline();
-  if (name === "accounts") renderAccounts();
 }
 
 // --- status ------------------------------------------------------------------
@@ -205,20 +203,30 @@ async function loadStatus() {
 
 // --- checking ----------------------------------------------------------------
 
+const DEEP_PHASES = {
+  prompt: "Windows is asking for administrator rights. Choose Yes in its prompt to continue. If you don't see the prompt, look for a flashing shield in the taskbar. Meanwhile the normal check is running.",
+  running: "Checking with administrator rights… this can take a few minutes.",
+};
+
 async function runCheck(deep) {
   for (const b of [$("btnCheck"), $("btnDeep")]) b.disabled = true;
   $("progress").hidden = false;
+  $("btnCancelDeep").hidden = !deep;
+  $("btnCancelDeep").disabled = false;
   $("progressText").textContent = deep
-    ? "Waiting for the administrator prompt, then checking… this can take a few minutes."
+    ? DEEP_PHASES.prompt
     : "Checking this PC… this usually takes a minute or two.";
   try {
     const result = await invoke("check_now", { deep });
     applyResult(result);
-    if (result.alerts.length) toast(`${result.alerts.length} new item(s) written to the evidence timeline.`);
+    const deepGap = deep && (result.report.gaps || []).find((g) => g.area === "Deep check");
+    if (deepGap) toast(deepGap.reason);
+    else if (result.alerts.length) toast(`${result.alerts.length} new item(s) written to the evidence timeline.`);
   } catch (e) {
     toast(String(e));
   } finally {
     $("progress").hidden = true;
+    $("btnCancelDeep").hidden = true;
     await loadStatus();
   }
 }
@@ -254,7 +262,7 @@ function renderResults() {
     if (brief) {
       root.append(h("article", { class: "card" },
         h("h3", {}, "Before you remove anything"),
-        h("p", {}, "Removing it can tip the person off, and can destroy the proof. Export the evidence first, and plan the next step with someone you trust."),
+        h("p", {}, "Removing it can destroy the proof. Export the evidence first."),
         h("div", { class: "card-actions" },
           h("button", { class: "btn outlined", onclick: () => showTab("safety") }, "Read the safety guidance"),
           h("button", { class: "btn outlined", onclick: () => showTab("timeline") }, "Go to Evidence"))));
@@ -368,7 +376,7 @@ function card(f, compact = false) {
       foot.append(h("button", { class: "btn outlined sm", onclick: () => answer(s, false) }, "I didn't install this"));
     } else {
       foot.append(
-        h("button", { class: "btn outlined sm", title: "Windows will ask for your PIN, fingerprint, face or password", onclick: () => answer(s, true) }, "I set this up"),
+        h("button", { class: "btn outlined sm", title: "Windows will ask for your PIN, fingerprint, face or password", onclick: () => answer(s, true) }, s.kind === "network" ? "That was me" : "I set this up"),
         h("button", { class: "btn outlined sm", onclick: () => answer(s, false) }, "I didn't do this"),
       );
     }
@@ -385,7 +393,6 @@ async function answer(subject, iDidThis) {
       ? "Noted in the timeline. From the next check it counts as yours, for as long as it stays exactly the same."
       : "Noted in the timeline that you did not set this up.");
     renderResults();
-    if (!$("tab-accounts").hidden) renderAccounts();
     loadStatus();
   } catch (e) {
     toast(String(e));
@@ -476,75 +483,6 @@ async function startNewTimeline() {
   } catch (e) { toast(String(e)); }
 }
 
-// --- message check ----------------------------------------------------------------
-
-async function checkMessage(ev) {
-  ev.preventDefault();
-  const text = $("messageText").value;
-  const out = $("messageResult");
-  try {
-    const v = await invoke("check_message", { text });
-    const links = v.findings.map((f) => `${f.url.registrableDomain} (${SCAM_LABELS[f.level].toLowerCase()})`);
-    out.replaceChildren(h("article", { class: "card" },
-      h("h3", { class: `verdict ${v.level}` }, SCAM_LABELS[v.level]),
-      v.reasons.length ? h("ul", { class: "bullets" }, v.reasons.map((r) => h("li", {}, r))) : null,
-      h("p", { class: "next-step" }, v.nextStep),
-      links.length ? h("p", { class: "small muted" }, `Links checked: ${links.join(", ")}.`) : null,
-    ));
-  } catch (e) {
-    toast(String(e));
-  }
-}
-
-// --- accounts -------------------------------------------------------------------------
-
-function renderAccounts() {
-  const pc = $("pcAccounts");
-  const found = report ? report.findings.filter((f) => PC_ACCOUNT_SUBJECTS.includes(f.subject.id)) : [];
-  pc.replaceChildren(h("h2", {}, "Accounts on this PC"),
-    ...(found.length
-      ? found.map((f) => card(f, f.evaluation.verdict.confidence === "UNLIKELY"))
-      : [h("p", { class: "small muted" }, report
-        ? "This check couldn't read the accounts on this PC; see \"Not checked this time\" on the Device check."
-        : "Run the device check to see who can sign in to this PC: hidden accounts, extra administrators, Remote Desktop and automatic sign-in.")]),
-    h("h2", {}, "Your online accounts"));
-  renderAudit();
-}
-
-async function renderAudit() {
-  try {
-    if (!auditSteps) auditSteps = await invoke("account_checkup");
-    const r = await invoke("account_checkup_report", { answers: auditAnswers });
-    $("auditSummary").replaceChildren(...[
-      h("h3", {}, RISK_LABELS[r.risk]),
-      h("p", { class: "small" }, `Checked ${r.checkedSteps} of ${r.totalSteps}. ${r.problems} problem(s) found.` +
-        (r.unresolved ? ` ${r.unresolved} you couldn't find, which still count as open.` : "")),
-      r.nextActions.length ? h("ul", { class: "bullets small" }, r.nextActions.slice(0, 5).map((a) => h("li", {}, a))) : null,
-    ].filter(Boolean));
-  } catch (e) {
-    toast(String(e));
-    return;
-  }
-  const choices = [["LOOKS_NORMAL", "Normal"], ["FOUND_PROBLEM", "Problem"], ["CANT_FIND", "Can't find"]];
-  $("auditSteps").replaceChildren(...auditSteps.map((s) => {
-    const current = auditAnswers[s.id];
-    return h("article", { class: "card" },
-      h("div", { class: "service" }, SERVICES[s.service] || s.service),
-      h("h3", {}, s.title),
-      h("p", { class: "step-line" }, h("b", {}, "Where: "), s.whereToLook),
-      h("p", { class: "step-line" }, h("b", {}, "Normal: "), s.expected),
-      h("p", { class: "step-line" }, h("b", {}, "Warning sign: "), s.dangerSign),
-      h("div", { class: "card-actions", role: "group", "aria-label": `What you found: ${s.title}` },
-        choices.map(([value, label]) => h("button", {
-          class: `btn outlined sm${current === value ? " selected" : ""}`,
-          "aria-pressed": String(current === value),
-          onclick: () => { auditAnswers[s.id] = value; renderAudit(); },
-        }, label))),
-      current === "FOUND_PROBLEM" ? h("p", { class: "step-line next-step" }, `Fix: ${s.fix}`) : null,
-    );
-  }));
-}
-
 // --- quick exit and app lock --------------------------------------------------------
 
 function clearScreen() {
@@ -561,12 +499,6 @@ function clearScreen() {
   $("checkpointBox").hidden = true;
   $("checkpointText").value = "";
   $("noteText").value = "";
-  $("messageText").value = "";
-  $("messageResult").replaceChildren();
-  auditAnswers = {};
-  $("auditSummary").replaceChildren();
-  $("auditSteps").replaceChildren();
-  $("pcAccounts").replaceChildren();
   showTab("check");
 }
 
@@ -609,7 +541,11 @@ function wire() {
   for (const b of document.querySelectorAll("[data-quick-exit]")) b.addEventListener("click", quickExit);
   $("btnCheck").addEventListener("click", () => runCheck(false));
   $("btnDeep").addEventListener("click", () => runCheck(true));
-  $("messageForm").addEventListener("submit", checkMessage);
+  $("btnCancelDeep").addEventListener("click", () => {
+    $("btnCancelDeep").disabled = true;
+    $("progressText").textContent = "Stopping the deep check and finishing the normal check…";
+    invoke("cancel_deep_check");
+  });
   $("btnSafetyOk").addEventListener("click", async () => {
     try { await invoke("safety_note_seen"); await loadStatus(); renderResults(); } catch (e) { toast(String(e)); }
   });
@@ -695,6 +631,11 @@ function wire() {
       toast(await invoke("install_rules_from_file", { bundle: await bundle.text(), signature: await sig.text() }));
     } catch (e) { toast(String(e)); }
     loadStatus();
+  });
+  listen("deep-phase", (ev) => {
+    if (!$("progress").hidden && !$("btnCancelDeep").disabled && DEEP_PHASES[ev.payload]) {
+      $("progressText").textContent = DEEP_PHASES[ev.payload];
+    }
   });
   listen("rules-updated", () => { if ($("lockScreen").hidden) loadStatus(); });
   listen("locked", () => {

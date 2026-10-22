@@ -3,4 +3,14 @@
     <string name="app_name">Phone Spy Guard</string>
     <!-- Neutral label shown when the owner turns on the discreet launcher (FR-SAF-05). -->
     <string name="discreet_name">System Services</string>
+
+    <!--
+      Where the daily signed rule-update check downloads the 2-of-3 signed bundle
+      and its detached signatures (market-scan item 2). Must be https. These are
+      set to the published rules location once the GitHub publish is live; while
+      blank, the update check is a clean no-op and the app runs on its shipped
+      bundle. The download carries nothing identifying.
+    -->
+    <string name="rule_update_url"></string>
+    <string name="rule_update_sig_url"></string>
 </resources>

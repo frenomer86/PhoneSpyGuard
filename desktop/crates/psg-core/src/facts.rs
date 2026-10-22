@@ -111,7 +111,8 @@ pub mod keys {
     pub const VPN_ACTIVE: &str = "device.vpn_active";
 
     // --- Every desktop subject ----------------------------------------------
-    /// `program`, `autostart`, `extension`, `setting`, `camera_mic`.
+    /// `product`, `program`, `process`, `autostart`, `extension`, `setting`,
+    /// `camera_mic`, `network`, `file`.
     pub const KIND: &str = "pc.kind";
     pub const NAME: &str = "pc.name";
     pub const PATH: &str = "pc.path";
@@ -142,9 +143,35 @@ pub mod keys {
     pub const UNATTENDED_ACCESS: &str = "pc.unattended_access";
 
     // --- Autostart (FR-DSK-03) ------------------------------------------------
-    /// `run_key`, `startup_folder`, `service`, `scheduled_task`, `wmi`.
+    /// `run_key`, `startup_folder`, `service`, `scheduled_task`, `wmi`,
+    /// `ifeo`, `winlogon`, and the deeper places Autoruns covers: `appinit`,
+    /// `appcert`, `lsa`, `winlogon_notify`, `boot_execute`, `silent_exit`,
+    /// `cmd_autorun`, `com_hijack`, `print_monitor`, `netsh`,
+    /// `shell_extension`, `bho`, `active_setup`, `terminal_server`.
     pub const AUTOSTART_LOCATION: &str = "pc.autostart_location";
     pub const WMI_SUBSCRIPTION: &str = "pc.wmi_subscription";
+    /// Validly signed by Microsoft. Set only on the deeper autostart places,
+    /// where anything else loaded into Windows itself is the finding.
+    pub const MICROSOFT_SIGNED: &str = "pc.microsoft_signed";
+
+    // --- Network contact with stalkerware services (Echap indicators) ---------
+    /// The DNS cache shows this PC looked up one of the family's servers.
+    pub const NET_SERVER_LOOKUP: &str = "pc.net_server_lookup";
+    /// A program other than a web browser is connected to one of its servers.
+    pub const NET_PROGRAM_CONNECTION: &str = "pc.net_program_connection";
+    /// A web browser is connected to one of its servers (its dashboard).
+    pub const NET_BROWSER_CONNECTION: &str = "pc.net_browser_connection";
+    /// A connection to an address the family once used, with no name to
+    /// confirm it (addresses get reused).
+    pub const NET_ADDRESS_ONLY: &str = "pc.net_address_only";
+    /// This PC looked up or connected to a website that sells it.
+    pub const NET_SALES_SITE: &str = "pc.net_sales_site";
+    /// The hosts file sends one of its servers to a fixed address (not a block).
+    pub const NET_HOSTS_ENTRY: &str = "pc.net_hosts_entry";
+
+    // --- Files ----------------------------------------------------------------
+    /// The file's hash is a known stalkerware installer (an Android .apk).
+    pub const STALKERWARE_FILE: &str = "pc.stalkerware_file";
 
     // --- Browser extensions (FR-DSK-05) ---------------------------------------
     pub const BROWSER: &str = "pc.browser";

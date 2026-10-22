@@ -6,8 +6,10 @@ import com.phonespyguard.detection.BundleStore
 import com.phonespyguard.detection.InstallResult
 import com.phonespyguard.detection.RuleBundle
 import com.phonespyguard.detection.RuleBundleParser
+import com.phonespyguard.detection.RuleUpdateFetcher
 import com.phonespyguard.detection.RuleUpdateService
 import com.phonespyguard.detection.TrustConfig
+import com.phonespyguard.detection.UpdateTransport
 import java.time.Instant
 
 /**
@@ -65,6 +67,21 @@ public object RuleBundleProvider {
         val shippedVersion = parser.parse(shippedPayload.decodeToString()).version
         val result = RuleUpdateService(trustConfig(), store).tryInstall(payload, signatures, shippedVersion)
         if (result is InstallResult.Installed) cached = null // reload on next access
+        return result
+    }
+
+    /**
+     * Download a signed update over [transport] and apply it if it verifies
+     * (market-scan item 2). Returns the outcome; on success the next [bundle]
+     * call reloads the new rules. Nothing identifying is sent — see
+     * [UpdateTransport].
+     */
+    public fun fetchUpdate(transport: UpdateTransport, payloadUrl: String, signaturesUrl: String): InstallResult {
+        val store = updateStore ?: return InstallResult.Refused("No update store configured")
+        val shippedVersion = parser.parse(loadShippedPayload().decodeToString()).version
+        val service = RuleUpdateService(trustConfig(), store)
+        val result = RuleUpdateFetcher(service, transport, payloadUrl, signaturesUrl).fetchAndInstall(shippedVersion)
+        if (result is InstallResult.Installed) cached = null
         return result
     }
 

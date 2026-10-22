@@ -110,6 +110,7 @@ pub fn apply_powershell_inventory(raw: &mut RawInventory, ps: &Value, user_root_
         let command = if arguments.is_empty() { execute.clone() } else { format!("\"{execute}\" {arguments}") };
         let path = classify::executable_from_command(&command, &expand_env).unwrap_or_default();
         raw.autostarts.push(AutostartEntry {
+            since_coverage: 0,
             location: "scheduled_task".into(),
             place: format!("{}{}", s(&t, "path"), s(&t, "name")),
             name: s(&t, "name"),
@@ -122,6 +123,7 @@ pub fn apply_powershell_inventory(raw: &mut RawInventory, ps: &Value, user_root_
         let target = s(&l, "target");
         let arguments = s(&l, "arguments");
         raw.autostarts.push(AutostartEntry {
+            since_coverage: 0,
             location: "startup_folder".into(),
             place: s(&l, "folder"),
             name: s(&l, "name"),
@@ -133,6 +135,7 @@ pub fn apply_powershell_inventory(raw: &mut RawInventory, ps: &Value, user_root_
     for w in many(ps.get("wmi")) {
         let command = s(&w, "command");
         raw.autostarts.push(AutostartEntry {
+            since_coverage: 0,
             location: "wmi".into(),
             place: "WMI root\\subscription".into(),
             name: s(&w, "name"),
@@ -181,6 +184,36 @@ pub fn apply_powershell_inventory(raw: &mut RawInventory, ps: &Value, user_root_
         many(ps.get("av")).iter().filter_map(|v| v.as_str().map(str::to_string)).collect();
     raw.settings.dns_servers =
         many(ps.get("dns")).iter().filter_map(|v| v.as_str().map(str::to_string)).collect();
+    // A section's key is present only if it ran; an empty result is null.
+    if ps.get("dnsCache").is_some() {
+        let mut records = Vec::new();
+        for r in many(ps.get("dnsCache")) {
+            let name = s(&r, "name");
+            let entry = s(&r, "entry");
+            if !entry.is_empty() && !entry.eq_ignore_ascii_case(&name) {
+                records.push(DnsRecord { name: entry, data: String::new(), record_type: 0 });
+            }
+            records.push(DnsRecord {
+                name,
+                data: s(&r, "data"),
+                record_type: r.get("type").and_then(Value::as_u64).unwrap_or(0) as u16,
+            });
+        }
+        raw.dns_cache = Some(records);
+    }
+    if ps.get("connections").is_some() {
+        raw.connections = Some(
+            many(ps.get("connections"))
+                .iter()
+                .map(|c| NetConnection {
+                    remote_address: s(c, "remoteAddress"),
+                    remote_port: c.get("remotePort").and_then(Value::as_u64).unwrap_or(0) as u16,
+                    state: s(c, "state"),
+                    pid: c.get("pid").and_then(Value::as_u64).unwrap_or(0) as u32,
+                })
+                .collect(),
+        );
+    }
     raw.settings.part_of_domain |= ps.get("partOfDomain").and_then(Value::as_bool).unwrap_or(false);
 
     // Cert:\CurrentUser\Root merges the machine store in; keep only the
@@ -226,8 +259,144 @@ fn describe_area(area: &str) -> &str {
         "dns" => "DNS servers",
         "rootCerts" => "Root certificates",
         "startupLinks" => "Start-up folders",
+        "dnsCache" => "Recently visited web addresses (DNS cache)",
+        "connections" => "Open network connections",
         other => other,
     }
+}
+
+/// How far the search for Android app files goes.
+#[derive(Debug, Clone, Copy)]
+pub struct ApkSearch {
+    pub max_depth: usize,
+    /// Directory entries looked at in all, so a huge folder can't stall a check.
+    pub max_entries: usize,
+    pub max_files: usize,
+    pub max_size: u64,
+}
+
+impl Default for ApkSearch {
+    fn default() -> Self {
+        Self { max_depth: 6, max_entries: 200_000, max_files: 2_000, max_size: 512 * 1024 * 1024 }
+    }
+}
+
+/// Find and hash `.apk` files under the given folders, without following
+/// links or junctions. `skip` says which files must not be read (on Windows,
+/// cloud-only files, which reading would download). Returns the files, and
+/// gaps for anything not searched.
+pub fn find_apk_files(
+    roots: &[PathBuf],
+    limits: ApkSearch,
+    skip: &dyn Fn(&std::fs::Metadata) -> bool,
+) -> (Vec<FoundFile>, Vec<Gap>) {
+    use sha2::{Digest, Sha256};
+    use std::io::Read;
+
+    let mut found = Vec::new();
+    let mut seen = BTreeSet::new();
+    let mut entries = 0usize;
+    let mut skipped_cloud = 0usize;
+    let mut skipped_large = 0usize;
+    let mut cut_short = false;
+    let mut stack: Vec<(PathBuf, usize)> = Vec::new();
+    for r in roots {
+        if seen.insert(r.to_string_lossy().to_lowercase()) {
+            stack.push((r.clone(), 0));
+        }
+    }
+    'walk: while let Some((dir, depth)) = stack.pop() {
+        let Ok(list) = std::fs::read_dir(&dir) else { continue };
+        for entry in list.flatten() {
+            entries += 1;
+            if entries > limits.max_entries || found.len() >= limits.max_files {
+                cut_short = true;
+                break 'walk;
+            }
+            let Ok(kind) = entry.file_type() else { continue };
+            let path = entry.path();
+            if kind.is_symlink() {
+                continue;
+            }
+            if kind.is_dir() {
+                if depth < limits.max_depth {
+                    stack.push((path, depth + 1));
+                }
+                continue;
+            }
+            let is_apk = path.extension().is_some_and(|e| e.eq_ignore_ascii_case("apk"));
+            if !kind.is_file() || !is_apk || !seen.insert(path.to_string_lossy().to_lowercase()) {
+                continue;
+            }
+            let Ok(meta) = entry.metadata() else { continue };
+            if skip(&meta) {
+                skipped_cloud += 1;
+                continue;
+            }
+            if meta.len() > limits.max_size {
+                skipped_large += 1;
+                continue;
+            }
+            let Ok(mut file) = std::fs::File::open(&path) else { continue };
+            let mut hasher = Sha256::new();
+            let mut buf = vec![0u8; 64 * 1024];
+            let ok = loop {
+                match file.read(&mut buf) {
+                    Ok(0) => break true,
+                    Ok(n) => hasher.update(&buf[..n]),
+                    Err(_) => break false,
+                }
+            };
+            if !ok {
+                continue;
+            }
+            found.push(FoundFile {
+                path: path.to_string_lossy().into_owned(),
+                size: meta.len(),
+                sha256: hasher.finalize().iter().map(|b| format!("{b:02x}")).collect(),
+                modified_millis: meta
+                    .modified()
+                    .ok()
+                    .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+                    .map(|d| d.as_millis() as i64),
+            });
+        }
+    }
+    let mut gaps = Vec::new();
+    let area = "Android app files (.apk) in your folders";
+    if cut_short {
+        gaps.push(Gap {
+            area: area.into(),
+            reason: format!("The search stopped after {} items, so some folders were not searched.", limits.max_entries.min(entries)),
+            needs_deep_check: false,
+        });
+    }
+    if skipped_cloud > 0 {
+        gaps.push(Gap {
+            area: area.into(),
+            reason: format!("{skipped_cloud} file(s) are stored only online (for example in OneDrive) and were not downloaded to check."),
+            needs_deep_check: false,
+        });
+    }
+    if skipped_large > 0 {
+        gaps.push(Gap {
+            area: area.into(),
+            reason: format!("{skipped_large} file(s) larger than {} MB were not checked.", limits.max_size / (1024 * 1024)),
+            needs_deep_check: false,
+        });
+    }
+    (found, gaps)
+}
+
+/// True for a file whose contents are not on this PC (a cloud placeholder),
+/// which opening would download.
+#[cfg(windows)]
+fn is_cloud_only(meta: &std::fs::Metadata) -> bool {
+    use std::os::windows::fs::MetadataExt;
+    const OFFLINE: u32 = 0x1000;
+    const RECALL_ON_OPEN: u32 = 0x4_0000;
+    const RECALL_ON_DATA_ACCESS: u32 = 0x40_0000;
+    meta.file_attributes() & (OFFLINE | RECALL_ON_OPEN | RECALL_ON_DATA_ACCESS) != 0
 }
 
 /// Fold PowerShell's signature list into the inventory.
@@ -316,6 +485,10 @@ fn collect_windows(deep: bool) -> RawInventory {
             needs_deep_check: false,
         }),
     }
+
+    let (apks, apk_gaps) = find_apk_files(&registry::user_folders(), ApkSearch::default(), &is_cloud_only);
+    raw.apk_files = apks;
+    raw.gaps.extend(apk_gaps);
 
     let paths: Vec<String> = paths_to_check(&raw).into_iter().filter(|p| Path::new(p).is_file()).collect();
     if !paths.is_empty() {
@@ -410,6 +583,75 @@ mod tests {
         apply_powershell_inventory(&mut raw, &serde_json::json!({"errors": ["accounts: denied"]}), &BTreeSet::new());
         assert!(raw.settings.accounts.is_none());
         assert_eq!(raw.gaps[0].area, "User accounts");
+    }
+
+    #[test]
+    fn folds_dns_cache_and_connections() {
+        let ps: Value = serde_json::from_str(
+            r#"{"dnsCache":[{"entry":"panel.example.com","name":"edge.cdn.example","data":"203.0.113.5","type":1}],
+               "connections":{"remoteAddress":"203.0.113.5","remotePort":443,"state":"Established","pid":77}}"#,
+        )
+        .unwrap();
+        let mut raw = RawInventory::default();
+        apply_powershell_inventory(&mut raw, &ps, &BTreeSet::new());
+        let dns = raw.dns_cache.unwrap();
+        assert_eq!(dns.len(), 2, "the name asked for and the record answering it");
+        assert!(dns.iter().any(|r| r.name == "panel.example.com"));
+        assert!(dns.iter().any(|r| r.name == "edge.cdn.example" && r.data == "203.0.113.5" && r.record_type == 1));
+        let c = raw.connections.unwrap();
+        assert_eq!((c[0].remote_port, c[0].pid), (443, 77));
+
+        // An empty cache arrives as null: read, and empty. A failure is a gap.
+        let mut raw = RawInventory::default();
+        apply_powershell_inventory(&mut raw, &serde_json::json!({"dnsCache": null, "errors": ["connections: no module"]}), &BTreeSet::new());
+        assert_eq!(raw.dns_cache, Some(vec![]));
+        assert_eq!(raw.connections, None);
+        assert_eq!(raw.gaps[0].area, "Open network connections");
+    }
+
+    #[test]
+    fn finds_and_hashes_apk_files_within_limits() {
+        use sha2::{Digest, Sha256};
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path().join("Downloads");
+        std::fs::create_dir_all(root.join("a/b")).unwrap();
+        std::fs::write(root.join("a/b/Update.APK"), b"not really an apk").unwrap();
+        std::fs::write(root.join("a/notes.txt"), b"x").unwrap();
+        std::fs::write(root.join("big.apk"), vec![0u8; 2048]).unwrap();
+        std::fs::create_dir_all(root.join("1/2/3")).unwrap();
+        std::fs::write(root.join("1/2/3/deep.apk"), b"deep").unwrap();
+
+        let limits = ApkSearch { max_depth: 2, max_size: 1024, ..ApkSearch::default() };
+        let (found, gaps) = find_apk_files(&[root.clone(), root.clone()], limits, &|_| false);
+        assert_eq!(found.len(), 1, "{found:?}");
+        assert!(found[0].path.ends_with("Update.APK"));
+        let expected: String = Sha256::digest(b"not really an apk").iter().map(|b| format!("{b:02x}")).collect();
+        assert_eq!(found[0].sha256, expected);
+        assert_eq!(found[0].size, 17);
+        assert_eq!(gaps.len(), 1, "the large file is reported, the too-deep one is out of scope");
+        assert!(gaps[0].reason.contains("larger than"));
+
+        let (found, gaps) = find_apk_files(&[root.clone()], ApkSearch::default(), &|_| true);
+        assert!(found.is_empty());
+        assert!(gaps.iter().any(|g| g.reason.contains("only online")));
+
+        let (_, gaps) = find_apk_files(&[root], ApkSearch { max_entries: 2, ..ApkSearch::default() }, &|_| false);
+        assert!(gaps.iter().any(|g| g.reason.contains("stopped")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn never_follows_links() {
+        let dir = tempfile::tempdir().unwrap();
+        let outside = dir.path().join("outside");
+        std::fs::create_dir_all(&outside).unwrap();
+        std::fs::write(outside.join("x.apk"), b"x").unwrap();
+        let root = dir.path().join("Downloads");
+        std::fs::create_dir_all(&root).unwrap();
+        std::os::unix::fs::symlink(&outside, root.join("link")).unwrap();
+        std::os::unix::fs::symlink(outside.join("x.apk"), root.join("y.apk")).unwrap();
+        let (found, _) = find_apk_files(&[root], ApkSearch::default(), &|_| false);
+        assert!(found.is_empty());
     }
 
     #[test]

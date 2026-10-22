@@ -5,7 +5,6 @@
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod accounts;
 mod core;
 mod device_key;
 mod rules;
@@ -29,6 +28,8 @@ use crate::store::now_millis;
 struct Shared {
     core: Mutex<Core>,
     checking: AtomicBool,
+    /// Set by the Cancel button during a deep check.
+    cancel_deep: AtomicBool,
     hidden_once: AtomicBool,
     /// With the app lock on, nothing sensitive is handed to the window until
     /// the owner confirms with Windows Hello or their password.
@@ -42,17 +43,30 @@ fn lock(shared: &Shared) -> std::sync::MutexGuard<'_, Core> {
     shared.core.lock().unwrap_or_else(|p| p.into_inner())
 }
 
+/// What a deep check needs from the window: the owner for Windows' prompt and
+/// somewhere to report its progress.
+struct Deep<'a> {
+    owner: Option<isize>,
+    phase: &'a (dyn Fn(system::DeepPhase) + Sync),
+}
+
 /// Collect (slow, no lock held), then score and log (fast, under the lock).
-fn run_check(shared: &Shared, deep: bool) -> Result<CheckResult, String> {
+/// A deep check asks for administrator rights first, while the owner's click
+/// is fresh, and runs the normal collection alongside.
+fn run_check(shared: &Shared, deep: Option<Deep>) -> Result<CheckResult, String> {
     if shared.checking.swap(true, Ordering::SeqCst) {
         return Err("A check is already running.".into());
     }
+    shared.cancel_deep.store(false, Ordering::SeqCst);
     let result = {
         let started = now_millis();
-        let raw = {
-            let mut raw = psg_windows::collect::collect(false);
-            if deep {
-                match system::deep_collect() {
+        let raw = match deep {
+            None => psg_windows::collect::collect(false),
+            Some(deep) => std::thread::scope(|s| {
+                let normal = s.spawn(|| psg_windows::collect::collect(false));
+                let extra = system::deep_collect(deep.owner, &shared.cancel_deep, deep.phase);
+                let mut raw = normal.join().unwrap_or_else(|_| psg_windows::collect::collect(false));
+                match extra {
                     Ok(extra) => raw.merge_deep(extra),
                     Err(e) => raw.gaps.push(psg_windows::Gap {
                         area: "Deep check".into(),
@@ -60,10 +74,10 @@ fn run_check(shared: &Shared, deep: bool) -> Result<CheckResult, String> {
                         needs_deep_check: true,
                     }),
                 }
-            }
-            without_self(raw)
+                raw
+            }),
         };
-        lock(shared).check(raw, started)
+        lock(shared).check(without_self(raw), started)
     };
     shared.checking.store(false, Ordering::SeqCst);
     result
@@ -219,11 +233,34 @@ fn quick_exit(app: AppHandle, state: AppState<'_>) {
 async fn check_now(app: AppHandle, state: AppState<'_>, deep: bool) -> Result<CheckResult, String> {
     unlocked(&state)?;
     let shared = state.inner().clone();
-    let result = tauri::async_runtime::spawn_blocking(move || run_check(&shared, deep))
-        .await
-        .map_err(|e| e.to_string())??;
+    #[cfg(windows)]
+    let owner = app.get_webview_window("main").and_then(|w| w.hwnd().ok()).map(|h| h.0 as isize);
+    #[cfg(not(windows))]
+    let owner = None;
+    let progress = app.clone();
+    let result = tauri::async_runtime::spawn_blocking(move || {
+        let phase = move |p: system::DeepPhase| {
+            let _ = progress.emit(
+                "deep-phase",
+                match p {
+                    system::DeepPhase::Prompt => "prompt",
+                    system::DeepPhase::Running => "running",
+                },
+            );
+        };
+        run_check(&shared, deep.then_some(Deep { owner, phase: &phase }))
+    })
+    .await
+    .map_err(|e| e.to_string())??;
     notify(&app, &result.alerts);
     Ok(result)
+}
+
+/// The Cancel button: stop waiting for the deep check. The normal check's
+/// results are still scored.
+#[tauri::command]
+fn cancel_deep_check(state: AppState<'_>) {
+    state.cancel_deep.store(true, Ordering::SeqCst);
 }
 
 /// "I set this up" lowers a finding, so Windows must confirm the owner first
@@ -318,34 +355,6 @@ fn set_start_at_sign_in(state: AppState<'_>, enabled: bool) -> Result<(), String
     lock(&state).set_start_at_sign_in(enabled)
 }
 
-/// The message check. Runs on this PC only; nothing is sent or saved.
-#[tauri::command]
-fn check_message(state: AppState<'_>, text: String) -> Result<psg_scam::ScamVerdict, String> {
-    unlocked(&state)?;
-    if text.trim().is_empty() {
-        return Err("Paste a message first.".into());
-    }
-    if text.len() > 20_000 {
-        return Err("That is longer than a message; paste just the message you're unsure about.".into());
-    }
-    Ok(psg_scam::check(&text))
-}
-
-#[tauri::command]
-fn account_checkup(state: AppState<'_>) -> Result<&'static [accounts::Step], String> {
-    unlocked(&state)?;
-    Ok(accounts::steps())
-}
-
-#[tauri::command]
-fn account_checkup_report(
-    state: AppState<'_>,
-    answers: std::collections::BTreeMap<String, accounts::Answer>,
-) -> Result<accounts::Report, String> {
-    unlocked(&state)?;
-    Ok(accounts::report(&answers))
-}
-
 #[tauri::command]
 fn safety_note_seen(state: AppState<'_>) -> Result<(), String> {
     lock(&state).mark_safety_note_seen()
@@ -414,7 +423,7 @@ fn start_watch(app: AppHandle, shared: Arc<Shared>) {
         if !enabled || now_millis() - last < WATCH_INTERVAL_MILLIS {
             continue;
         }
-        match run_check(&shared, false) {
+        match run_check(&shared, None) {
             Ok(result) => {
                 notify(&app, &result.alerts);
                 let _ = app.emit("check-finished", &result);
@@ -452,6 +461,7 @@ fn main() {
             let shared = Arc::new(Shared {
                 core: Mutex::new(core),
                 checking: AtomicBool::new(false),
+                cancel_deep: AtomicBool::new(false),
                 hidden_once: AtomicBool::new(false),
                 locked: AtomicBool::new(app_lock),
                 updating: AtomicBool::new(false),
@@ -473,7 +483,7 @@ fn main() {
                         let app = app.clone();
                         let shared = tray_shared.clone();
                         std::thread::spawn(move || {
-                            if let Ok(r) = run_check(&shared, false) {
+                            if let Ok(r) = run_check(&shared, None) {
                                 notify(&app, &r.alerts);
                                 let _ = app.emit("check-finished", &r);
                             }
@@ -532,6 +542,7 @@ fn main() {
             set_app_lock,
             set_discreet,
             check_now,
+            cancel_deep_check,
             answer,
             add_note,
             get_timeline,
@@ -543,9 +554,6 @@ fn main() {
             check_rule_updates,
             install_rules_from_file,
             set_auto_rule_updates,
-            check_message,
-            account_checkup,
-            account_checkup_report,
         ])
         .run(tauri::generate_context!())
         .expect("Phone Spy Guard failed to start");

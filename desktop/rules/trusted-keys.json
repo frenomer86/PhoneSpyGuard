@@ -2,16 +2,16 @@
   "threshold": 2,
   "keys": [
     {
-      "keyId": "build-a10f981b-1",
-      "publicKey": "MCowBQYDK2VwAyEAUWb9z37O7vex29FnLsdQCvyjhDSnk1g+T5xp+5zojMg="
+      "keyId": "build-f71609a3-1",
+      "publicKey": "MCowBQYDK2VwAyEA6Fpab7Eoqtaphn2aOviN4zYWeP1Ok2NWHdnaXFD0F08="
     },
     {
-      "keyId": "build-b90242da-2",
-      "publicKey": "MCowBQYDK2VwAyEAHms1TihXIKi+IKpUOF1etPUZWOnU62NSyIf3/PQOFW4="
+      "keyId": "build-e254460e-2",
+      "publicKey": "MCowBQYDK2VwAyEAsZ8RNbvbkC7fx8Z8abgJdnvMp/sSW7HFn0kz8HHmDIU="
     },
     {
-      "keyId": "build-bc17f3d0-3",
-      "publicKey": "MCowBQYDK2VwAyEA6U2TfX7lMCGBNgiOVbS7guHrTWKg+Wdy/BLij95qwtc="
+      "keyId": "build-fa79d3f7-3",
+      "publicKey": "MCowBQYDK2VwAyEAhNq7LTAg6eWZwGXTu/9vwSxsl+uotVslWNxvk1D3vwQ="
     }
   ]
 }

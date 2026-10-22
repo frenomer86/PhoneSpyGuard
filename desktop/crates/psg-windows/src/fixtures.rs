@@ -73,6 +73,7 @@ pub fn sample_inventory(now_millis: i64) -> RawInventory {
         ],
         autostarts: vec![
             AutostartEntry {
+                since_coverage: 0,
                 location: "run_key".into(),
                 place: "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run".into(),
                 name: "WindowsUpdateHelper".into(),
@@ -80,6 +81,7 @@ pub fn sample_inventory(now_millis: i64) -> RawInventory {
                 path: "C:\\Users\\owner\\AppData\\Roaming\\WinUpdate\\svchostw.exe".into(),
             },
             AutostartEntry {
+                since_coverage: 0,
                 location: "run_key".into(),
                 place: "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run".into(),
                 name: "OneDrive".into(),
@@ -87,6 +89,7 @@ pub fn sample_inventory(now_millis: i64) -> RawInventory {
                 path: "C:\\Program Files\\Microsoft OneDrive\\OneDrive.exe".into(),
             },
             AutostartEntry {
+                since_coverage: 0,
                 location: "scheduled_task".into(),
                 place: "\\Microsoft\\Windows\\SyncCheck".into(),
                 name: "SyncCheck".into(),
@@ -197,6 +200,17 @@ pub fn sample_inventory(now_millis: i64) -> RawInventory {
         },
         signatures,
         hashes: BTreeMap::new(),
+        dns_cache: Some(vec![
+            DnsRecord { name: "www.bbc.co.uk".into(), data: "151.101.0.81".into(), record_type: 1 },
+            DnsRecord { name: "outlook.office365.com".into(), data: "52.97.0.1".into(), record_type: 1 },
+        ]),
+        connections: Some(vec![NetConnection {
+            remote_address: "151.101.0.81".into(),
+            remote_port: 443,
+            state: "Established".into(),
+            pid: 4120,
+        }]),
+        apk_files: Vec::new(),
         gaps: vec![Gap {
             area: "Defender exclusions and WMI start-up triggers".into(),
             reason: "Windows only shows these to an administrator.".into(),

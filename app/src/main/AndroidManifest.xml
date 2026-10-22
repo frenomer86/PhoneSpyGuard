@@ -31,6 +31,13 @@
          it reveals only that some VPN is up, never its traffic. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Usage access: lets the owner opt in to the "sends data while your screen
+         is off" check (market-scan item 6). The owner grants it by hand in
+         Settings; until then the check is off. It reveals per-app data totals and
+         screen on/off times, never message or file contents. -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
     <!-- App lock before results/export are shown (NFR-SEC-06, review C4). -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
@@ -95,6 +102,22 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!--
+          Fast new-install check (market-scan item 5): a scan is triggered as
+          soon as an app is installed or replaced, instead of waiting for the
+          next 15-minute tick. The periodic watch remains the guaranteed path on
+          devices that throttle this broadcast.
+        -->
+        <receiver
+            android:name=".watch.PackageChangeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 

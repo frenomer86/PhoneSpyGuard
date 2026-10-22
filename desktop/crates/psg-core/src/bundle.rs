@@ -50,6 +50,9 @@ pub struct BundleLimits {
     pub max_condition_nodes: usize,
     pub max_depth: usize,
     pub max_indicators: usize,
+    /// Most list entries (names, hashes, domains, addresses...) across every
+    /// indicator together.
+    pub max_indicator_entries: usize,
     /// Most rule ids one INNOCENT rule may name in `explains`.
     pub max_explains: usize,
 }
@@ -57,18 +60,22 @@ pub struct BundleLimits {
 impl Default for BundleLimits {
     fn default() -> Self {
         Self {
-            max_bytes: 256 * 1024,
+            // Room for the full Echap stalkerware data (3,228 sample hashes,
+            // ~1,600 domains) with headroom; the updater caps downloads at 4 MiB.
+            max_bytes: 1024 * 1024,
             max_rules: 1024,
             max_condition_nodes: 256,
             max_depth: 16,
             max_indicators: 4096,
+            max_indicator_entries: 65_536,
             max_explains: 64,
         }
     }
 }
 
-/// One known product: monitoring software, a keylogger, a RAT, or a
-/// remote-access tool. Matching is by name token, publisher, or file hash.
+/// One known product: monitoring software, a keylogger, a RAT, a
+/// remote-access tool, or a stalkerware family. Matching is by name token,
+/// publisher, file hash, or the servers and websites it uses.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
 pub struct Indicator {
     pub id: String,
@@ -82,6 +89,13 @@ pub struct Indicator {
     pub sha256: Vec<String>,
     /// Lower-case Windows service names that mean unattended access.
     pub services: Vec<String>,
+    /// Lower-case host names of the product's servers (data upload and the
+    /// buyer's dashboard). A name matches itself and its sub-domains.
+    pub domains: Vec<String>,
+    /// Server addresses, in canonical text form.
+    pub ips: Vec<String>,
+    /// Lower-case host names of the websites that sell it.
+    pub websites: Vec<String>,
     /// Plain-language removal steps (FR-DSK-04).
     pub removal: String,
 }
@@ -93,6 +107,9 @@ pub struct Indicators {
     /// Parental-control and employee-monitoring products sold openly. On an
     /// adult's own PC they are a finding, not an explanation (review H5).
     pub oversight: Vec<Indicator>,
+    /// Stalkerware families from the Echap indicator set: phone spyware
+    /// matched on a PC by its servers, sales sites and installer hashes.
+    pub stalkerware: Vec<Indicator>,
 }
 
 /// Parses a rule bundle from JSON into typed, bounded rules.
@@ -264,13 +281,32 @@ impl RuleBundleParser {
         let monitoring = self.indicator_list(obj, "monitoring")?;
         let remote_access = self.indicator_list(obj, "remote_access")?;
         let oversight = self.indicator_list(obj, "oversight")?;
-        if monitoring.len() + remote_access.len() + oversight.len() > self.limits.max_indicators {
+        let stalkerware = self.indicator_list(obj, "stalkerware")?;
+        let all = || monitoring.iter().chain(&remote_access).chain(&oversight).chain(&stalkerware);
+        if all().count() > self.limits.max_indicators {
             return reject(format!(
                 "Bundle has more than {} indicators",
                 self.limits.max_indicators
             ));
         }
-        Ok(Indicators { monitoring, remote_access, oversight })
+        let entries: usize = all()
+            .map(|i| {
+                i.names.len()
+                    + i.publishers.len()
+                    + i.sha256.len()
+                    + i.services.len()
+                    + i.domains.len()
+                    + i.ips.len()
+                    + i.websites.len()
+            })
+            .sum();
+        if entries > self.limits.max_indicator_entries {
+            return reject(format!(
+                "Bundle has more than {} indicator entries",
+                self.limits.max_indicator_entries
+            ));
+        }
+        Ok(Indicators { monitoring, remote_access, oversight, stalkerware })
     }
 
     fn indicator_list(
@@ -299,18 +335,58 @@ impl RuleBundleParser {
                 let lower = |k: &str| -> Result<Vec<String>, BundleRejected> {
                     Ok(str_list(o, k)?.into_iter().map(|s| s.to_lowercase()).collect())
                 };
+                let checked = |k: &str, valid: fn(&str) -> Option<String>| -> Result<Vec<String>, BundleRejected> {
+                    lower(k)?
+                        .into_iter()
+                        .map(|v| {
+                            valid(&v).ok_or_else(|| BundleRejected(format!("Indicator {id} has an invalid '{k}' entry")))
+                        })
+                        .collect()
+                };
                 Ok(Indicator {
                     name: str_of(o, "name").unwrap_or_else(|| id.clone()),
                     names: lower("names")?,
                     publishers: lower("publishers")?,
-                    sha256: lower("sha256")?,
+                    sha256: checked("sha256", valid_sha256)?,
                     services: lower("services")?,
+                    domains: checked("domains", valid_host)?,
+                    ips: checked("ips", valid_ip)?,
+                    websites: checked("websites", valid_host)?,
                     removal: str_of(o, "removal").unwrap_or_default(),
                     id,
                 })
             })
             .collect()
     }
+}
+
+/// 64 hex digits.
+fn valid_sha256(s: &str) -> Option<String> {
+    (s.len() == 64 && s.bytes().all(|b| b.is_ascii_hexdigit())).then(|| s.to_string())
+}
+
+/// A DNS host name with at least two labels: letters, digits and hyphens,
+/// labels of 1-63 characters not starting or ending with a hyphen. A
+/// trailing dot is dropped.
+fn valid_host(s: &str) -> Option<String> {
+    let s = s.strip_suffix('.').unwrap_or(s);
+    let labels: Vec<&str> = s.split('.').collect();
+    let ok = s.len() <= 253
+        && labels.len() >= 2
+        && labels.iter().all(|l| {
+            !l.is_empty()
+                && l.len() <= 63
+                && !l.starts_with('-')
+                && !l.ends_with('-')
+                && l.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-')
+        });
+    ok.then(|| s.to_string())
+}
+
+/// An IPv4 or IPv6 address, rewritten in canonical form so lookups compare
+/// equal however the bundle spelled it.
+fn valid_ip(s: &str) -> Option<String> {
+    s.parse::<std::net::IpAddr>().ok().map(|ip| ip.to_string())
 }
 
 fn parse_leaf(node: &Map<String, Value>, rule_id: &str) -> Result<Condition, BundleRejected> {
