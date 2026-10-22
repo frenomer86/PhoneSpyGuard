@@ -1,0 +1,52 @@
+{
+  "description": "Canonical-content vectors for the evidence hash chain. entryHash = lower-hex SHA-256 of the canonical content (see core:evidence EvidenceLog.canonicalContent). Computed by an independent Python implementation; Kotlin and Rust must both reproduce them.",
+  "vectors": [
+    {
+      "seq": 0,
+      "timestampMillis": 1761126475000,
+      "type": "FINDING",
+      "summary": "Remote-access tool AnyDesk set for unattended access",
+      "details": {
+        "subject": "program:anydesk",
+        "confidence": "VERY_LIKELY",
+        "rules": "PSG-PC-RAT-002"
+      },
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "entryHash": "f8e83c276f68be86390d3b540481a29200a4603c89423ebd0bcb1202aaaf39cb"
+    },
+    {
+      "seq": 1,
+      "timestampMillis": 1761126476123,
+      "type": "CHANGE",
+      "summary": "New autostart entry; with = and ; and \\ inside\nsecond line",
+      "details": {
+        "path": "C:\\Users\\a\\AppData\\x.exe",
+        "k=1": "v;2",
+        "emoji😀": "z",
+        "Ａ": "fullwidth A sorts after astral in UTF-16"
+      },
+      "prevHash": "abababababababababababababababababababababababababababababababab",
+      "entryHash": "443e348fc4c43ddd17c866692685f195a3f1e99490b5cd401a8e0feb1bbe6e9e"
+    },
+    {
+      "seq": 7,
+      "timestampMillis": 0,
+      "type": "WATCH_GAP",
+      "summary": "",
+      "details": {},
+      "prevHash": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+      "entryHash": "9741c5639b222f599c6f364e574fc60ddc97b87b3a910be5f25abe09a1c1625d"
+    },
+    {
+      "seq": 2,
+      "timestampMillis": -5,
+      "type": "ANSWER",
+      "summary": "Ünïcødé — owner said: I did this",
+      "details": {
+        "answer": "i_did_this"
+      },
+      "prevHash": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef",
+      "entryHash": "34a5b0849d2025292871454f6b7ce883067da4a38d1eb99fd09c20668f29ce96"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[package]
+name = "psg-windows"
+description = "Phone Spy Guard Windows checks: collectors that turn the PC's state into facts, the change watch, and the scan pipeline."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+psg-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+
+[features]
+# The sample inventory the automated tests run on; never part of the app.
+fixtures = []
+
+[dev-dependencies]
+tempfile = "3"
+psg-windows = { path = ".", features = ["fixtures"] }

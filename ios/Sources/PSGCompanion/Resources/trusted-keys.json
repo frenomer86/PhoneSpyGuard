@@ -1,0 +1,18 @@
+{
+  "_note": "Single-use build keys from psg-ios-check sign-once on 2026-10-22: the private keys were made in memory, signed the bundled files and were destroyed, so nobody can sign anything else with them, including later updates. A store release replaces this file with the release keys from the key ceremony (desktop/rules/KEY-CEREMONY.md, psg-ios-check keygen/trust/sign); the release workflow refuses to publish while once- keys are here.",
+  "threshold": 2,
+  "keys": [
+    {
+      "keyId": "once-2026-10-22-1",
+      "publicKey": "MCowBQYDK2VwAyEAjXQuofE4r/mkWmlECmWXcsyg+SiDaJMXHMRKMMCsxew="
+    },
+    {
+      "keyId": "once-2026-10-22-2",
+      "publicKey": "MCowBQYDK2VwAyEARnNYkTsyel+dBSPluPhvDor2wB7adHRZxxSxupu3ypU="
+    },
+    {
+      "keyId": "once-2026-10-22-3",
+      "publicKey": "MCowBQYDK2VwAyEAPnNoc82ZFkYrRjErclpmu+a4r6OhHePxOOWvqyZCxPo="
+    }
+  ]
+}

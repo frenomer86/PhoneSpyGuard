@@ -1,0 +1,1092 @@
+{
+  "_note": "Independent evaluation set (security review M6). Known = real packages/certs sampled from the Echap stalkerware-indicators dataset. Renamed = a fresh package name signed with a real operator cert, to test that a renamed sample is still caught (C1). Behavioural = held-out samples with no known identity, caught by behaviour only. Legitimate = real top Play-store package names, independent of the indicator list. Assistive = screen readers and remote-support/password-manager tools. Facts are the raw device signals a collector reads; the harness applies the signed indicators and computes the surveillance-power count itself. NOTE: app facts are representative profiles, not a live device run \u2014 the thesis states this limit and reports every miss and false alarm.",
+  "fixtures": [
+    {
+      "name": "Known: Hoverwatch",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.android.core.monitor.debug",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: VIPTrack",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.mit.viptrackpro",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: Ahmyth",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "net.droid.talk218",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: SpyMug",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.service.mug",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: SpyphoneMobileTracker",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.phonetrackerofficial",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: Bulgok",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.bulgakov.controlphone",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: SpyLive360",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.sl360",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: AndroidLost",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.androidlost",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: WebWatcher",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.at.wwka",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: MeuSpy",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.app.com.app.com.app.aplintal",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: WtSpy",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.wwtspy",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: MobiStealth",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "stealthLight.sys",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: Mrecorder",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.mobileservices2.synchronization",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: TheOneSpy",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.android.services",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Known: TrackView",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "app.cybrook.trackvieo",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Renamed NetSpy (same signing key)",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.repackaged.4969",
+      "cert": "a4e169aaf0068a1fc5f7900b7f59a438b833364c",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Renamed Cocospy (same signing key)",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.repackaged.1958",
+      "cert": "8418703221a74c73405ad273c28cbc12444d7520",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Renamed Hoverwatch (same signing key)",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.repackaged.4277",
+      "cert": "0e0be37d31ca21f19095fc38f9f1bef310ce227c",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Renamed AbsoluTrack (same signing key)",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.repackaged.5062",
+      "cert": "8851279b5177ef52b0b8540ee1fced4babdfb318",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Renamed BrunoEspiao (same signing key)",
+      "label": "KNOWN_STALKERWARE",
+      "pkg": "com.repackaged.833",
+      "cert": "159b64b29bc8842acdf8022b70730b13e288044b",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Behavioural (held-out) com.unknownvendor.a",
+      "label": "BEHAVIOURAL_STALKERWARE",
+      "pkg": "com.unknownvendor.a",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Behavioural (held-out) com.unknownvendor.b",
+      "label": "BEHAVIOURAL_STALKERWARE",
+      "pkg": "com.unknownvendor.b",
+      "facts": {
+        "app.install_source": "sideload",
+        "app.accessibility_enabled": true,
+        "app.notification_access": true,
+        "app.has_launcher_icon": true
+      }
+    },
+    {
+      "name": "Behavioural (held-out) com.unknownvendor.c",
+      "label": "BEHAVIOURAL_STALKERWARE",
+      "pkg": "com.unknownvendor.c",
+      "facts": {
+        "app.install_source": "unknown",
+        "app.device_admin": true,
+        "app.notification_access": true,
+        "app.has_launcher_icon": true
+      }
+    },
+    {
+      "name": "Behavioural (held-out) com.unknownvendor.d",
+      "label": "BEHAVIOURAL_STALKERWARE",
+      "pkg": "com.unknownvendor.d",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.notification_access": true,
+        "app.install_source": "sideload"
+      }
+    },
+    {
+      "name": "Behavioural (held-out) com.unknownvendor.e",
+      "label": "BEHAVIOURAL_STALKERWARE",
+      "pkg": "com.unknownvendor.e",
+      "facts": {
+        "app.cert_changed_on_update": true,
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Behavioural (held-out) com.unknownvendor.f",
+      "label": "BEHAVIOURAL_STALKERWARE",
+      "pkg": "com.unknownvendor.f",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.uploads_screen_off": true,
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.whatsapp",
+      "label": "LEGITIMATE",
+      "pkg": "com.whatsapp",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.facebook.katana",
+      "label": "LEGITIMATE",
+      "pkg": "com.facebook.katana",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.instagram.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.instagram.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.spotify.music",
+      "label": "LEGITIMATE",
+      "pkg": "com.spotify.music",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.netflix.mediaclient",
+      "label": "LEGITIMATE",
+      "pkg": "com.netflix.mediaclient",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.youtube",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.youtube",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.gm",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.gm",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.android.chrome",
+      "label": "LEGITIMATE",
+      "pkg": "com.android.chrome",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.microsoft.office.outlook",
+      "label": "LEGITIMATE",
+      "pkg": "com.microsoft.office.outlook",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.microsoft.teams",
+      "label": "LEGITIMATE",
+      "pkg": "com.microsoft.teams",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.zhiliaoapp.musically",
+      "label": "LEGITIMATE",
+      "pkg": "com.zhiliaoapp.musically",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.snapchat.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.snapchat.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app org.telegram.messenger",
+      "label": "LEGITIMATE",
+      "pkg": "org.telegram.messenger",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.twitter.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.twitter.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.pinterest",
+      "label": "LEGITIMATE",
+      "pkg": "com.pinterest",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.linkedin.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.linkedin.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.reddit.frontpage",
+      "label": "LEGITIMATE",
+      "pkg": "com.reddit.frontpage",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.ubercab",
+      "label": "LEGITIMATE",
+      "pkg": "com.ubercab",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.apps.maps",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.apps.maps",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.waze",
+      "label": "LEGITIMATE",
+      "pkg": "com.waze",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.booking",
+      "label": "LEGITIMATE",
+      "pkg": "com.booking",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.airbnb.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.airbnb.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.amazon.mShop.android.shopping",
+      "label": "LEGITIMATE",
+      "pkg": "com.amazon.mShop.android.shopping",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.ebay.mobile",
+      "label": "LEGITIMATE",
+      "pkg": "com.ebay.mobile",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.paypal.android.p2pmobile",
+      "label": "LEGITIMATE",
+      "pkg": "com.paypal.android.p2pmobile",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.revolut.revolut",
+      "label": "LEGITIMATE",
+      "pkg": "com.revolut.revolut",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.squareup.cash",
+      "label": "LEGITIMATE",
+      "pkg": "com.squareup.cash",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.apps.photos",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.apps.photos",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.dropbox.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.dropbox.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.adobe.reader",
+      "label": "LEGITIMATE",
+      "pkg": "com.adobe.reader",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.king.candycrushsaga",
+      "label": "LEGITIMATE",
+      "pkg": "com.king.candycrushsaga",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.supercell.clashofclans",
+      "label": "LEGITIMATE",
+      "pkg": "com.supercell.clashofclans",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.mojang.minecraftpe",
+      "label": "LEGITIMATE",
+      "pkg": "com.mojang.minecraftpe",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.roblox.client",
+      "label": "LEGITIMATE",
+      "pkg": "com.roblox.client",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.discord",
+      "label": "LEGITIMATE",
+      "pkg": "com.discord",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.duolingo",
+      "label": "LEGITIMATE",
+      "pkg": "com.duolingo",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.nianticlabs.pokemongo",
+      "label": "LEGITIMATE",
+      "pkg": "com.nianticlabs.pokemongo",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.ss.android.ugc.trill",
+      "label": "LEGITIMATE",
+      "pkg": "com.ss.android.ugc.trill",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.shazam.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.shazam.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.soundcloud.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.soundcloud.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.spotify.lite",
+      "label": "LEGITIMATE",
+      "pkg": "com.spotify.lite",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.viber.voip",
+      "label": "LEGITIMATE",
+      "pkg": "com.viber.voip",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.skype.raider",
+      "label": "LEGITIMATE",
+      "pkg": "com.skype.raider",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app jp.naver.line.android",
+      "label": "LEGITIMATE",
+      "pkg": "jp.naver.line.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.apps.translate",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.apps.translate",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.calendar",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.calendar",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.keep",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.keep",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.todoist",
+      "label": "LEGITIMATE",
+      "pkg": "com.todoist",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.evernote",
+      "label": "LEGITIMATE",
+      "pkg": "com.evernote",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.notion.id",
+      "label": "LEGITIMATE",
+      "pkg": "com.notion.id",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.slack",
+      "label": "LEGITIMATE",
+      "pkg": "com.slack",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.zoom.videomeetings",
+      "label": "LEGITIMATE",
+      "pkg": "com.zoom.videomeetings",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app us.zoom.videomeetings",
+      "label": "LEGITIMATE",
+      "pkg": "us.zoom.videomeetings",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.canva.editor",
+      "label": "LEGITIMATE",
+      "pkg": "com.canva.editor",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.figma.mirror",
+      "label": "LEGITIMATE",
+      "pkg": "com.figma.mirror",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.strava",
+      "label": "LEGITIMATE",
+      "pkg": "com.strava",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.myfitnesspal.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.myfitnesspal.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.fitbit.FitbitMobile",
+      "label": "LEGITIMATE",
+      "pkg": "com.fitbit.FitbitMobile",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.apps.fitness",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.apps.fitness",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.headspace.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.headspace.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.calm.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.calm.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.audible.application",
+      "label": "LEGITIMATE",
+      "pkg": "com.audible.application",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.amazon.kindle",
+      "label": "LEGITIMATE",
+      "pkg": "com.amazon.kindle",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.wattpad",
+      "label": "LEGITIMATE",
+      "pkg": "com.wattpad",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.apps.docs",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.apps.docs",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.microsoft.office.word",
+      "label": "LEGITIMATE",
+      "pkg": "com.microsoft.office.word",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.microsoft.office.excel",
+      "label": "LEGITIMATE",
+      "pkg": "com.microsoft.office.excel",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.alibaba.aliexpresshd",
+      "label": "LEGITIMATE",
+      "pkg": "com.alibaba.aliexpresshd",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.einnovation.temu",
+      "label": "LEGITIMATE",
+      "pkg": "com.einnovation.temu",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.shein.sheinapp",
+      "label": "LEGITIMATE",
+      "pkg": "com.shein.sheinapp",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.contextlogic.wish",
+      "label": "LEGITIMATE",
+      "pkg": "com.contextlogic.wish",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.expedia.bookings",
+      "label": "LEGITIMATE",
+      "pkg": "com.expedia.bookings",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.tripadvisor.tripadvisor",
+      "label": "LEGITIMATE",
+      "pkg": "com.tripadvisor.tripadvisor",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.yelp.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.yelp.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.opentable",
+      "label": "LEGITIMATE",
+      "pkg": "com.opentable",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.deliveroo.orderapp",
+      "label": "LEGITIMATE",
+      "pkg": "com.deliveroo.orderapp",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.grubhub.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.grubhub.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.ubercab.eats",
+      "label": "LEGITIMATE",
+      "pkg": "com.ubercab.eats",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app org.mozilla.firefox",
+      "label": "LEGITIMATE",
+      "pkg": "org.mozilla.firefox",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.opera.browser",
+      "label": "LEGITIMATE",
+      "pkg": "com.opera.browser",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.brave.browser",
+      "label": "LEGITIMATE",
+      "pkg": "com.brave.browser",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.duckduckgo.mobile.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.duckduckgo.mobile.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.github.android",
+      "label": "LEGITIMATE",
+      "pkg": "com.github.android",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Play app com.google.android.apps.nbu.files",
+      "label": "LEGITIMATE",
+      "pkg": "com.google.android.apps.nbu.files",
+      "facts": {
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Legit edge com.watch.companion.plugin",
+      "label": "LEGITIMATE",
+      "pkg": "com.watch.companion.plugin",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.notification_access": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Legit edge com.android.systemui.helper",
+      "label": "LEGITIMATE",
+      "pkg": "com.android.systemui.helper",
+      "facts": {
+        "app.has_launcher_icon": false,
+        "app.notification_access": true,
+        "app.install_source": "system",
+        "app.is_system_app": true
+      }
+    },
+    {
+      "name": "Assistive com.google.android.marvin.talkback",
+      "label": "ASSISTIVE",
+      "pkg": "com.google.android.marvin.talkback",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "system",
+        "app.is_system_app": true
+      }
+    },
+    {
+      "name": "Assistive com.samsung.android.accessibility.talkback",
+      "label": "ASSISTIVE",
+      "pkg": "com.samsung.android.accessibility.talkback",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "system",
+        "app.is_system_app": true
+      }
+    },
+    {
+      "name": "Assistive com.google.android.apps.accessibility.voiceaccess",
+      "label": "ASSISTIVE",
+      "pkg": "com.google.android.apps.accessibility.voiceaccess",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Assistive com.teamviewer.quicksupport.market",
+      "label": "ASSISTIVE",
+      "pkg": "com.teamviewer.quicksupport.market",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Assistive com.anydesk.anydeskandroid",
+      "label": "ASSISTIVE",
+      "pkg": "com.anydesk.anydeskandroid",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    },
+    {
+      "name": "Assistive com.lastpass.lpandroid",
+      "label": "ASSISTIVE",
+      "pkg": "com.lastpass.lpandroid",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": true,
+        "app.install_source": "play"
+      }
+    }
+  ]
+}

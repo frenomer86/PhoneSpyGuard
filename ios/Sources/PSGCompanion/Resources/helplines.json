@@ -1,0 +1,65 @@
+{
+  "_note": "Safety helplines (FR-SAF-03). Only numbers verified against the services' own websites or dated public sources are listed; every entry must be re-checked each quarter, and countries added only after verification. INTL is shown when the owner's country has no entry. GH entries checked 2026-10-22: 0800 111 222 (Royal Danish Embassy in Ghana, 'Report domestic violence'), 191/18555/112 (Ghana Police Service, 3News, Jan 2020).",
+  "countries": [
+    {
+      "country": "GB",
+      "contacts": [
+        {
+          "name": "National Domestic Abuse Helpline (Refuge), 24 hours, free",
+          "number": "0808 2000 247",
+          "kind": "DOMESTIC_ABUSE"
+        }
+      ]
+    },
+    {
+      "country": "US",
+      "contacts": [
+        {
+          "name": "National Domestic Violence Hotline, 24 hours",
+          "number": "1-800-799-7233",
+          "kind": "DOMESTIC_ABUSE"
+        }
+      ]
+    },
+    {
+      "country": "AU",
+      "contacts": [
+        {
+          "name": "1800RESPECT, 24 hours",
+          "number": "1800 737 732",
+          "kind": "DOMESTIC_ABUSE"
+        }
+      ]
+    },
+    {
+      "country": "GH",
+      "contacts": [
+        {
+          "name": "Orange Support Centre: domestic and gender-based violence, free",
+          "number": "0800 111 222",
+          "kind": "DOMESTIC_ABUSE"
+        },
+        {
+          "name": "Police emergency (also 18555 and 112)",
+          "number": "191",
+          "kind": "EMERGENCY"
+        }
+      ]
+    },
+    {
+      "country": "INTL",
+      "contacts": [
+        {
+          "name": "Access Now Digital Security Helpline (for journalists, activists and anyone at risk of mercenary spyware)",
+          "number": "help@accessnow.org",
+          "kind": "EXPERT"
+        },
+        {
+          "name": "Coalition Against Stalkerware: find local help",
+          "number": "https://stopstalkerware.org",
+          "kind": "DOMESTIC_ABUSE"
+        }
+      ]
+    }
+  ]
+}

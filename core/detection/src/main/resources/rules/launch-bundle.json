@@ -1,0 +1,4934 @@
+{
+  "version": 2,
+  "expires": "2027-01-01T00:00:00Z",
+  "indicators": {
+    "_note": "Stalkerware: Echap/stalkerware-indicators (github.com/Te-k/stalkerware-indicators, ioc.yaml, fetched 2026-10-22) — 614 packages and 473 signing-cert SHA-1 fingerprints across 132 families; an app matches on package OR cert, so a renamed sample signed with the same key is still caught. Mercenary: Android app ids from MVT (mvt-project/mvt-indicators) RCS Lab Hermit, WyrmSpy/DragonEgg, Spyrtacus, Morpheus, ResidentBat and Cellebrite sets. Allow-lists (screen_readers/parental_control/known_good_keyboards) match by package and are honoured only for a system or store-installed app, or when a cert_sha1 is pinned (review N2), so a sideloaded impostor cannot borrow the name.",
+    "stalkerware": [
+      {
+        "package": "com.apspy.app",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.fone",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.guest",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.ispyoo",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.ispyoo.traceyou",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.mxspy",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.spyzee",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.systemservice",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.thetruth",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.ttsapp.catchcheating",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "31a6ececd97cf39bc4126b8745cd94a7c30bf81c",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "36e6671bc4397f475a350905d9a649a5ade97bb2",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "483716998f0c092fe82b0b12b1a4ba399d941318",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "4ff0174bedc1d16be55ac53b98599398ac461f82",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "56ef5244378fb6b4ef82d2b9e99bf41f7b97d93a",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "5d7b59f3afb74d86ccd56440f99ca2fc83a23f22",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "917bb5b2d40ec40018541784a06285de0f50f60f",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "b0f639b67819edbadc73b9feff2582fc58b8f115",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "b1336a5f3a017394186563e84ae0d2649fc1697d",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "cbda86758fbe8e5a6ab805f493aa151b1f2b95f4",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "d667a33203776f2285eba3e826cd286356ef05d0",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "ff8ccd9816b0524a58fbde1809fb227dbcdfd692",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "e6502d8a870c3f3910ea34f5b46d20d923047580",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "de648a3253c16692af71141c069d15c87c3e5495",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "f9181c6cf9aacb3ab1092f5338c3198a8d833431",
+        "name": "TheTruthSpy"
+      },
+      {
+        "cert_sha1": "5e3c376b52c672c81439358de6348f25f96eaaa4",
+        "name": "TheTruthSpy"
+      },
+      {
+        "package": "com.android.innovaspy",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.example.hellospy",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.googlesettings.setting",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.hellospy",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.hellospy.system",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.maxxspy",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.maxxspy.system",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.mobiispy",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.mobiispy.system",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.mrblue.setting",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.mrbluetooth.setting",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.mrtred.setred",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.prophoto.editor",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.topspy",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.topspy.system",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.virsys.tracker",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.wifiset.service",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.wifisettings.service",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "googlesettings.setting",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "1ebffd9fe9463b2ed24582d2846990a5abef79b9",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "656cd7890ed79ce8570d1b7156c31958d5ac1606",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "6b660eaaeba47793b7a1278d714669a6612bca5b",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "6eb49e72d6138b4210d1ca60247d419e5660315c",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "7afd651f96c7c938351396a53895c3c0704f6b96",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "7f5c0d54a813ba9b87a91420ca2c3de5e7948f09",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "a40d8fdc7953ad69d970ff00658eb0f58b3a052a",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "cd8f39daecc7793f33d8d847a598373b8f25a7b7",
+        "name": "HelloSpy"
+      },
+      {
+        "cert_sha1": "f6914f044b9385d6005dc9c50a9aecdc2349f413",
+        "name": "HelloSpy"
+      },
+      {
+        "package": "com.sa.app",
+        "name": "SpyAdvice"
+      },
+      {
+        "cert_sha1": "b374a75f87f992a6f57cf99a24197abceb17a1e7",
+        "name": "SpyAdvice"
+      },
+      {
+        "package": "com.brot.storage.work",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "com.cycle.start.mess",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "com.thecybernanny.andapp",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "net.androidcoreapp.androidbackup",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "net.delphiboardlayer.androidcoreapp",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "net.reptilicus.clientapp",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "net.system_updater_abs341",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "net.vkurhandler",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "se.vkur.clientapp",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "yc.sysupd.client",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "230e35a26e471352df5dbdbcf9834e0711500cb0",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "2c08279bcc8eb16b2b31acfbd7e1d4bb28e49a87",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "2fd8bef4081f126d4da655b40e9fc63f116dd857",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "9256e291823da741b64cb23f7e371d0940e5272e",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "9bd494107efed96f630d29d6e18ae4dcc47149e2",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "6d0ff787bf4534f1077d1e4bf2e18ba381d97061",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "d3a7e0e542a3e1112741806ac31f341c4200fba1",
+        "name": "Reptilicus"
+      },
+      {
+        "cert_sha1": "b61326887306e5a65726ae6bfd1d720d2760ceff",
+        "name": "Reptilicus"
+      },
+      {
+        "package": "com.retina.phonesheriff",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.retina21.ms41",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.retina22.ms6",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl22.retinaspy",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.retinasoft.ephonetracker",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl15.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl16.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl17.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl18.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl19.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl20.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.rspl21.nanny.android",
+        "name": "PhoneSheriff"
+      },
+      {
+        "cert_sha1": "f57cbb4cbb9834a14af675222ceca6a0d26d838e",
+        "name": "PhoneSheriff"
+      },
+      {
+        "cert_sha1": "f28f3a97d25e51ab266e56d3b80f04747d242e50",
+        "name": "PhoneSheriff"
+      },
+      {
+        "package": "com.ownspy.android",
+        "name": "OwnSpy"
+      },
+      {
+        "package": "org.system.kernel",
+        "name": "OwnSpy"
+      },
+      {
+        "cert_sha1": "ca5304e94f4bc97da9d147e76858dbf70ab8b4e6",
+        "name": "OwnSpy"
+      },
+      {
+        "cert_sha1": "14a071616d4bc37f08be865d375101f4c963777a",
+        "name": "OwnSpy"
+      },
+      {
+        "package": "com.aiyi.admin",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.cocospy",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.duiyun.cocospy",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.duiyun.cocospy.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.duiyun.fonemonitor",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.duiyun.spyine",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.duiyun.spyzie",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.duiyun.spyic",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.minspy.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.minspy.v3",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.cocospy.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.fonemonitor",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.fonemonitor.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.minspy.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.neatspy.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.safespy.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.safespy.v3",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.spyic.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.spyic.v3",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.spyier.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.spyine.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.spyzie.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.dy.spyzie.v4",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.sc.teensafe.v2",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.spyic",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.wb.production",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.ws.sc",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.ws.scli",
+        "name": "Cocospy"
+      },
+      {
+        "cert_sha1": "8418703221a74c73405ad273c28cbc12444d7520",
+        "name": "Cocospy"
+      },
+      {
+        "cert_sha1": "b4a1513c2c71f08d2ee763cd3fae585f71f268a9",
+        "name": "Cocospy"
+      },
+      {
+        "cert_sha1": "c377adff5df116ab7297d32850ade8a8fc3f8fb9",
+        "name": "Cocospy"
+      },
+      {
+        "cert_sha1": "cc866e79bdad431a2b1e07229b92e64808221610",
+        "name": "Cocospy"
+      },
+      {
+        "cert_sha1": "f25d72fccb84baf7f73467fc9571024b7e274ca3",
+        "name": "Cocospy"
+      },
+      {
+        "cert_sha1": "71be35691a181e1524ddf83f931fbc62dc4e7ec6",
+        "name": "Cocospy"
+      },
+      {
+        "package": "com.mit.viptrackpro",
+        "name": "VIPTrack"
+      },
+      {
+        "package": "com.mit.networkadapter",
+        "name": "VIPTrack"
+      },
+      {
+        "package": "com.tag.viptrack",
+        "name": "VIPTrack"
+      },
+      {
+        "cert_sha1": "2e104c33c8da4db32e59a45701d8e0c4cad16bd3",
+        "name": "VIPTrack"
+      },
+      {
+        "cert_sha1": "5a73c8fe7cba5c9e70b0df69b3a111c42a10b215",
+        "name": "VIPTrack"
+      },
+      {
+        "cert_sha1": "437940a417b58b1c2cdb85ede4d37c3de6efdc95",
+        "name": "VIPTrack"
+      },
+      {
+        "package": "app.EasyLogger",
+        "name": "EasyLogger"
+      },
+      {
+        "package": "app.Elogger",
+        "name": "EasyLogger"
+      },
+      {
+        "package": "app.childsafetytracker",
+        "name": "EasyLogger"
+      },
+      {
+        "package": "app.seniorsafety",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "07906d1fa933730b8eb44f03910c88fdac2c0135",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "24d3251c7a1184649211b9068820545397b112c9",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "35d7cf057bfa5023ce739a725ada0da1fd34d1ff",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "8698564fbec700167fcc53d1aed00ffadf6bed6c",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "8f23e1457adc6189f6ed504a60df8896fec6d970",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "d15a276f181c839e0390672a43065e8d97f140e9",
+        "name": "EasyLogger"
+      },
+      {
+        "cert_sha1": "53faddaf873b7bd00e5ad9f5f05e7888a398ce70",
+        "name": "EasyLogger"
+      },
+      {
+        "package": "com.android.core.monitor.debug",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.monitor.null",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.monitornull",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.monitor",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnt",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnta",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntah",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntb",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntd",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnte",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntf",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntg",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnth",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnti",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntj",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntk",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntl",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntm",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntn",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnto",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntp",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntq",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntr",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnts",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntt",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntu",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntv",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntw",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntx",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mnty",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "com.android.core.mntz",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "cmf0.c3b5bm90zq.patch",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "0e0be37d31ca21f19095fc38f9f1bef310ce227c",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "4f6ad2383dadaccf93ea5be4300571c315dbdf5b",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "5284272445ce993de601bb23cae6ba9e43e4589c",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "6144ed2e25b6f3a5fafcf914965ca071a685674b",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "64403a61f41848f987d6fd0be00392e9561a0ef7",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "afc457a96258490fbc284ee889634b5f3e325b8e",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "b6b58148f1b2198c94bde546fd2e0734ec7838d6",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "cc4a78dbe96ac1fa5977e03c97052a9a334113b4",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "e8ff1077d207e47ab4b53f275c437c0889579658",
+        "name": "Hoverwatch"
+      },
+      {
+        "cert_sha1": "f21ecafcff000686e8ec090f1ecdaece08798bff",
+        "name": "Hoverwatch"
+      },
+      {
+        "package": "pl.lidwin.letmespy",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.letmespy2",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.letmespy3",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.letmespy4",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.letmespy5",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.lms",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.remote",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.remote1",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.lidwin.remote2",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "pl.radeal.lms4",
+        "name": "LetMeSpy"
+      },
+      {
+        "cert_sha1": "340e571cb1a64e6ee384d3f8a544681459cf3f5f",
+        "name": "LetMeSpy"
+      },
+      {
+        "cert_sha1": "69ee83cb3e0968b49e33849d40f7d91b0592c7db",
+        "name": "LetMeSpy"
+      },
+      {
+        "cert_sha1": "8f0ead4f1da5daaf8c0f7a51096ceceef81d0c76",
+        "name": "LetMeSpy"
+      },
+      {
+        "cert_sha1": "ef6bc4c13fe455cd98192e56d96317069bdf7658",
+        "name": "LetMeSpy"
+      },
+      {
+        "package": "com.android.core.mngi",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngj",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngk",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngl",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngn",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngo",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngp",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngq",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngr",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngs",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngt",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngu",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngv",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngw",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngx",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngy",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.android.core.mngz",
+        "name": "Snoopza"
+      },
+      {
+        "cert_sha1": "240e97a0587bf99441787ea3bcb2b2d8827564fe",
+        "name": "Snoopza"
+      },
+      {
+        "cert_sha1": "854f7978408ea58c5b792c1c1ef9733fc2d5e813",
+        "name": "Snoopza"
+      },
+      {
+        "cert_sha1": "1988edea389d42983cec8b5f8a9c27ae49f800f9",
+        "name": "Snoopza"
+      },
+      {
+        "cert_sha1": "5e16ba998632c1c3e4d4ae707d6ee2454ed2aeb5",
+        "name": "Snoopza"
+      },
+      {
+        "cert_sha1": "e023517b163aaae209cbd97e312752960f575d38",
+        "name": "Snoopza"
+      },
+      {
+        "package": "com.app.audiorec",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.app.call_rec_hidden",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.app.keylogger",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.app.spy_call_recorder",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.app.recorder",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.app.videorec",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.apps.anti_theft",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.apps.rct.CellTrackerActivity",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.dev4playapps.whatsdeleted",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.gcm_call_sms_tracker",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.gcm_call_sms_tracker.updated",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.gcm_call_tracker",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.gcm_celltracker",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.local_cell_tracker",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.local_cell_tracker_updated",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.soh",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.trackerapps.whatsaptracker",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.trackmyphone_pro",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.trackmyphones.livefamilytracker",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.trackmyphones.recoverphoneusingchatmessages",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.trackmyphones.tmpusingchatmessages",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "37ace0321e8833f25bddb363ab395c81354e88a0",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "554137dee63be07ce9687c5886244954277227f5",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "68ac78a7cd660ed204b4bc3c73a3f91da1ae45fc",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "6db1f33668aa745163dfb6c5614c3800bca8d693",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "849d181e1bee5084cbe1bacba8442996a8b1f8c6",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "87ef370b8d6e3089e7f8cddd6e830b5e4c8cf60b",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "a93266e83b136cbc220062898d308213263e793a",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "b7285348b05edaeff7f032384e4f90182e1c1f27",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "ebd3713dfb02d79adc90c88de1e0b547882f5a42",
+        "name": "TrackMyPhones"
+      },
+      {
+        "cert_sha1": "f5a5336b28456208ef357b4630a93a91206cf21a",
+        "name": "TrackMyPhones"
+      },
+      {
+        "package": "com.vvt.android.syncmanager",
+        "name": "FlexiSpy"
+      },
+      {
+        "package": "com.telephony.android",
+        "name": "FlexiSpy"
+      },
+      {
+        "package": "com.fp.backup",
+        "name": "FlexiSpy"
+      },
+      {
+        "package": "com.android.phone.dialer",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "69b327860edb531ddffb1b5dbf0c24245a75f3e4",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "93385a087bb5cab96eae83a1af874e0e39b2990f",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "20c940625b322c487a89b1febf6c090845b040c1",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "984f8786102d9bf26e5244bbc93733d3609948f4",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "45decbf059864164a4bc644d3eab8127fc98238a",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "0b6c1b010fbea4316eb01602f71cdd6a8f365023",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "636f6fe622d3059b569c9989f3cd491607f23a5d",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "284e4af2e92e8e49edc2c8792d7008759813cb68",
+        "name": "FlexiSpy"
+      },
+      {
+        "cert_sha1": "f6422b9d4dd3c7370e3ed2879ea4dc8f463cd2a2",
+        "name": "FlexiSpy"
+      },
+      {
+        "package": "com.lsdroid.cerberuss",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.cerberus.persona",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.cerberus.persona2",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.cerberus.kids",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.cerberus.client",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.cerberus",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.surebrec",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.ssurebrec",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.cerberus.enterprise",
+        "name": "Cerberus"
+      },
+      {
+        "package": "com.lsdroid.lsp",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "bc693b48b7ec988e275cf9e1cdaa1447a31717d9",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "724c6500f11737c12c0b89185a60427989656697",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "69c28343a4d0f2156d7b56ae4616e1386173a047",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "f2633353631ee72f7b7a7b946fabe1ef0a339041",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "b4ed5fa9e2a9176da53324717a9b10f57191859c",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "409b589fdeae073a94d609e2b41a6c0ea952b35a",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "c87a87f7f5ede2d279dda0ccde55e6ab85549d70",
+        "name": "Cerberus"
+      },
+      {
+        "cert_sha1": "52b12772c6558d6a44a2daf9e18ffae48c577ca7",
+        "name": "Cerberus"
+      },
+      {
+        "package": "android.helper.system",
+        "name": "mSpy"
+      },
+      {
+        "package": "android.sys.process",
+        "name": "mSpy"
+      },
+      {
+        "package": "com.android.keyboardhelper",
+        "name": "mSpy"
+      },
+      {
+        "package": "com.mspy.lite",
+        "name": "mSpy"
+      },
+      {
+        "package": "core.framework",
+        "name": "mSpy"
+      },
+      {
+        "package": "com.eyezy.android",
+        "name": "mSpy"
+      },
+      {
+        "package": "core.update.framework",
+        "name": "mSpy"
+      },
+      {
+        "package": "med.mspy.mspy",
+        "name": "mSpy"
+      },
+      {
+        "package": "system.framework",
+        "name": "mSpy"
+      },
+      {
+        "package": "update.service.android",
+        "name": "mSpy"
+      },
+      {
+        "package": "update.service.android.installer",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "021985cea754d8e58d538d2fedff6b1565a6b45b",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "3930b621f30d13d24692cbbbbc67c59f92f1c9bd",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "5eec898f0dbbd70a9b33dd16ee5ff06b6de26ea6",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "7ffe6da96346fee822e1f791176cd6970a1dc770",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "3e1a6646c93a7423a25104a88da5bece2f35eff0",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "cb28adfd818fbffdf5542f2efc5140d596ee957e",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "fe821a533bdc31822d9eb5f98243eb16917c8ee7",
+        "name": "mSpy"
+      },
+      {
+        "cert_sha1": "1ecc7f67bbd1bfab97addcb05a496bca7b6b135f",
+        "name": "mSpy"
+      },
+      {
+        "package": "com.app.com.app.com.app.aplintal",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "com.app.insapp2",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "com.meuspy",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.cloud.aplicativo",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.cloud.backup",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.daggers.gameap",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.daggers.toshtec",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.phonecell.cloud1",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.phonecell.go5ge",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.phonecell.maps",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.phonecell.radio",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.phonecell.services",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.sistema.aplicativo",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.monsthers.gameap",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "in.servidor.service",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.galaxys.gameap",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.gamelevel.playstart",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.gamelevel.cloudv3",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "com.tutorial.instalao",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "com.aisistem.instalao",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "br.com.appfornecedor.legal",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "77e86a5c583256b5a52a5aeeb70542cd1be34a99",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "3e929db5941c185ea4fac2b0d7ba7589d40a379e",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "b8ca103d22c39282d7a1e8028d93333e481cca83",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "018d06b4a5679892572cb9da44ba1a8c1e3b68a5",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "b0a100360b029e0b2105f60e2c8eeb9053998a7e",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "e0e02ad30f042e096a7a5654217b846ea08c02d1",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "493812991a9a1cc7beefd45f2180cd2fc0af8913",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "35b05acc96d02849e20d9ed3ba9cea41c2b83ffa",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "6c0b8cf7f47db7a82a2c06d410690935fdd912df",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "18c94fab82f77f89546600f84d2d2b48a0c0b927",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "0af3219d3a9525cb4a618215db7a29cbfd9ffe78",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "6b1dc3eae0e8c59e7769a6e0a1baa1938620a191",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "8508603ae680c3bcde91e6f909bf400f6dc878b4",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "dd34b4e5125f07ba50738192fbe7b745785fc15a",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "af113d18054a6b8de74644bce3f0ae41206b16ac",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "a7e75010b3709d54d52cce914af06946744f5f67",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "53486b8f8790d1848e0842f37b5c6dfa15cd3ebb",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "114c4dc0f254efd81f0ac7f41dbe882ffdb2e127",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "50cadba5487e7c00d67c8ff0d3a952d7b62bee9a",
+        "name": "MeuSpy"
+      },
+      {
+        "cert_sha1": "b9f546776987f0f2ff893325d2ccdf7f62f0d56e",
+        "name": "MeuSpy"
+      },
+      {
+        "package": "com.atracker.app",
+        "name": "AppSpy"
+      },
+      {
+        "package": "com.agpstracker.app",
+        "name": "AppSpy"
+      },
+      {
+        "package": "com.aphonetracker.app",
+        "name": "AppSpy"
+      },
+      {
+        "package": "com.afreesmstracker.app",
+        "name": "AppSpy"
+      },
+      {
+        "package": "com.mobilefindfree",
+        "name": "AppSpy"
+      },
+      {
+        "cert_sha1": "07525d7d2e83ce865f98e1b9c0f6095b1c29d48a",
+        "name": "AppSpy"
+      },
+      {
+        "cert_sha1": "0ad33649f0d0532b5eb0a36a81712962aa79bf54",
+        "name": "AppSpy"
+      },
+      {
+        "cert_sha1": "492ff617a79f6c8d80b453815cfe6586e21c5f72",
+        "name": "AppSpy"
+      },
+      {
+        "cert_sha1": "9e09874197988f20db51eb6a34bfd908ac42c35b",
+        "name": "AppSpy"
+      },
+      {
+        "cert_sha1": "d98c69b50c1092fe21f7cf748dc8b2f91be56b64",
+        "name": "AppSpy"
+      },
+      {
+        "cert_sha1": "fb926cf2937331bb8a46e2c5280233c04da2342e",
+        "name": "AppSpy"
+      },
+      {
+        "package": "a.tck.lvmchi",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.androdid.inteernet.aa21111227",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.jyotin.ct",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.lrvciyti.unrxnfig",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.m.service.control",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mob.service.control",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mobile.gps",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mobile.loc",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mobiletracker",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mobiletrackerfree.secondapp",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mobiletrackerfree.www",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mtf.d",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.netowrk.service",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.services.phone",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "g.google.llc",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.mob.control",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.mob.service2020",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.phone.control2020",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.protect.children",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.protect.parental",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.secu.children",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "m.security.parental",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mob.protect.children",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mob.service.parental2020",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.controlparental2020",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.monitor.child2021",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.monitor.child2022",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.monitor.child2023",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.monitor.child2034",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.parental2021",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.protect.children",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "mobile.protect.children2020",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "security.mobile.parental",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "service.download.app",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "tracker.mob.gps",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "yogaworkouts.dailyyoga.yogafitness",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.get.mtf",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.mtf.download",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.protect.download",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "021a3f097eda780798df5ecb16ef338c08236847",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "0568e0400308cbfc58e11a324ea233f5b2e923bf",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "09dcbfdb7c7262f143089c5493435ab07564fd67",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "0fb6108d34289681ba0181ed9a4350514eb07665",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "1128939e0d8b8baeab14c41aebfaa100c319ad8f",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "16254e7cbdfec82b6cce599dfce6a6e84cf25504",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "29fffe437675d2b55512953759c40776e547592d",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "2f033070a8cd93ceac60f9e203ba33c9a9a3d226",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "35cd797d1736484786152a231920575fabc5c12a",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "377223c40330f7925bb238e3a2ac6e1be1a05749",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "3935e474cd6edacb19f24192809b337d376656f6",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "457d2470ca3e635178d224c14c0d743b7c7f9f80",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "57178ba7be0677c3143c24362fd35a9cf0e311a8",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "575a730bc2411897a318deb23b3c3cc4f63422f5",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "5f43a60bfc663fb37f419a40015495431649310b",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "6000c3f6a35c81c0ae6aca73dbf7b7d19dcdb7bc",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "6f1ce95315749ac6f377b310c0b831cf05b04c68",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "845705fb0fe177970768ce3f5241aebd99f3beee",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "85f12b25ceb58b8376f83209d8d128841132dc51",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "8a718113c6ede9473fe4bf1f29e2e807b7eb7b56",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "8a92a4f6f9fc52bc8788f17704944614c744716c",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "8b9540311c46184984b48bf9cb51f1742a8afb42",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "8ced75e875a2f11b3327a73a6dbd0b25e26533f2",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "9225c8fd380154467908ae344fbe75ce7ef996b8",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "927ca44949d7788aa86f9d7f04d7fdacecd1dfb9",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "9442f1d40fbaad7053d130986c4487d0ba5c079f",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "a75b340a58545b28b7e837582259c1cc2ce21512",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "b0b09157dc34e3d20df6a92eba0014d36a27c451",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "b7322b2126b2c4f4ded940d719fe1e63fd233d35",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "b8d8c25b1cfe2829d397c8fb166895a6791a43d5",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "c656605bdb536b842319ac008fbb249d8b0a7422",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "cb6e6deb296275edf70dc71a62a75ab7b9c8db89",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "cd5724426b602c1cd0bf3bd65ef75b9021c0ec3a",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "ce3bb9701274c15d26a92c1d7d34110961eb73f1",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "d244aa1dd3d4296ce875eda2e1b0332459f7dace",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "d943998aec15b3d70da3bf00ff7bf580a41f6e4b",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "ddcf7f1032e7d9da4e3d245a5145363f69f9c393",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "e8395be2a32b62c1ba21e37663e3bf1583e00faa",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "fb2eea183c183b486b3001ec5fc4e8c906593356",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "09273a6004a46078991f3fba2a4868da26dbb508",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "2a84b79a7e17e1f49642e8d5ea9828cfea763e8c",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "a4817668612688754b4905c44ab9f70c58c25cb2",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "cert_sha1": "1ce722f401c3fa8fe498ff824669c0007a200aa9",
+        "name": "MobileTrackerFree"
+      },
+      {
+        "package": "com.android.internet.a20200817",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.android.internet.a20210916",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.android.internet.a20220729",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.android.internet.a20220829",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.android.internet.a20220914",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.sec.android.internet.im.service.im20190118",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.sec.android.internet.im.service.im20190419",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.sec.android.internet.im.service.im20210815",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "c1d83f5ffe3ec319ff103ec7346cddf218b5634d",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "4dad108f915e237ca2834fac70c077ad8105e804",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "b8f5fdfae5920c4cfb6ace214d39327f299fa76d",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "9284cb43b87e9f9c77da509f1672e884bd6ca876",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "786325ab3e614f868ca2a7f2f0e75ec76a047311",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "f747f0bbef33ffee6afc4e7cfa03b28215985f24",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "0c422f0025f866c311df61a7549fcd519683898d",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "98ed5841256a44fb1525fe154c0516aced82fff3",
+        "name": "iKeyMonitor"
+      },
+      {
+        "cert_sha1": "acb2ca50376456fd81b5c6c19cf6d717cfbb888b",
+        "name": "iKeyMonitor"
+      },
+      {
+        "package": "com.panspy.android",
+        "name": "PanSpy"
+      },
+      {
+        "cert_sha1": "ccd5678ff73d6ecf4e74317166422afe67d77406",
+        "name": "PanSpy"
+      },
+      {
+        "package": "com.androidlost",
+        "name": "AndroidLost"
+      },
+      {
+        "package": "com.androidlost.smshandler",
+        "name": "AndroidLost"
+      },
+      {
+        "cert_sha1": "9eece9b4ecf4dc0c5981feacfb271e1c0a2967ff",
+        "name": "AndroidLost"
+      },
+      {
+        "package": "com.metasploit.stage",
+        "name": "Metasploit"
+      },
+      {
+        "package": "net.spy24.wifi",
+        "name": "Spy24"
+      },
+      {
+        "package": "com.example.openanotherapp",
+        "name": "Spy24"
+      },
+      {
+        "package": "ir.spy24.updater",
+        "name": "Spy24"
+      },
+      {
+        "package": "ir.spy24.wifi",
+        "name": "Spy24"
+      },
+      {
+        "package": "app.spy24.systemwifi",
+        "name": "Spy24"
+      },
+      {
+        "package": "app.spy24.spy24installer",
+        "name": "Spy24"
+      },
+      {
+        "cert_sha1": "79c395148c34f0826e04b37a6632a53a7977a1aa",
+        "name": "Spy24"
+      },
+      {
+        "cert_sha1": "f5c25a3b800311e8053295676adb112753e03f0b",
+        "name": "Spy24"
+      },
+      {
+        "package": "wosc.cwf",
+        "name": "CatWatchful"
+      },
+      {
+        "package": "wosc.cwf2",
+        "name": "CatWatchful"
+      },
+      {
+        "package": "com.example.wosc.androidclient",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "5037e917539b4f31e0b92ebb7a9089c5dc567518",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "68e4a16fd2b8d41e817cc5a06ba95b9ced9bd9f9",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "757db1c635344324b665baf056dc3e4b1d0cc39b",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "783b1880ecdc5e75620a4c484e3bdbe08d6d4397",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "8e352f2ee18054df97c238915c0375aa13305dec",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "92df71db15beeab77df36fd879a89e5e0def4617",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "93135aba6ff4b6cfe9b06153b9bdf769aebc1d87",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "9fe876af76cdcb685102a38528a3a732b0872dc6",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "b927daca3bb3876523e2e8b1bdb56ce84b0dfff7",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "f18b3369f152ec3c74ec884be977b3ca0e0c996d",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "523c42bf2f6cbafc78be41043e8e3e3bb311cba2",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "77032e80cc0ecee49b8f2f58f9999330026e0db3",
+        "name": "CatWatchful"
+      },
+      {
+        "cert_sha1": "7688ea09ee353ed077e0a90d401881b63f115a3f",
+        "name": "CatWatchful"
+      },
+      {
+        "package": "org.secure.smsgps",
+        "name": "HighsterMobile"
+      },
+      {
+        "package": "com.autoforward.monitor",
+        "name": "HighsterMobile"
+      },
+      {
+        "package": "com.phonespector.app",
+        "name": "HighsterMobile"
+      },
+      {
+        "package": "com.ddiutilities.monitor",
+        "name": "HighsterMobile"
+      },
+      {
+        "cert_sha1": "683722a1c629ad5734b93e08adfaa61775ad196f",
+        "name": "HighsterMobile"
+      },
+      {
+        "cert_sha1": "48a2190050b80f31e1e3ccfaf9909fad238d9849",
+        "name": "HighsterMobile"
+      },
+      {
+        "package": "com.imonitor.ainfo",
+        "name": "iMonitorSpy"
+      },
+      {
+        "package": "inc.imonitor",
+        "name": "iMonitorSpy"
+      },
+      {
+        "cert_sha1": "3ea68714ae224b0c0eeed64a14b11d3983c3d6f8",
+        "name": "iMonitorSpy"
+      },
+      {
+        "cert_sha1": "bfc4c15e35e3506095b42e2b428e4016b1ffa1ab",
+        "name": "iMonitorSpy"
+      },
+      {
+        "cert_sha1": "5c5ef3dfe98b02251a6ec82609f22a092562afee",
+        "name": "iMonitorSpy"
+      },
+      {
+        "package": "org.poleward.burghs.hydrotherapy.homonymously",
+        "name": "MobileTool"
+      },
+      {
+        "package": "org.urates.amirates.suffocate.chiliast",
+        "name": "MobileTool"
+      },
+      {
+        "package": "org.connecting.updived.hygeist.interplays",
+        "name": "MobileTool"
+      },
+      {
+        "cert_sha1": "3e9b3e5190f64ba9a952b7f57942aa21ffda50ba",
+        "name": "MobileTool"
+      },
+      {
+        "cert_sha1": "7f11358ac560c5e90b735a21b907f1c8143353df",
+        "name": "MobileTool"
+      },
+      {
+        "package": "com.runaki.synclogs",
+        "name": "ShadowSpy"
+      },
+      {
+        "package": "com.client.requestlogs",
+        "name": "ShadowSpy"
+      },
+      {
+        "package": "com.shadow.client.android",
+        "name": "ShadowSpy"
+      },
+      {
+        "cert_sha1": "fe7626a8d3c38fd78ea2a729b39b943ba814f014",
+        "name": "ShadowSpy"
+      },
+      {
+        "cert_sha1": "01e49c220a9776d4978c1d28d6c32f86d145b8ae",
+        "name": "ShadowSpy"
+      },
+      {
+        "cert_sha1": "ad231a7cd57e2cef8162f4d341c3573de2b8f443",
+        "name": "ShadowSpy"
+      },
+      {
+        "package": "com.cldprotect",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "m.mobile.control",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "com.saxfamqvxj",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "com.safesecureservice",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "com.myappspqwddeexo",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "com.yurpdpvxnybmlgh",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "com.spyhumanrev",
+        "name": "SpyHuman"
+      },
+      {
+        "cert_sha1": "76f6c302533751bed738d40882ac219baad65e7b",
+        "name": "SpyHuman"
+      },
+      {
+        "cert_sha1": "f9265164219a1c5dee4a76d66bea0c35a1fd6032",
+        "name": "SpyHuman"
+      },
+      {
+        "cert_sha1": "597c0169d8c27de7c6b62c2c252f9ecac0e562c4",
+        "name": "SpyHuman"
+      },
+      {
+        "cert_sha1": "e2ac495c52b9fbd49b83cfae0c167878a2f796a5",
+        "name": "SpyHuman"
+      },
+      {
+        "cert_sha1": "e169250b134e5c46c3064f166e457cdbfcc16524",
+        "name": "SpyHuman"
+      },
+      {
+        "cert_sha1": "c270531a6d75eb4ea2aa0f4d6df2980afb494cb3",
+        "name": "SpyHuman"
+      },
+      {
+        "package": "com.tuner.funnelwebview",
+        "name": "uMobix"
+      },
+      {
+        "package": "com.system.user",
+        "name": "uMobix"
+      },
+      {
+        "package": "com.play.services",
+        "name": "uMobix"
+      },
+      {
+        "cert_sha1": "575f8e8a04a5967e78bc5b5a3e31fdacf42f4fb1",
+        "name": "uMobix"
+      },
+      {
+        "cert_sha1": "6696449aa96eba57cdf4707f0f84274958be4523",
+        "name": "uMobix"
+      },
+      {
+        "cert_sha1": "f4e6da34f0071aeb70010ebb69875e5212d69140",
+        "name": "uMobix"
+      },
+      {
+        "package": "com.ant.spymie.keylogger",
+        "name": "Spymie"
+      },
+      {
+        "cert_sha1": "05b23c7e9156a4c55768da27936ff2d7af09bb8f",
+        "name": "Spymie"
+      },
+      {
+        "package": "com.android.services",
+        "name": "TheOneSpy"
+      },
+      {
+        "package": "com.android.omg",
+        "name": "TheOneSpy"
+      },
+      {
+        "cert_sha1": "d46492f02f25877e9f5d6cffa4ce99dac64d981a",
+        "name": "TheOneSpy"
+      },
+      {
+        "cert_sha1": "9de8d6c6757152ec819c1a09f5665b77f72493a2",
+        "name": "TheOneSpy"
+      },
+      {
+        "cert_sha1": "b6d2d36c75931cca18538b79c5de3a04ef4af777",
+        "name": "TheOneSpy"
+      },
+      {
+        "package": "com.kids.pro",
+        "name": "ClevGuard"
+      },
+      {
+        "package": "com.kids.whatsapp",
+        "name": "ClevGuard"
+      },
+      {
+        "cert_sha1": "cce55d4c3e844e8a7542036d40bfbb4aa98b89d7",
+        "name": "ClevGuard"
+      },
+      {
+        "cert_sha1": "e48c6714dbfd2ab6e5cf85c87efd05bd8e11e6fb",
+        "name": "ClevGuard"
+      },
+      {
+        "package": "com.spappm_mondow.alarm",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "package": "com.monspap.alarm",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "package": "com.aleghe.hatra",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "package": "com.snapchat.trmonap",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "package": "com.snapch.monabcab",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "cert_sha1": "4a3742e0c96afb91954d613aaa637076750e5a0b",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "cert_sha1": "fc5a4ad10f0686aa8eae2c08ba13cc451cbd6037",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "cert_sha1": "892c4f172ad3262ec398b40bbf8130c6421040a1",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "cert_sha1": "86238ec6df27dd0886b701d73397e2da99c74066",
+        "name": "EasyPhoneTrack"
+      },
+      {
+        "package": "com.pt.bark",
+        "name": "bark"
+      },
+      {
+        "cert_sha1": "473f919a69bbad3457af2f0e3afc34e513f103f1",
+        "name": "bark"
+      },
+      {
+        "package": "com.sl360",
+        "name": "SpyLive360"
+      },
+      {
+        "package": "com.itqredn8dzrl",
+        "name": "SpyLive360"
+      },
+      {
+        "package": "com.wifi0",
+        "name": "SpyLive360"
+      },
+      {
+        "package": "com.w0f0",
+        "name": "SpyLive360"
+      },
+      {
+        "package": "com.w1f1",
+        "name": "SpyLive360"
+      },
+      {
+        "cert_sha1": "73bf44a503427f7682c7136b109631e3be4114de",
+        "name": "SpyLive360"
+      },
+      {
+        "cert_sha1": "630bb83172b184a6571126229e2b2dca2eb4123f",
+        "name": "SpyLive360"
+      },
+      {
+        "package": "com.system.task",
+        "name": "XNSpy"
+      },
+      {
+        "package": "com.map.system",
+        "name": "XNSpy"
+      },
+      {
+        "package": "com.xnspy.dashboard",
+        "name": "XNSpy"
+      },
+      {
+        "cert_sha1": "c276c3b087207c9d3ceeda766c01e0bdef7eac71",
+        "name": "XNSpy"
+      },
+      {
+        "package": "com.psac.a.processservice",
+        "name": "MobiSpy"
+      },
+      {
+        "cert_sha1": "b5075ab201ee483c8ecade1bc4fc711293d6932b",
+        "name": "MobiSpy"
+      },
+      {
+        "package": "ns.antapp.module",
+        "name": "NeoSpy"
+      },
+      {
+        "package": "com.nsmon.guard",
+        "name": "NeoSpy"
+      },
+      {
+        "cert_sha1": "9ed8dd944d3eb545e1eeeeec1d8174772cf37c07",
+        "name": "NeoSpy"
+      },
+      {
+        "package": "city.russ.alltrackercorp",
+        "name": "AllTracker"
+      },
+      {
+        "package": "city.russ.alltrackerfamily",
+        "name": "AllTracker"
+      },
+      {
+        "package": "city.russ.alltrackerinstaller",
+        "name": "AllTracker"
+      },
+      {
+        "package": "org.alltracker.security",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "219d2d7fec2b2da6e25693a75fc15d2c6f4f6e67",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "43d45ce7bee36e449434c14973b7d285209414c7",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "6c4e74fd002aec131f8d05852566055c349e0a54",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "b6a744b0e8ae049ac0c20402ebc137b1192699a9",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "f1912cee4b5d6c1ea4070b53b440e2f660ffcbbd",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "f7871f09d6e58b9bea5913fb2fa879e5427725e3",
+        "name": "AllTracker"
+      },
+      {
+        "cert_sha1": "6ef8c27ebcf808ffa377a391db9892b997af16c9",
+        "name": "AllTracker"
+      },
+      {
+        "package": "com.spapptrakapp.alarm",
+        "name": "SpyPhoneApp"
+      },
+      {
+        "package": "com.spatrakappp.alarm",
+        "name": "SpyPhoneApp"
+      },
+      {
+        "cert_sha1": "8c017fdb2a81807ec879a8e30f4ab05d5ca02034",
+        "name": "SpyPhoneApp"
+      },
+      {
+        "cert_sha1": "9477420001bc79500623374ec586b054aac97bf9",
+        "name": "SpyPhoneApp"
+      },
+      {
+        "cert_sha1": "26af8554ee338d6969fac51bf4dac3186098056e",
+        "name": "SpyPhoneApp"
+      },
+      {
+        "package": "com.ibm.fb",
+        "name": "AndroidMonitor"
+      },
+      {
+        "cert_sha1": "92ebdb7d7c18a34705a6918b5f327ddb0e8c8452",
+        "name": "AndroidMonitor"
+      },
+      {
+        "cert_sha1": "558765849658a3821fe4054ed2c1ff6e28b4b8a0",
+        "name": "AndroidMonitor"
+      },
+      {
+        "package": "tech.logsettings",
+        "name": "TalkLog"
+      },
+      {
+        "package": "t.tools.app",
+        "name": "TalkLog"
+      },
+      {
+        "package": "technic.settings",
+        "name": "TalkLog"
+      },
+      {
+        "cert_sha1": "08acb92d02487ebc0cea42b672a631ba7ea59adf",
+        "name": "TalkLog"
+      },
+      {
+        "cert_sha1": "af821dd021558aedf49730d2892063bd502dea14",
+        "name": "TalkLog"
+      },
+      {
+        "package": "iqual.calculadora.pro",
+        "name": "SpyMasterPro"
+      },
+      {
+        "package": "com.semantic.childcontrol",
+        "name": "SpyMasterPro"
+      },
+      {
+        "cert_sha1": "8ad595a53b76014b7b919ed231db372096d358e7",
+        "name": "SpyMasterPro"
+      },
+      {
+        "cert_sha1": "c8bae63357ca1dcd9b084bcc99399c96a5b67d49",
+        "name": "SpyMasterPro"
+      },
+      {
+        "cert_sha1": "9b07a93bc509c0ae614aeaffcd6b56797cd02166",
+        "name": "SpyMasterPro"
+      },
+      {
+        "package": "com.hp.vd",
+        "name": "FreeAndroidSpy"
+      },
+      {
+        "package": "com.hp.vc",
+        "name": "FreeAndroidSpy"
+      },
+      {
+        "cert_sha1": "e0103bf20e95e826920a3f0f7b3bd03a899127d7",
+        "name": "FreeAndroidSpy"
+      },
+      {
+        "package": "com.googleplay.settings",
+        "name": "NetSpy"
+      },
+      {
+        "cert_sha1": "a4e169aaf0068a1fc5f7900b7f59a438b833364c",
+        "name": "NetSpy"
+      },
+      {
+        "package": "com.bettertomorrowapps.spyyourlovefree",
+        "name": "CouplerTracker"
+      },
+      {
+        "package": "com.bytepioneers.coupletracker",
+        "name": "CouplerTracker"
+      },
+      {
+        "cert_sha1": "18cd402cc43df0bc03e9951b0f843dc4b1552dc6",
+        "name": "CouplerTracker"
+      },
+      {
+        "cert_sha1": "bc53cc2a9996de47bf72348f2a592dc0ebdaf06b",
+        "name": "CouplerTracker"
+      },
+      {
+        "package": "com.mobile.loki",
+        "name": "GPSTrackerLoki"
+      },
+      {
+        "package": "com.mobile.asgard",
+        "name": "GPSTrackerLoki"
+      },
+      {
+        "cert_sha1": "6156db551938bb4560d4643b54527e4f169ed44f",
+        "name": "GPSTrackerLoki"
+      },
+      {
+        "package": "com.spyapp247.system",
+        "name": "SpyApp247"
+      },
+      {
+        "package": "com.service.mug",
+        "name": "SpyMug"
+      },
+      {
+        "cert_sha1": "56c8fa19250edba1a91a37f500da91fbc0657b1f",
+        "name": "SpyMug"
+      },
+      {
+        "package": "com.wwtspy",
+        "name": "WtSpy"
+      },
+      {
+        "package": "com.wtspy.apps",
+        "name": "WtSpy"
+      },
+      {
+        "cert_sha1": "bb5e2c0e8dfdc54730c1e9b48754977e7dbcccf9",
+        "name": "WtSpy"
+      },
+      {
+        "package": "com.xno.systemservice",
+        "name": "Xnore"
+      },
+      {
+        "cert_sha1": "9bce25527ff174a4ad6cde233b17038641a5eef9",
+        "name": "Xnore"
+      },
+      {
+        "package": "com.kfhdha.fkjfgjdi",
+        "name": "EspiaoAndroid"
+      },
+      {
+        "cert_sha1": "60da6a5b04c0100dfce1213c850efbdeb0d1e8d7",
+        "name": "EspiaoAndroid"
+      },
+      {
+        "package": "com.avi.scbase",
+        "name": "pcTattletale"
+      },
+      {
+        "cert_sha1": "20f092bec76c406223a7943371a1dbbb5bf66c13",
+        "name": "pcTattletale"
+      },
+      {
+        "cert_sha1": "934a3c0dc8912c4f2f8620f666fc7621bd7b97b8",
+        "name": "pcTattletale"
+      },
+      {
+        "package": "com.wSpyEra",
+        "name": "SpyEra"
+      },
+      {
+        "cert_sha1": "813a3ad37d87aa36120dfec64146c311db5f4ca9",
+        "name": "SpyEra"
+      },
+      {
+        "package": "br.com.maceda.android.antifurtow",
+        "name": "AntiFurtoDroid"
+      },
+      {
+        "cert_sha1": "ce94b8512390676f62f3ec61beceddde9ab5519f",
+        "name": "AntiFurtoDroid"
+      },
+      {
+        "package": "com.gizmoquip.smstracker",
+        "name": "CallSMSTracker"
+      },
+      {
+        "cert_sha1": "0c01aeb7346c700d02613eba513bd40e87a182f8",
+        "name": "CallSMSTracker"
+      },
+      {
+        "cert_sha1": "8f576beeb71ea74e5f27764917bff5b508017b68",
+        "name": "CallSMSTracker"
+      },
+      {
+        "package": "com.aif.tracksp",
+        "name": "AiSpyer"
+      },
+      {
+        "cert_sha1": "f038cd90afea9c037a801ffae67df55a870879c4",
+        "name": "AiSpyer"
+      },
+      {
+        "cert_sha1": "bca2bcb87f6e28fb403ced643311b135ca0dc0a2",
+        "name": "AiSpyer"
+      },
+      {
+        "package": "com.spytoapp.system",
+        "name": "SpyToApp"
+      },
+      {
+        "cert_sha1": "6f93929ab60ac760000e873cd7c56ba79a9e6cad",
+        "name": "SpyToApp"
+      },
+      {
+        "package": "com.saloomughal.spyapp",
+        "name": "BlurSpy"
+      },
+      {
+        "cert_sha1": "4caca12eb37b7a7f07ae380c7e1741d2c36531df",
+        "name": "BlurSpy"
+      },
+      {
+        "package": "com.android.system.devicelogs",
+        "name": "AppMia"
+      },
+      {
+        "cert_sha1": "c51c36fe4f1dfc0c5b8cd55f74773135c1c1e1e5",
+        "name": "AppMia"
+      },
+      {
+        "package": "com.tools.secretcamcorder",
+        "name": "SecretCamRecorder"
+      },
+      {
+        "package": "ru.usafe.u_safe",
+        "name": "Unisafe"
+      },
+      {
+        "package": "ru.usafe.usafe",
+        "name": "Unisafe"
+      },
+      {
+        "package": "ru.usafe.kid.unisafekids",
+        "name": "Unisafe"
+      },
+      {
+        "package": "su.unisafe.unisafe",
+        "name": "Unisafe"
+      },
+      {
+        "cert_sha1": "20ab40acc2822a34ec199622cdca9d7a63bb302b",
+        "name": "Unisafe"
+      },
+      {
+        "cert_sha1": "41862c48d4bbc2a83db3ce6eba0d0c53e3d882b6",
+        "name": "Unisafe"
+      },
+      {
+        "cert_sha1": "a519ef2b8c4e73a097065b322687c9d38ded610c",
+        "name": "Unisafe"
+      },
+      {
+        "cert_sha1": "b5895930053256d408de74b66ba132b73cb21527",
+        "name": "Unisafe"
+      },
+      {
+        "cert_sha1": "fcb6f780ea8f2fe7249f66c6348572bdbd54f576",
+        "name": "Unisafe"
+      },
+      {
+        "package": "app.cybrook.trackvieo",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackviep",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackvieq",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackvier",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackvies",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackviet",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackvieu",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackviev",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackview",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackviex",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackviey",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trackviez",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.cybrook.trustserv",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.lifecircle",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.trackview",
+        "name": "TrackView"
+      },
+      {
+        "package": "app.trackview.pro",
+        "name": "TrackView"
+      },
+      {
+        "package": "cn.trackview.shentan",
+        "name": "TrackView"
+      },
+      {
+        "package": "com.trackview",
+        "name": "TrackView"
+      },
+      {
+        "package": "cybrook.trackview",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackvieo",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackviep",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackvieq",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackvier",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackvies",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackviet",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackvieu",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackviev",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackview",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackviex",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackviey",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trackviez",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.cybrook.trustserv",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.homesafe",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.trackview",
+        "name": "TrackView"
+      },
+      {
+        "package": "net.trackview.pro",
+        "name": "TrackView"
+      },
+      {
+        "package": "tv.familynk",
+        "name": "TrackView"
+      },
+      {
+        "package": "tv.familynl",
+        "name": "TrackView"
+      },
+      {
+        "package": "us.trackview",
+        "name": "TrackView"
+      },
+      {
+        "cert_sha1": "cb97e71afa4665d6d28697b9197046c81e5e5d6c",
+        "name": "TrackView"
+      },
+      {
+        "cert_sha1": "b14e50e56d5d483031137fd247d4a5466d0e61b4",
+        "name": "TrackView"
+      },
+      {
+        "cert_sha1": "96a1f635f940d8d154fd42d550b6201b60692744",
+        "name": "TrackView"
+      },
+      {
+        "package": "com.tracking_smartphone",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "package": "com.app.remote_control",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "package": "com.ts_settings",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "cert_sha1": "1db0d66c1d21dd4b185d03b13d6cf620e4facbaa",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "cert_sha1": "603881e46350999ff7a5cbd68fe6a5897c50cede",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "cert_sha1": "665d624fd53e4d538dfe9f7a87087c513cb40506",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "cert_sha1": "86d94a8ce736f82d834fa588f34106ae7b69d325",
+        "name": "TrackingSmartphone"
+      },
+      {
+        "package": "com.phonetrackerofficial",
+        "name": "SpyphoneMobileTracker"
+      },
+      {
+        "package": "com.phonetrackerofficial1",
+        "name": "SpyphoneMobileTracker"
+      },
+      {
+        "cert_sha1": "5f61beb9591adbdf9da5b141a1ef35cdc0944c8c",
+        "name": "SpyphoneMobileTracker"
+      },
+      {
+        "package": "mg.locations.track5",
+        "name": "OneLocator"
+      },
+      {
+        "cert_sha1": "e43b5671cba3f48619bf00d6e380bbc2f02a5dca",
+        "name": "OneLocator"
+      },
+      {
+        "package": "com.realtime.spyapp",
+        "name": "RealtimeSpy"
+      },
+      {
+        "cert_sha1": "8cd8fb235ea7f9b0fc308c1a59ab561c3869878c",
+        "name": "RealtimeSpy"
+      },
+      {
+        "package": "com.backup.tt",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "002dd372c94e80600c7c60192cbd701a3c3b87ee",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "4af16661fc885f7cc84358ccb8f272308436d5e3",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "6dfb725019c7784b400d940daaedaed18c5b898b",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "d3e6a092741cba59be9308fba72df887eab184fd",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "d8418b279414687729d37b34e53ab75d502b9f73",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "ee35e2740576480486307c991c762a3fba8da46d",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "b8fcbca563b1cd0e79cac595002422c2e54072b7",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "cf627144481d3f1dcfbb6cf12291c540ae325fbe",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "34b791b5d35a874d189202eea1fa99188f58a4c1",
+        "name": "jjspy"
+      },
+      {
+        "cert_sha1": "933c19015525266982ac6d830cb6b3d25079777b",
+        "name": "jjspy"
+      },
+      {
+        "package": "apk.screenshotrecorder",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "apk.keylogger",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "apk.kgl",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "apk.kwoapsnde",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.clipboardmanager",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.facecapture",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.gpstracker",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.keylogger",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.keylogger2",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.klogger",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.screenrecorder",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "com.as.urllogger",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "9f6f25ab4eb39ca27bbb22465e6fdc1fc3791c85",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "aa0458b6c035e767e61db7456cbca89cc4d42090",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "56bd8eb8a20904e4766d99f6d38d87466c44b114",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "839fbbe6f3df8153bb6582247dbbc2a42864a87d",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "b7bb744c68fd6eb4c49298e7506bed53dc4773ff",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "c863d800b89648724cd483911fbf756f36497cc9",
+        "name": "AndroidSpy"
+      },
+      {
+        "cert_sha1": "f57cacb890be22907709dde69ed3887f6943734e",
+        "name": "AndroidSpy"
+      },
+      {
+        "package": "afs.hbmoczc",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "bv.vemzye",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "com.amon",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "com.monitorchecker",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "fod.loqpf",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "ifk.ghumlh",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "mhu.bylbcwc",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "oo.ptkqyawh",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "sy.slvzccd",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "vmf.uxytqgrl",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "vn.ehkfqgvn",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "yr.tubjypbl",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "com.dromon",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "kenkbltcf.pwpwkvdwmjk",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "iiw.orqjtwbkx",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "efexmsz.mzuooelftl",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "fka.ugsonrqogw",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "4591bd0e4cbe86fd7510f1427ba6538bb269ae4d",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "1cd94b411b5d4d2f5f525d775876ff0993b4b716",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "5c77395f77e17f293cc8c4e3e1fdd48296ee4b28",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "6a610d0211e543113efe1a82cc4d270b6a45c526",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "6cc6fb667f4d178df4e9111fe96be9aeaee485ef",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "85a4c4f357a99888725862c351119fbb12c45695",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "970b463f5103b36326af8c8349a4106f6932835b",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "b57faab701e26b4c92972442d3a428881e18441a",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "e0fcd3e782fb859f7388e4f44a44a5d694114968",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "ead44242a3c0a73def7976c56ac10a4530e8f67a",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "ed5badbc20b1b027f5858d29dafbf66535c46db9",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "339b5c1746a1cdea945d51bbe967c1320ae73cc4",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "bef28cc19adfbeadc95137a2bd5035b6046666e9",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "16226330ebb138a5d47913151827a86567ad9cd4",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "3ba583488f36c708025c078d9eb4bedc3918b098",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "dde822baf53ef55c49096e866a995464cecb8b1c",
+        "name": "AndroidPolice"
+      },
+      {
+        "cert_sha1": "e6f85cab3903304dc16197b7eda8f67ed6d65a1a",
+        "name": "AndroidPolice"
+      },
+      {
+        "package": "com.mango.findmyphone",
+        "name": "FindMyPhone"
+      },
+      {
+        "package": "com.mango.findmyphone2",
+        "name": "FindMyPhone"
+      },
+      {
+        "package": "com.mango.findmyphone3",
+        "name": "FindMyPhone"
+      },
+      {
+        "package": "com.bulgakov.controlphone",
+        "name": "Bulgok"
+      },
+      {
+        "package": "com.bulgakov.bug",
+        "name": "Bulgok"
+      },
+      {
+        "package": "com.bul.b",
+        "name": "Bulgok"
+      },
+      {
+        "cert_sha1": "71ad1f579c3dcf32aa1e00e02245d359f80c260b",
+        "name": "Bulgok"
+      },
+      {
+        "cert_sha1": "fd5e1bbc94e5609f366dd4816c975c1cf4003f40",
+        "name": "Bulgok"
+      },
+      {
+        "cert_sha1": "dbc4b607c3b07c48f40f9d184de443d651436ca5",
+        "name": "Bulgok"
+      },
+      {
+        "package": "com.android.fystem.maps",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.android.system.maps",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.google.android.bacfup",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.google.android.safe",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.wzogle.zndroid.yacfup",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.qzogle.xndroid.jacfup",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.qzogle.xndroid.jacfut",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.qzogle.android.jacfut",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "01efa0c8fae43215125aca78308efb1768fb4049",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "2a1c74fffe33c7d867c7b284ffdbba4ddd024450",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "5407e1cc26f28d6024e0384693045aea2b24c5da",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "7d0f4308b87223aeeffa65060f0f752e84d363be",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "9427212b33e9d3636970eab73e2845e0dc59b5aa",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "a9a302c9606af4be4468a4fc74f7873ddada2ab0",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "bd3986483d9b962b029d65bf34bf4b7c568ff204",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "4474d3395029e6c6744a470ee5f2107dbaef16a0",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "6f1fda1889463bfa646a950e49e121b7829a884d",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "5051413bb7c4931f5cd25260fff173739cbe0f3a",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "4140120093b5655cf559b2a786269cf3f82e3ae9",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "7a55c057800823f710bf32a7d9865b300777e2d5",
+        "name": "Tracku"
+      },
+      {
+        "cert_sha1": "feef07ea18ba2ef7b75ad311f45a45ab4c1e8f0e",
+        "name": "Tracku"
+      },
+      {
+        "package": "com.protect",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.aixlunro.uqfhkagb",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.bzbqbkya.hgozttiu",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.gzomoyig.qwgawtaz",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.android.inputmethod.latinmy",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.ntckdlhc.oifhnjwp",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.selgdg.febgdsra",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.selgdg.mardsdaf",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.sepfsp.jasend",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.bnahrrbc.kwexsnhl",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.tbntxear.vfmkjxme",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.fbhpdsej.gnuebduy",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.uxgbipup.pdtvcgzc",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.uzoifhzk.qmqnpwaf",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.zkftwsel.fqnoquuv",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.mnwkvijy.wzyxgrft",
+        "name": "KidsShield"
+      },
+      {
+        "package": "net.kidlogger.kidlogger",
+        "name": "KidsShield"
+      },
+      {
+        "package": "net.teslineservice.kidl5",
+        "name": "KidsShield"
+      },
+      {
+        "package": "net.someapp1.somecorp2",
+        "name": "KidsShield"
+      },
+      {
+        "package": "com.fhekpqbq.otlzonjx",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "0d025a887a1546585d9bba6f023f42b8be0274e1",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "1a6d10e15280c6a938eed9bef53a31da0ceba45a",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "272cd0bc357fa03af87940644cb8ffdecd2fddc6",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "3397c095ead93b13cc5b9979d1f3b4faef1d194c",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "35d1db3904a84793394fe5df7b678e263b1b33a0",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "5ef38d0143f601fd01aa39bfe9079e9927920208",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "6ca8c06d7dac5f5685e014ae5c4d2062f77b42d6",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "789a24c1605f1bf2b6d64580c697bd38d9446a7e",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "8ae2267aeea0dbff7d7cc1c82e54343b1b0cfa22",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "8b187b3ebef7d1bc8e32bec78d36cbf95505a1c1",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "95d589a90971992a2038e5961b39c8b6bc77cf19",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "a2ebdd14e2ae17f52363bcb751ccbe15be5a2f8d",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "aa4f85cd7c24116bb51fa733be59290b7bb8c204",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "f575ca9980d3075cf728f2081d9ec5f910cc17e8",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "fd84821c80c1499a2446f6f7e13bf8bda6a66402",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "77c411957f307f6b971c7c07825ca5ea06f0e36d",
+        "name": "KidsShield"
+      },
+      {
+        "cert_sha1": "e871393054ed858acb5854c0db9f674c42160344",
+        "name": "NemoSpy"
+      },
+      {
+        "cert_sha1": "c7fbc97c3bd3949a6c19ff332e6cf2f2e5cee561",
+        "name": "NemoSpy"
+      },
+      {
+        "package": "com.ajygpxjy.bnthtjou",
+        "name": "SpyKontrol"
+      },
+      {
+        "package": "com.udxlbuno.plwnnhop",
+        "name": "SpyKontrol"
+      },
+      {
+        "package": "com.igyluazm.iytdhsky",
+        "name": "SpyKontrol"
+      },
+      {
+        "cert_sha1": "fb8f23c57d0afd255fd255b290b2ef6dbb2eafd8",
+        "name": "SpyKontrol"
+      },
+      {
+        "cert_sha1": "a36c70833a8a796f94ccd56b810d2a123f4f0485",
+        "name": "SpyKontrol"
+      },
+      {
+        "cert_sha1": "ea35fc50b3b0e0a9e5405bac2d7e58d7f9559fd0",
+        "name": "SpyKontrol"
+      },
+      {
+        "package": "com.callhist.calltr",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.catrsy.jaluc",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.cellph.montrb",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.dbzbpr.skt",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.elpatr.woac",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.ernell.thht",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.gh.ob",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.greatdata",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.kidsmobmon",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.mobitra.todv",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.mobphn.monit",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.mobtr.danbel",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.mophtr.td",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.phone.tracker.smsb",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.phtranlo.tifach",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.rephko.stha",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.s2m",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.s2m.seas",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.sap4mobile",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.smart",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.smartback",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.smstra.xanris",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.spy2mobile",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.spy2mobile.light",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.stmrsa.htxt",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.tccplos.spth",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.tevi.walpi",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.tracker.sms.mobile",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.trackzone.kids",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.trandmon.tool",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.trphwhat.prob",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.viewcalls.rem",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.viewsms.remb",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.whtrack.monit",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "0387135d057aeaa0f8bcfce2afa84d9bd1fa6f30",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "0c5ab4d05a2c804d3a4d0472ceac50b89833e6e4",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "0f64b6ebb49849ac685fe5df605908594623368e",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "14ee7779b2e84a0ff1309dea72881670d78e98ab",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "1bb7f1e962c35f00be2ef97a64c753cca0993637",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "20948233c3ef1662e79850ae0ab959c4760114c2",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "26dda9b261169fb0a63a6cea5b682b7a190328b6",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "26fc20c25af99e4b6c16abad8e8d76afa55973bb",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "271ca9a77af56b94f942eda8f517e4b0fd44206c",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "2919ff38f04d757ba6fe344f1729275739f43e89",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "2b02f9708fad9017d9f709ab2c5c8b5bd0d29394",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "39ddefd8261c1946e4f3160f6a9e200f59f06c11",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "3a041a8b1cf12e01ad4aa14779c1fcca0701fe5c",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "3e4e5813ca5b9d9bb50b70fad3c201faa54b4fd5",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "4569a62308fa134a33a5ddcc065d6fdae5653435",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "4579e9e02465dac399b7a47682813f5104e5d914",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "54e4d1acda9e3071d27aa7b6470e23f75bf1380b",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "5c9031e2340478521630198f3f90e5c8d38d3b64",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "76a90b5e41fa2afe14478cda24a0ca6b4f7fc5f3",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "7d9edde23b4d3d7ac459b06ecebe8ea1350d4f8f",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "7ded7756c3dbe351a23be061e989273888414fe6",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "8c76b4444dae08ecf578af51d295836f0d9badc6",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "8d7fec36654f6b35fa89e079685d637ccee27755",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "9329632a70d41158ebab6eed27b12d8cb0d47579",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "98140cae57f4d4ca53ef81f6521e7a0fd601f6e9",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "986e5892efb97e807772698bac701f49ce9caea8",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "98e76043b54dd7cb76e0e6e384a83646f1865bae",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "a2cd01ee20e3c25575d2d9b9645a52a1fa8c36c6",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "a2ce290d98b66b577880f3d7807dc01eb7fce01b",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "adf393a6628366341ba488b85a5ae738793bfd17",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "b8c908630d7d1ed52fa4e5aec2a2bda0414f8b3f",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "bb59fc701eac40c51c9274ea6a8ee623f5002802",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "bc682a41c2aa1efffd65ce42bbe3fa967a561eec",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "ca6f27ddcbe5d7929c82f42f63ff24703a352756",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "e401c172fe10c4893a13b38b1fabaa43473e2900",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "ef8006163d09d176083936cfb068bb07a8918118",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "f5eaefdecad39b93134e859bedc7d3ed42fbe2b3",
+        "name": "Trackplus"
+      },
+      {
+        "cert_sha1": "fd4c2144df6e431378a46eaeacc696af94de9d56",
+        "name": "Trackplus"
+      },
+      {
+        "package": "com.at.wwka",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.ati.client",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.ati.monitor",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.ati.webwatcherconsole",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.atinc.slcompanion",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.atiw.wc",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.awarenesstech.monitor",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.awarenesstech.wwpapp",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.awarenesstechnologies.sideloadedws",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.awti.slc",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.screentime",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.ww.companion",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "35e90a29262f1e6cc25b6e483dec67161513de30",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "4e6b680ef3b588ef53097bc7cefb778833b8a475",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "60277e8ce202d8023f2ecc86f1726a50d9990576",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "ad62cbb4bd298cf69cda40997c3e5d70112d7161",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "b9d5baedcf0c711317e8b6e54d60f0a5edee9517",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "e689432f7c2a39379bd64cb0bd2a6028f3a666dd",
+        "name": "WebWatcher"
+      },
+      {
+        "cert_sha1": "fc786b8f918655d45245c685a471bd57f02fb366",
+        "name": "WebWatcher"
+      },
+      {
+        "package": "com.cryzp.leplluln",
+        "name": "MyCellSpy"
+      },
+      {
+        "package": "com.pser.sysutils",
+        "name": "MyCellSpy"
+      },
+      {
+        "package": "com.sev.android.systemdev",
+        "name": "MyCellSpy"
+      },
+      {
+        "cert_sha1": "d09ee9d79ff75e737429dde34fd13edfdda34e78",
+        "name": "MyCellSpy"
+      },
+      {
+        "package": "com.chaoqi.spyapp",
+        "name": "Spylix"
+      },
+      {
+        "cert_sha1": "2cf347ea59967f7799aa2c1fdb5d711b2b93d586",
+        "name": "Spylix"
+      },
+      {
+        "package": "com.sec.provider.mobile.android",
+        "name": "MonitorUltra"
+      },
+      {
+        "cert_sha1": "0dcd7c9cc6a76ad28d7d992c4ef3df2f768ea473",
+        "name": "MonitorUltra"
+      },
+      {
+        "package": "com.thewispy",
+        "name": "TheWiSpy"
+      },
+      {
+        "cert_sha1": "bff94895a64aeb38b5278bc41b1db242cd82da62",
+        "name": "TheWiSpy"
+      },
+      {
+        "package": "YWZiZDFjZTg2NTZlOGI4NDkyYWJjZDJjZDE5ZTM0Mjk.MzkwMmNhZGFiZGZhMjMyZjQzNTJkYmQ1ODg1ZjI1NzA",
+        "name": "Observer"
+      },
+      {
+        "package": "com.system.settings",
+        "name": "Observer"
+      },
+      {
+        "cert_sha1": "3d4d65f3584201e74b186a90c3333c468d3c6a09",
+        "name": "Observer"
+      },
+      {
+        "cert_sha1": "64ac17a447eb4bcaf556b57c5c66f232c489c7a7",
+        "name": "Observer"
+      },
+      {
+        "cert_sha1": "85af7a95f8a95541f6b6de88a8ebc24ff1658e98",
+        "name": "Observer"
+      },
+      {
+        "cert_sha1": "d44524fa0d7866f1798c41c28953da899b46be65",
+        "name": "Observer"
+      },
+      {
+        "cert_sha1": "e906d462fa05007de06423a10539c7e7eab041cd",
+        "name": "Observer"
+      },
+      {
+        "package": "com.mobileservices2.synchronization",
+        "name": "Mrecorder"
+      },
+      {
+        "package": "com.mrecorder.callrecorder",
+        "name": "Mrecorder"
+      },
+      {
+        "package": "com.mobileservice.sync",
+        "name": "Mrecorder"
+      },
+      {
+        "package": "com.connection.manager",
+        "name": "Mrecorder"
+      },
+      {
+        "cert_sha1": "718f3191938da39d3a4eac0ef0f44c70f32b0989",
+        "name": "Mrecorder"
+      },
+      {
+        "cert_sha1": "77142da3a865c256fcdd24e187fdceba1b4ec587",
+        "name": "Mrecorder"
+      },
+      {
+        "package": "com.popo.analyse",
+        "name": "PhoneSpy"
+      },
+      {
+        "package": "com.wlset.info",
+        "name": "PhoneSpy"
+      },
+      {
+        "cert_sha1": "5ec970bc602d0ebb2f3c7a5135e24c330b71de59",
+        "name": "PhoneSpy"
+      },
+      {
+        "cert_sha1": "fbc83fd67e3b534b8b03d3b341249db3186374e2",
+        "name": "PhoneSpy"
+      },
+      {
+        "package": "com.shadyspy.monitor",
+        "name": "ShadySpy"
+      },
+      {
+        "cert_sha1": "91ed4f75a763a63471e1d1d39ba012df867550d4",
+        "name": "ShadySpy"
+      },
+      {
+        "cert_sha1": "c44894ee63f2e861a6960834a21eb27169150722",
+        "name": "ShadySpy"
+      },
+      {
+        "package": "com.ass.antitheft",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.ass.remotesecurity",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.ass.ladieschildprotection",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.ots.ladieschildprotection",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.ots.remotesecurity",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.ots.antitheft",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.softalogy.thiefguard",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.ots.womenchildsafety",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.gss.whereismyphone",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.smart.guardoffline",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "8851279b5177ef52b0b8540ee1fced4babdfb318",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "5d655f30de8b8bdabccdf660582c6369145e7a5a",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "28393dba55f5b08294d1e54962be1648c1efb4a2",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "40159690af08a01670e3fa07a021f7b1c1437042",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "c9be6c42b975258dea10eb6946a7986e4fe955e2",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "d1bb66a93f621a66094f28856988c7a2ae9972d0",
+        "name": "AbsoluTrack"
+      },
+      {
+        "cert_sha1": "1c6e171d3a6e51947df9e83946bb115ed4a41c6a",
+        "name": "AbsoluTrack"
+      },
+      {
+        "package": "com.AwamiSolution.smartkeylogger",
+        "name": "SmartKeylogger"
+      },
+      {
+        "cert_sha1": "842676b67005e6561808b650152f598035d12800",
+        "name": "SmartKeylogger"
+      },
+      {
+        "package": "org.traccar.client",
+        "name": "Traccar"
+      },
+      {
+        "package": "org.traccar.client.hidden",
+        "name": "Traccar"
+      },
+      {
+        "cert_sha1": "aa752803419b66bc6d5cfcd61a7c88935ffe5511",
+        "name": "Traccar"
+      },
+      {
+        "cert_sha1": "f4f16bdeb31aed018276b47cad9007063029fd22",
+        "name": "Traccar"
+      },
+      {
+        "cert_sha1": "dae17da900e269741688cea3daf929a8d896536d",
+        "name": "Traccar"
+      },
+      {
+        "cert_sha1": "a759ec34a1144dc3443a9d4c3286f9f3a4f23fb1",
+        "name": "Traccar"
+      },
+      {
+        "package": "dell.scream.application",
+        "name": "SpyNote"
+      },
+      {
+        "package": "com.spynote.software.stubspynote",
+        "name": "SpyNote"
+      },
+      {
+        "cert_sha1": "219d542f901d8db85c729b0f7ae32410096077cb",
+        "name": "SpyNote"
+      },
+      {
+        "package": "tej.flashkeylogger",
+        "name": "FlashKeylogger"
+      },
+      {
+        "package": "tej.flashkeyloggerpro",
+        "name": "FlashKeylogger"
+      },
+      {
+        "package": "tej.flashkeylogges",
+        "name": "FlashKeylogger"
+      },
+      {
+        "cert_sha1": "340fe1f4aa4a401ad8e326907e35fb9e0c2486bd",
+        "name": "FlashKeylogger"
+      },
+      {
+        "package": "stealthLight.sys",
+        "name": "MobiStealth"
+      },
+      {
+        "package": "phone.Secure",
+        "name": "MobiStealth"
+      },
+      {
+        "package": "and.LocatorTrial",
+        "name": "MobiStealth"
+      },
+      {
+        "package": "and.GuardTrial",
+        "name": "MobiStealth"
+      },
+      {
+        "package": "lookOut.Secure",
+        "name": "MobiStealth"
+      },
+      {
+        "cert_sha1": "5ad2acb089f8be5112ff5125d94036983de3e8d5",
+        "name": "MobiStealth"
+      },
+      {
+        "cert_sha1": "fed69d6f09ae8c98dd4053c1934ccaf57d31824d",
+        "name": "MobiStealth"
+      },
+      {
+        "package": "one.enix.smsforward",
+        "name": "SMSForward"
+      },
+      {
+        "cert_sha1": "1e15b0d27c0551061885340a3990d52a93f646b8",
+        "name": "SMSForward"
+      },
+      {
+        "package": "net.droid.talk218",
+        "name": "Ahmyth"
+      },
+      {
+        "package": "ahmyth.mine.king.ahmyth",
+        "name": "Ahmyth"
+      },
+      {
+        "cert_sha1": "0ecd5fd80682776d804715ab5b8504daf59a4b54",
+        "name": "Ahmyth"
+      },
+      {
+        "package": "com.xhunter.client",
+        "name": "xHunter"
+      },
+      {
+        "package": "com.android.preference.help.mole",
+        "name": "BosSpy"
+      },
+      {
+        "cert_sha1": "32570ad62b2df951a67251acb49e39e96b8a43ba",
+        "name": "BosSpy"
+      },
+      {
+        "package": "com.mobilespy.io",
+        "name": "Fenced"
+      },
+      {
+        "package": "com.fenced.ai",
+        "name": "Fenced"
+      },
+      {
+        "cert_sha1": "5f2dcc133af3e19d3935a85a3e2871856602a21d",
+        "name": "Fenced"
+      },
+      {
+        "package": "br.com.rastreadordenamorado",
+        "name": "RastreadorDeNamorado"
+      },
+      {
+        "cert_sha1": "795c30fad432ee48edf52b0748ba2749f0915ca3",
+        "name": "SwiftMobileSpy"
+      },
+      {
+        "package": "com.android.wifi.tracker",
+        "name": "Trackji"
+      },
+      {
+        "cert_sha1": "dba6211533a354e4bbf685a2ea458ac372c4ece4",
+        "name": "Trackji"
+      },
+      {
+        "package": "xd.spy.app",
+        "name": "XDSpy"
+      },
+      {
+        "cert_sha1": "06a49fe1347c7d2e596df2f08b8c235c00975af8",
+        "name": "XDSpy"
+      },
+      {
+        "cert_sha1": "7a22eb86fd8d817ed7bfaa03e7a280a03af20779",
+        "name": "XDSpy"
+      },
+      {
+        "package": "com.remote.app",
+        "name": "XploitSPY"
+      },
+      {
+        "package": "com.devspark.securityotp",
+        "name": "SpySMS"
+      },
+      {
+        "package": "com.droidwatcher",
+        "name": "DroidWatcher"
+      },
+      {
+        "package": "com.rana_aditya.child",
+        "name": "Spyzier"
+      },
+      {
+        "package": "me.hawkshaw",
+        "name": "AndroidSpyApp"
+      },
+      {
+        "package": "net.majorkernelpanic.spydroid",
+        "name": "SpyDroid"
+      },
+      {
+        "package": "com.example.ghazi.sms",
+        "name": "SpyAppGhazi"
+      },
+      {
+        "package": "com.hyadesinc.curiosus",
+        "name": "Curiosus"
+      },
+      {
+        "package": "com.example.lovespy.app",
+        "name": "LoveSpy"
+      },
+      {
+        "package": "edu.virginia.cs.cs4720.ispy",
+        "name": "ISpy"
+      },
+      {
+        "package": "in.spyapp.patanjali.android",
+        "name": "PatanSpyApp"
+      },
+      {
+        "package": "com.github.muneebwanee.dash",
+        "name": "Dash"
+      },
+      {
+        "package": "com.femimesusu.libapasopi",
+        "name": "SpyApp"
+      },
+      {
+        "cert_sha1": "38819265668eeae6ac3c6c80d1a6530eae99ad0e",
+        "name": "SpyApp"
+      },
+      {
+        "cert_sha1": "e3620714fb24a45614a456df1176d482bcd1b032",
+        "name": "SpyApp"
+      },
+      {
+        "cert_sha1": "f3e17dfdb98b1f7774a16967fd1d84d3d9d59389",
+        "name": "SpyApp"
+      },
+      {
+        "package": "com.my.spy.app",
+        "name": "MySpyApps"
+      },
+      {
+        "cert_sha1": "cccd74b31e53685bfa5a23ad0ae020af74689085",
+        "name": "MySpyApps"
+      },
+      {
+        "package": "com.android.system.app",
+        "name": "OneSpy"
+      },
+      {
+        "package": "com.android.settings.app",
+        "name": "OneSpy"
+      },
+      {
+        "package": "seC.fqjx.sqBB",
+        "name": "OneSpy"
+      },
+      {
+        "package": "com.qwertyuiop.asdfghjkl",
+        "name": "OneSpy"
+      },
+      {
+        "cert_sha1": "e458dc7cd8928a41865f502a884f0d51309e0bef",
+        "name": "OneSpy"
+      },
+      {
+        "cert_sha1": "e7d395df3b8077c733d9be67d841fdf271f49406",
+        "name": "OneSpy"
+      },
+      {
+        "cert_sha1": "0fb6643902e891c230f6e6662083442eea1f16ce",
+        "name": "OneSpy"
+      },
+      {
+        "package": "com.alienmanfc6.wheresmyandroid",
+        "name": "WheresMyDroid"
+      },
+      {
+        "cert_sha1": "f8fc21d0709c3c0a3e4fba81d24ab50979f25c19",
+        "name": "WheresMyDroid"
+      },
+      {
+        "package": "com.wisemo.wsmguest.v18",
+        "name": "WiseMo"
+      },
+      {
+        "package": "com.wisemo.host.v10",
+        "name": "WiseMo"
+      },
+      {
+        "cert_sha1": "9b48840cbf93379410172b4b85989624d2b33d59",
+        "name": "WiseMo"
+      },
+      {
+        "package": "org.findmykids.app",
+        "name": "FindMyKids"
+      },
+      {
+        "package": "org.findmykids.child",
+        "name": "FindMyKids"
+      },
+      {
+        "package": "com.moxlndmp.uhzhgzjh",
+        "name": "BrunoEspiao"
+      },
+      {
+        "package": "com.fzvsdrtb.qamlhxri",
+        "name": "BrunoEspiao"
+      },
+      {
+        "package": "com.thaxygpc.xjsjobpn",
+        "name": "BrunoEspiao"
+      },
+      {
+        "package": "com.nhevvtmt.thinkquo",
+        "name": "BrunoEspiao"
+      },
+      {
+        "cert_sha1": "159b64b29bc8842acdf8022b70730b13e288044b",
+        "name": "BrunoEspiao"
+      },
+      {
+        "cert_sha1": "8e38d577187544d4e0f747caef32b47fd15b07e5",
+        "name": "BrunoEspiao"
+      },
+      {
+        "cert_sha1": "6041f01561ec43309ccc8452719c4f515c32f3c2",
+        "name": "BrunoEspiao"
+      },
+      {
+        "cert_sha1": "a1aa4cd5b6cdbd906e3b27a7d1fa42ea2416adc3",
+        "name": "BrunoEspiao"
+      },
+      {
+        "package": "com.jgeuhcex.ejcxndak",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.eytewqrm.wvdkgmrl",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.epbzrqcg.syzzkuqx",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.laucass.phonecontrolenabler",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.laucass.phonecontroltarget",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.laucass.androsmscontrol",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.juzyuwqt.thxxnjvf",
+        "name": "Spyone"
+      },
+      {
+        "package": "com.epasufob.kybavfgt",
+        "name": "Spyone"
+      },
+      {
+        "package": "pl.spyone.agent2",
+        "name": "Spyone"
+      },
+      {
+        "package": "Aktualizacja.apps",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "c4b56e3768543190fdbe0aa01dd628e579f5514c",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "28aff3c41c0d42acbb6b73c6c08868c442088640",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "2441f6d331d6cfd8624346ed4b1987eae6534fa3",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "123c09b261dfa0f67d817e9ba079942830c31d54",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "32f6e28dd3e2e61ed94446591e31f89aee3a9bd2",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "317a9577a5b2d0930d06e0d8d7427e2f8fcad29d",
+        "name": "Spyone"
+      },
+      {
+        "cert_sha1": "d2a84922f8f747fd7582efef4189e06897fa8839",
+        "name": "Spyone"
+      },
+      {
+        "package": "br.com.eaglespy",
+        "name": "eagleSPY"
+      },
+      {
+        "cert_sha1": "b7b561250288c8bb44932b591b5451d852a95109",
+        "name": "eagleSPY"
+      },
+      {
+        "package": "com.pvojpamt.tzzyqjyb",
+        "name": "PhoneMonitor"
+      },
+      {
+        "package": "com.monitor.phone.s0ft.phonemonitor",
+        "name": "PhoneMonitor"
+      },
+      {
+        "package": "com.google.android.network",
+        "name": "Buhsam"
+      },
+      {
+        "cert_sha1": "00f618c4c43c28b107dab8f5641ad00d3a774afd",
+        "name": "Buhsam"
+      },
+      {
+        "package": "com.example.reverseshell2",
+        "name": "AndroRat"
+      },
+      {
+        "package": "update.service.android.pynger",
+        "name": "Spynger"
+      },
+      {
+        "cert_sha1": "9997e63018756cc7034f94b005205a5e15a3770c",
+        "name": "Spynger"
+      },
+      {
+        "package": "app.everspy.ru",
+        "name": "Everspy"
+      },
+      {
+        "package": "io.github.vvb2060.packageinstaller.test",
+        "name": "Msafely"
+      },
+      {
+        "cert_sha1": "1be914194d14b3deda93ea06e0c58ecd420bb89f",
+        "name": "Msafely"
+      },
+      {
+        "cert_sha1": "e82ededcdc22c6fa054aa74274ab789412b1c2f5",
+        "name": "Msafely"
+      },
+      {
+        "cert_sha1": "4feaf05665d7ca7d017962cadfdb4e38cc8d79e7",
+        "name": "Msafely"
+      },
+      {
+        "cert_sha1": "0172d7d80d2f0656711ed87c2433988bff820e3d",
+        "name": "Msafely"
+      },
+      {
+        "package": "com.simundkarten.g4.cc.starter",
+        "name": "Stalkerware"
+      },
+      {
+        "cert_sha1": "5b2265cd0f004a70a0de7483a5dd450a051f4108",
+        "name": "Stalkerware"
+      }
+    ],
+    "mercenary": [
+      {
+        "package": "com.androidservices.support",
+        "name": "RCS Lab Hermit"
+      },
+      {
+        "package": "com.fintur.support",
+        "name": "RCS Lab Hermit"
+      },
+      {
+        "package": "com.vodaservices",
+        "name": "RCS Lab Hermit"
+      },
+      {
+        "package": "com.xdja.jxclient",
+        "name": "RCS Lab Hermit"
+      },
+      {
+        "package": "com.xdja.safekeyservice",
+        "name": "RCS Lab Hermit"
+      },
+      {
+        "package": "com.adobe.flash.dex",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "com.adobe.flash.jni",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "com.adobe.flash.listen.beta",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "com.android.system.configs.service",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "com.hx.rootwifi",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "remote.google.rt.googleservice",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "xx.an",
+        "name": "WyrmSpy / DragonEgg"
+      },
+      {
+        "package": "com.elysium.core",
+        "name": "Spyrtacus (SIO)"
+      },
+      {
+        "package": "it.taog",
+        "name": "Spyrtacus (SIO)"
+      },
+      {
+        "package": "org.util.carriersvc",
+        "name": "Spyrtacus (SIO)"
+      },
+      {
+        "package": "sys.base.service",
+        "name": "Spyrtacus (SIO)"
+      },
+      {
+        "package": "com.android.core",
+        "name": "Morpheus (IPS)"
+      },
+      {
+        "package": "com.android.cored",
+        "name": "Morpheus (IPS)"
+      },
+      {
+        "package": "com.android.corew",
+        "name": "Morpheus (IPS)"
+      },
+      {
+        "package": "cm.google.android.apps.assistant",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.android.framework.safety",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.google.android.service",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.google.bat",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.hihonor.core.service",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.huaweisettingsapp.mkz",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.linkedln.service",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.oneplussync.bat",
+        "name": "ResidentBat"
+      },
+      {
+        "package": "com.client.appA",
+        "name": "Cellebrite"
+      }
+    ],
+    "screen_readers": [
+      {
+        "package": "com.google.android.marvin.talkback",
+        "name": "Android TalkBack"
+      },
+      {
+        "package": "com.samsung.android.accessibility.talkback",
+        "name": "Samsung TalkBack"
+      },
+      {
+        "package": "com.google.android.apps.accessibility.voiceaccess",
+        "name": "Voice Access"
+      }
+    ],
+    "parental_control": [
+      {
+        "package": "com.google.android.apps.kids.familylink",
+        "name": "Google Family Link"
+      },
+      {
+        "package": "com.qustodio.qustodioapp",
+        "name": "Qustodio"
+      },
+      {
+        "package": "com.mmguardian.childapp",
+        "name": "MMGuardian"
+      }
+    ],
+    "known_good_keyboards": [
+      {
+        "package": "com.google.android.inputmethod.latin",
+        "name": "Gboard"
+      },
+      {
+        "package": "com.sec.android.inputmethod",
+        "name": "Samsung Keyboard"
+      },
+      {
+        "package": "com.touchtype.swiftkey",
+        "name": "Microsoft SwiftKey"
+      },
+      {
+        "package": "com.google.android.googlequicksearchbox",
+        "name": "Google voice typing"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "id": "PSG-KNOWN-001",
+      "version": 2,
+      "severity": "critical",
+      "contribution": "confirm",
+      "title": "Known stalkerware app",
+      "when": {
+        "fact": "app.known_stalkerware_match",
+        "eq": true
+      },
+      "evidence": [
+        "identity",
+        "arrival",
+        "powers",
+        "activity"
+      ],
+      "explain": "This app matches a known stalkerware product by its package or signing certificate. Apps like this are sold to monitor another person's phone.",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence",
+        "remove_device_admin",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-KNOWN-002",
+      "version": 2,
+      "severity": "critical",
+      "contribution": "confirm",
+      "title": "Known mercenary-spyware indicator",
+      "when": {
+        "fact": "app.mercenary_indicator_match",
+        "eq": true
+      },
+      "evidence": [
+        "identity",
+        "activity"
+      ],
+      "explain": "This app matches a published indicator for mercenary spyware (for example from Amnesty International or Citizen Lab).",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence",
+        "seek_expert_help"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PROOF-001",
+      "version": 2,
+      "severity": "critical",
+      "contribution": "confirm",
+      "title": "Someone opened your canary link",
+      "when": {
+        "fact": "app.proof_test_fired",
+        "eq": true
+      },
+      "evidence": [
+        "proof_tests"
+      ],
+      "explain": "A private link placed in your own notes was opened from a device that is not yours, which means someone is reading your messages.",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-014",
+      "version": 2,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Hidden sideloaded app that can read your screen",
+      "when": {
+        "all": [
+          {
+            "fact": "app.accessibility_enabled",
+            "eq": true
+          },
+          {
+            "fact": "app.has_launcher_icon",
+            "eq": false
+          },
+          {
+            "fact": "app.install_source",
+            "in": [
+              "sideload",
+              "unknown"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "arrival",
+        "powers",
+        "activity",
+        "data_leaving"
+      ],
+      "explain": "This app can read everything on your screen and what you type, it was installed from outside an app store, and it hides its icon. Legitimate apps rarely do all three.",
+      "steps": [
+        "remove_accessibility",
+        "remove_device_admin",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-021",
+      "version": 2,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "App that uploads while your screen is off",
+      "when": {
+        "all": [
+          {
+            "fact": "app.accessibility_enabled",
+            "eq": true
+          },
+          {
+            "fact": "app.uploads_screen_off",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "powers",
+        "activity",
+        "data_leaving"
+      ],
+      "explain": "This app can read your screen and sent data out while your screen was off, a pattern typical of monitoring apps.",
+      "steps": [
+        "remove_accessibility",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-030",
+      "version": 2,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Sideloaded app holding several surveillance powers",
+      "when": {
+        "all": [
+          {
+            "fact": "app.install_source",
+            "in": [
+              "sideload",
+              "unknown"
+            ]
+          },
+          {
+            "fact": "app.surveillance_power_count",
+            "gte": 2
+          }
+        ]
+      },
+      "evidence": [
+        "arrival",
+        "powers"
+      ],
+      "explain": "This app was installed from outside an app store and holds two or more of the powers stalkerware needs (reading your screen, notifications, texts or being a device administrator).",
+      "steps": [
+        "read_safety_guidance",
+        "remove_device_admin",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-031",
+      "version": 2,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Hidden app holding a surveillance power",
+      "when": {
+        "all": [
+          {
+            "fact": "app.has_launcher_icon",
+            "eq": false
+          },
+          {
+            "fact": "app.surveillance_power_count",
+            "gte": 1
+          },
+          {
+            "fact": "app.install_source",
+            "in": [
+              "sideload",
+              "unknown"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "powers",
+        "activity"
+      ],
+      "explain": "This app keeps no icon in your app list, holds a power that can watch you, and was installed from outside an app store. Hiding the icon is a common stalkerware trait.",
+      "steps": [
+        "read_safety_guidance",
+        "review_app",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-040",
+      "version": 2,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "App's signing certificate changed on update",
+      "when": {
+        "fact": "app.cert_changed_on_update",
+        "eq": true
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "This app was replaced by a version signed by someone different from before. That is how a trusted app can be swapped for a repackaged, tampered one.",
+      "steps": [
+        "read_safety_guidance",
+        "review_app",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-010",
+      "version": 2,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Sideloaded app with a surveillance power",
+      "when": {
+        "all": [
+          {
+            "fact": "app.install_source",
+            "in": [
+              "sideload",
+              "unknown"
+            ]
+          },
+          {
+            "fact": "app.surveillance_power_count",
+            "gte": 1
+          }
+        ]
+      },
+      "evidence": [
+        "arrival",
+        "powers"
+      ],
+      "explain": "This app was installed from outside an app store and holds a power that could be used to watch you. Worth a look if you did not install it yourself.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-040",
+      "version": 2,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "App can read your screen (accessibility)",
+      "when": {
+        "fact": "app.accessibility_enabled",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This app has accessibility access, which lets it read your screen and what you type. Many legitimate tools use it too, so check whether you recognise this one.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-003",
+      "version": 2,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "App's install source looks faked",
+      "when": {
+        "fact": "app.install_source_mismatch",
+        "eq": true
+      },
+      "evidence": [
+        "arrival"
+      ],
+      "explain": "This app claims to come from an app store, but the record of who installed it does not line up. Someone with physical access can fake the store label when sideloading.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-030",
+      "version": 2,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Parental-control app on your own phone",
+      "when": {
+        "fact": "app.is_parental_control",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This is a known parental-control product. On a child's phone that is expected, but on your own phone an app that can monitor and restrict you is worth a careful look — stalkerware is often sold as parental control.",
+      "steps": [
+        "read_safety_guidance",
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-002",
+      "version": 2,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Unrecognised keyboard app",
+      "when": {
+        "all": [
+          {
+            "fact": "app.is_keyboard",
+            "eq": true
+          },
+          {
+            "fact": "app.is_known_good_keyboard",
+            "eq": false
+          }
+        ]
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "A keyboard app can see everything you type. This one is not a recognised mainstream keyboard, so it is worth a look if you did not install it yourself.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-031",
+      "version": 2,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Hidden app holding a surveillance power",
+      "when": {
+        "all": [
+          {
+            "fact": "app.has_launcher_icon",
+            "eq": false
+          },
+          {
+            "fact": "app.surveillance_power_count",
+            "gte": 1
+          }
+        ]
+      },
+      "evidence": [
+        "powers",
+        "activity"
+      ],
+      "explain": "This app keeps no icon in your app list yet holds a power that can watch you. Many legitimate components (a watch companion, a system helper) do this too, so check whether you recognise it.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-INNOCENT-001",
+      "version": 2,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Screen reader you turned on",
+      "when": {
+        "fact": "app.is_screen_reader",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This app is a recognised screen reader, an assistive tool. Its accessibility access, and its having no icon in the app list, are explained by that.",
+      "explains": [
+        "PSG-RISK-040",
+        "PSG-BEH-031",
+        "PSG-RISK-031"
+      ],
+      "steps": [],
+      "log": false
+    },
+    {
+      "id": "PSG-INNOCENT-002",
+      "version": 2,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Parental-control product",
+      "when": {
+        "fact": "app.is_parental_control",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This app is a known parental-control product, which explains its accessibility access. It is still shown as worth a look because on your own phone such an app can be misused to monitor you.",
+      "explains": [
+        "PSG-RISK-040",
+        "PSG-RISK-031"
+      ],
+      "steps": [],
+      "log": false
+    }
+  ]
+}

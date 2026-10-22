@@ -1,0 +1,3 @@
+# Signed rule bundles must keep their exact bytes (no CRLF conversion).
+Sources/PSGCompanion/Resources/*.json -text
+Tests/PSGCompanionTests/Fixtures/* binary

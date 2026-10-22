@@ -1,0 +1,16 @@
+{
+  "signatures": [
+    {
+      "keyId": "once-2026-10-22-1",
+      "signature": "Ylw/DXe0rzSuWLe1BuN3kxxAvche+Gc7Z9o9lTJi2+gu1oYUxg2qL+kiCUugJvDJQceK5jHNPm9QOdiYqYTSAQ=="
+    },
+    {
+      "keyId": "once-2026-10-22-2",
+      "signature": "MyN7okzLFEIaL6YCEb9caqY4XsmOaLJzHL1oc35GqYDUV/zxrmMxmxYMSdZZpn8tq709REQ1X5VvFbHYHZb6Dg=="
+    },
+    {
+      "keyId": "once-2026-10-22-3",
+      "signature": "pA+J3qHXuJjNO/JDpq5t+sR9goRrfL2gt7Eex/3hgXRpyVbgQMCk9p8pw4/JVN1NMeqRvVoh+Y7KSqGQMwhfAg=="
+    }
+  ]
+}

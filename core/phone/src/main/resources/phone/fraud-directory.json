@@ -1,0 +1,24 @@
+{
+  "_note": "Starter directory. Operator- and bank-specific numbers must be verified per country before launch and re-checked quarterly (FR-PHN-04). The entries below are well-known public anti-fraud lines only.",
+  "countries": [
+    {
+      "country": "GB",
+      "contacts": [
+        { "name": "Call your bank (Stop Scams UK)", "number": "159", "kind": "BANK_SUPPORT" },
+        { "name": "Report Fraud (formerly Action Fraud)", "number": "0300 123 2040", "kind": "OPERATOR_FRAUD_LINE" }
+      ]
+    },
+    {
+      "country": "US",
+      "contacts": [
+        { "name": "FTC report fraud", "number": "1-877-382-4357", "kind": "OPERATOR_FRAUD_LINE" }
+      ]
+    },
+    {
+      "country": "GH",
+      "contacts": [
+        { "name": "Cyber Security Authority — report cybercrime (call or text)", "number": "292", "kind": "OPERATOR_FRAUD_LINE" }
+      ]
+    }
+  ]
+}

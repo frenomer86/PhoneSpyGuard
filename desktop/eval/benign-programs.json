@@ -1,0 +1,1285 @@
+{
+ "about": "Common Windows programs, as Settings > Apps names them, used to measure false alarms. Includes assistive tech, parental controls, VPNs and near-miss names that share letters with indicator tokens. None is remote-access or monitoring software aimed at this PC's user.",
+ "programs": [
+  {
+   "name": "Google Chrome",
+   "publisher": "Google LLC",
+   "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  {
+   "name": "Microsoft Edge",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+   "name": "Mozilla Firefox (x64 en-US)",
+   "publisher": "Mozilla",
+   "path": "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+  },
+  {
+   "name": "Brave",
+   "publisher": "Brave Software Inc",
+   "path": "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
+  },
+  {
+   "name": "Opera Stable 112.0",
+   "publisher": "Opera Software",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Programs\\Opera\\opera.exe"
+  },
+  {
+   "name": "Vivaldi",
+   "publisher": "Vivaldi Technologies AS.",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Vivaldi\\Application\\vivaldi.exe"
+  },
+  {
+   "name": "Microsoft 365 Apps for enterprise - en-us",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE"
+  },
+  {
+   "name": "Microsoft Office Home and Student 2021 - en-us",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE"
+  },
+  {
+   "name": "Microsoft Teams",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files\\WindowsApps\\MSTeams\\ms-teams.exe"
+  },
+  {
+   "name": "Microsoft OneDrive",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files\\Microsoft OneDrive\\OneDrive.exe"
+  },
+  {
+   "name": "Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.40.33810",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Microsoft .NET Runtime - 8.0.8 (x64)",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Update Health Tools",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Edge WebView2 Runtime",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\msedgewebview2.exe"
+  },
+  {
+   "name": "Microsoft Visual Studio Code",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+  },
+  {
+   "name": "Visual Studio Community 2022",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\devenv.exe"
+  },
+  {
+   "name": "Microsoft PC Manager",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Windows PC Health Check",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Remote Desktop",
+   "publisher": "Microsoft Corporation",
+   "path": "C:\\Program Files\\Remote Desktop\\msrdc.exe"
+  },
+  {
+   "name": "Skype version 8.125",
+   "publisher": "Skype Technologies S.A.",
+   "path": "C:\\Program Files (x86)\\Microsoft\\Skype for Desktop\\Skype.exe"
+  },
+  {
+   "name": "Zoom Workplace",
+   "publisher": "Zoom Video Communications, Inc.",
+   "path": "C:\\Program Files\\Zoom\\bin\\Zoom.exe"
+  },
+  {
+   "name": "Webex",
+   "publisher": "Cisco Webex LLC",
+   "path": "C:\\Users\\owner\\AppData\\Local\\CiscoSparkLauncher\\CiscoCollabHost.exe"
+  },
+  {
+   "name": "Slack",
+   "publisher": "Slack Technologies Inc.",
+   "path": "C:\\Users\\owner\\AppData\\Local\\slack\\slack.exe"
+  },
+  {
+   "name": "Discord",
+   "publisher": "Discord Inc.",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Discord\\app-1.0.9163\\Discord.exe"
+  },
+  {
+   "name": "WhatsApp",
+   "publisher": "WhatsApp Inc.",
+   "path": "C:\\Program Files\\WindowsApps\\WhatsAppDesktop\\WhatsApp.exe"
+  },
+  {
+   "name": "Telegram Desktop",
+   "publisher": "Telegram FZ-LLC",
+   "path": "C:\\Users\\owner\\AppData\\Roaming\\Telegram Desktop\\Telegram.exe"
+  },
+  {
+   "name": "Signal 7.20.0",
+   "publisher": "Signal Messenger, LLC",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Programs\\signal-desktop\\Signal.exe"
+  },
+  {
+   "name": "Viber",
+   "publisher": "Viber Media S.a.r.l",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Viber\\Viber.exe"
+  },
+  {
+   "name": "Messenger",
+   "publisher": "Meta Platforms, Inc.",
+   "path": ""
+  },
+  {
+   "name": "Spotify",
+   "publisher": "Spotify AB",
+   "path": "C:\\Users\\owner\\AppData\\Roaming\\Spotify\\Spotify.exe"
+  },
+  {
+   "name": "VLC media player",
+   "publisher": "VideoLAN",
+   "path": "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe"
+  },
+  {
+   "name": "iTunes",
+   "publisher": "Apple Inc.",
+   "path": "C:\\Program Files\\iTunes\\iTunes.exe"
+  },
+  {
+   "name": "Apple Mobile Device Support",
+   "publisher": "Apple Inc.",
+   "path": ""
+  },
+  {
+   "name": "iCloud",
+   "publisher": "Apple Inc.",
+   "path": "C:\\Program Files\\Common Files\\Apple\\Internet Services\\iCloud.exe"
+  },
+  {
+   "name": "Steam",
+   "publisher": "Valve Corporation",
+   "path": "C:\\Program Files (x86)\\Steam\\steam.exe"
+  },
+  {
+   "name": "Epic Games Launcher",
+   "publisher": "Epic Games, Inc.",
+   "path": "C:\\Program Files (x86)\\Epic Games\\Launcher\\Portal\\Binaries\\Win64\\EpicGamesLauncher.exe"
+  },
+  {
+   "name": "EA app",
+   "publisher": "Electronic Arts",
+   "path": "C:\\Program Files\\Electronic Arts\\EA Desktop\\EA Desktop\\EADesktop.exe"
+  },
+  {
+   "name": "Ubisoft Connect",
+   "publisher": "Ubisoft",
+   "path": "C:\\Program Files (x86)\\Ubisoft\\Ubisoft Game Launcher\\UbisoftConnect.exe"
+  },
+  {
+   "name": "Battle.net",
+   "publisher": "Blizzard Entertainment",
+   "path": "C:\\Program Files (x86)\\Battle.net\\Battle.net.exe"
+  },
+  {
+   "name": "Riot Client",
+   "publisher": "Riot Games, Inc",
+   "path": "C:\\Riot Games\\Riot Client\\RiotClientServices.exe"
+  },
+  {
+   "name": "Roblox Player for owner",
+   "publisher": "Roblox Corporation",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Roblox\\Versions\\version-1\\RobloxPlayerBeta.exe"
+  },
+  {
+   "name": "Minecraft Launcher",
+   "publisher": "Mojang",
+   "path": ""
+  },
+  {
+   "name": "GOG GALAXY",
+   "publisher": "GOG.com",
+   "path": "C:\\Program Files (x86)\\GOG Galaxy\\GalaxyClient.exe"
+  },
+  {
+   "name": "Xbox",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "NVIDIA Graphics Driver 560.94",
+   "publisher": "NVIDIA Corporation",
+   "path": ""
+  },
+  {
+   "name": "NVIDIA GeForce Experience 3.28.0.417",
+   "publisher": "NVIDIA Corporation",
+   "path": "C:\\Program Files\\NVIDIA Corporation\\NVIDIA GeForce Experience\\NVIDIA GeForce Experience.exe"
+  },
+  {
+   "name": "NVIDIA app",
+   "publisher": "NVIDIA Corporation",
+   "path": "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\CEF\\NVIDIA app.exe"
+  },
+  {
+   "name": "NVIDIA PhysX System Software 9.23.1019",
+   "publisher": "NVIDIA Corporation",
+   "path": ""
+  },
+  {
+   "name": "AMD Software",
+   "publisher": "Advanced Micro Devices, Inc.",
+   "path": "C:\\Program Files\\AMD\\CNext\\CNext\\RadeonSoftware.exe"
+  },
+  {
+   "name": "Intel(R) Graphics Driver",
+   "publisher": "Intel Corporation",
+   "path": ""
+  },
+  {
+   "name": "Intel\u00ae Driver & Support Assistant",
+   "publisher": "Intel",
+   "path": "C:\\Program Files (x86)\\Intel\\Driver and Support Assistant\\DSATray.exe"
+  },
+  {
+   "name": "Realtek High Definition Audio Driver",
+   "publisher": "Realtek Semiconductor Corp.",
+   "path": "C:\\Program Files\\Realtek\\Audio\\HDA\\RtkNGUI64.exe"
+  },
+  {
+   "name": "Realtek Card Reader",
+   "publisher": "Realtek Semiconductor Corp.",
+   "path": ""
+  },
+  {
+   "name": "Synaptics Pointing Device Driver",
+   "publisher": "Synaptics Incorporated",
+   "path": ""
+  },
+  {
+   "name": "ELAN Touchpad 15.6.20.3_X64_WHQL",
+   "publisher": "ELAN Microelectronic Corp.",
+   "path": ""
+  },
+  {
+   "name": "Dolby Audio X2 Windows API SDK",
+   "publisher": "Dolby Laboratories, Inc.",
+   "path": ""
+  },
+  {
+   "name": "Waves MaxxAudio Pro",
+   "publisher": "Waves Audio Ltd.",
+   "path": ""
+  },
+  {
+   "name": "Dell SupportAssist",
+   "publisher": "Dell Inc.",
+   "path": "C:\\Program Files\\Dell\\SupportAssistAgent\\bin\\SupportAssistAgent.exe"
+  },
+  {
+   "name": "Dell Command | Update",
+   "publisher": "Dell Inc.",
+   "path": ""
+  },
+  {
+   "name": "Dell Optimizer",
+   "publisher": "Dell Inc.",
+   "path": ""
+  },
+  {
+   "name": "HP Support Assistant",
+   "publisher": "HP Inc.",
+   "path": "C:\\Program Files (x86)\\HP\\HP Support Framework\\HPSF.exe"
+  },
+  {
+   "name": "HP Smart",
+   "publisher": "HP Inc.",
+   "path": ""
+  },
+  {
+   "name": "HP Wolf Security",
+   "publisher": "HP Inc.",
+   "path": ""
+  },
+  {
+   "name": "HP Audio Switch",
+   "publisher": "HP Inc.",
+   "path": ""
+  },
+  {
+   "name": "Lenovo Vantage Service",
+   "publisher": "Lenovo Group Ltd.",
+   "path": "C:\\Program Files (x86)\\Lenovo\\VantageService\\LenovoVantageService.exe"
+  },
+  {
+   "name": "Lenovo System Update",
+   "publisher": "Lenovo",
+   "path": ""
+  },
+  {
+   "name": "ASUS System Control Interface",
+   "publisher": "ASUSTeK Computer Inc.",
+   "path": ""
+  },
+  {
+   "name": "Armoury Crate",
+   "publisher": "ASUSTeK COMPUTER INC.",
+   "path": ""
+  },
+  {
+   "name": "MyASUS",
+   "publisher": "ASUSTeK COMPUTER INC.",
+   "path": ""
+  },
+  {
+   "name": "Acer Care Center",
+   "publisher": "Acer Incorporated",
+   "path": ""
+  },
+  {
+   "name": "Acer Jumpstart",
+   "publisher": "Acer Incorporated",
+   "path": ""
+  },
+  {
+   "name": "MSI Center",
+   "publisher": "MSI Co., LTD",
+   "path": ""
+  },
+  {
+   "name": "Samsung Settings",
+   "publisher": "Samsung Electronics Co., Ltd.",
+   "path": ""
+  },
+  {
+   "name": "Logitech G HUB",
+   "publisher": "Logitech",
+   "path": "C:\\Program Files\\LGHUB\\lghub.exe"
+  },
+  {
+   "name": "Logi Options+",
+   "publisher": "Logitech",
+   "path": "C:\\Program Files\\LogiOptionsPlus\\logioptionsplus_agent.exe"
+  },
+  {
+   "name": "Razer Synapse",
+   "publisher": "Razer Inc.",
+   "path": ""
+  },
+  {
+   "name": "Corsair iCUE5 Software",
+   "publisher": "Corsair",
+   "path": ""
+  },
+  {
+   "name": "SteelSeries GG 70.0.0",
+   "publisher": "SteelSeries ApS",
+   "path": ""
+  },
+  {
+   "name": "Canon IJ Scan Utility",
+   "publisher": "Canon Inc.",
+   "path": ""
+  },
+  {
+   "name": "Epson Scan 2",
+   "publisher": "Seiko Epson Corporation",
+   "path": ""
+  },
+  {
+   "name": "Brother MFL-Pro Suite",
+   "publisher": "Brother Industries, Ltd.",
+   "path": ""
+  },
+  {
+   "name": "Windows Driver Package - Google, Inc. (WinUSB) AndroidUsbDeviceClass",
+   "publisher": "Google, Inc.",
+   "path": ""
+  },
+  {
+   "name": "7-Zip 24.08 (x64)",
+   "publisher": "Igor Pavlov",
+   "path": "C:\\Program Files\\7-Zip\\7zFM.exe"
+  },
+  {
+   "name": "WinRAR 7.01 (64-bit)",
+   "publisher": "win.rar GmbH",
+   "path": "C:\\Program Files\\WinRAR\\WinRAR.exe"
+  },
+  {
+   "name": "PeaZip 9.9.1 (WIN64)",
+   "publisher": "Giorgio Tani",
+   "path": ""
+  },
+  {
+   "name": "Notepad++ (64-bit x64)",
+   "publisher": "Notepad++ Team",
+   "path": "C:\\Program Files\\Notepad++\\notepad++.exe"
+  },
+  {
+   "name": "Adobe Acrobat (64-bit)",
+   "publisher": "Adobe",
+   "path": "C:\\Program Files\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe"
+  },
+  {
+   "name": "Adobe Acrobat Reader DC",
+   "publisher": "Adobe Systems Incorporated",
+   "path": "C:\\Program Files\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe"
+  },
+  {
+   "name": "Adobe Creative Cloud",
+   "publisher": "Adobe Inc.",
+   "path": "C:\\Program Files\\Adobe\\Adobe Creative Cloud\\ACC\\Creative Cloud.exe"
+  },
+  {
+   "name": "Adobe Photoshop 2025",
+   "publisher": "Adobe Inc.",
+   "path": ""
+  },
+  {
+   "name": "Adobe Genuine Service",
+   "publisher": "Adobe Inc.",
+   "path": ""
+  },
+  {
+   "name": "Foxit PDF Reader",
+   "publisher": "Foxit Software Inc.",
+   "path": ""
+  },
+  {
+   "name": "SumatraPDF",
+   "publisher": "Krzysztof Kowalczyk",
+   "path": ""
+  },
+  {
+   "name": "LibreOffice 24.8.1.2",
+   "publisher": "The Document Foundation",
+   "path": ""
+  },
+  {
+   "name": "OpenOffice 4.1.15",
+   "publisher": "Apache Software Foundation",
+   "path": ""
+  },
+  {
+   "name": "WPS Office (12.2.0.17119)",
+   "publisher": "Kingsoft Corp.",
+   "path": ""
+  },
+  {
+   "name": "Grammarly for Windows",
+   "publisher": "Grammarly",
+   "path": "C:\\Users\\owner\\AppData\\Local\\GrammarlyForWindows\\GrammarlyForWindows.exe"
+  },
+  {
+   "name": "Evernote 10.105.4",
+   "publisher": "Evernote Corporation",
+   "path": ""
+  },
+  {
+   "name": "Notion",
+   "publisher": "Notion Labs, Inc",
+   "path": "C:\\Users\\owner\\AppData\\Local\\Programs\\Notion\\Notion.exe"
+  },
+  {
+   "name": "Obsidian",
+   "publisher": "Obsidian",
+   "path": ""
+  },
+  {
+   "name": "Dropbox",
+   "publisher": "Dropbox, Inc.",
+   "path": "C:\\Program Files (x86)\\Dropbox\\Client\\Dropbox.exe"
+  },
+  {
+   "name": "Google Drive",
+   "publisher": "Google LLC",
+   "path": "C:\\Program Files\\Google\\Drive File Stream\\launch.bat"
+  },
+  {
+   "name": "Box",
+   "publisher": "Box, Inc.",
+   "path": ""
+  },
+  {
+   "name": "MEGAsync",
+   "publisher": "Mega Limited",
+   "path": ""
+  },
+  {
+   "name": "Proton Drive",
+   "publisher": "Proton AG",
+   "path": ""
+  },
+  {
+   "name": "Proton VPN",
+   "publisher": "Proton AG",
+   "path": ""
+  },
+  {
+   "name": "Proton Pass",
+   "publisher": "Proton AG",
+   "path": ""
+  },
+  {
+   "name": "NordVPN",
+   "publisher": "NordVPN",
+   "path": "C:\\Program Files\\NordVPN\\NordVPN.exe"
+  },
+  {
+   "name": "ExpressVPN",
+   "publisher": "ExpressVPN",
+   "path": ""
+  },
+  {
+   "name": "Surfshark",
+   "publisher": "Surfshark B.V.",
+   "path": ""
+  },
+  {
+   "name": "Mullvad VPN",
+   "publisher": "Mullvad VPN AB",
+   "path": ""
+  },
+  {
+   "name": "Cloudflare WARP",
+   "publisher": "Cloudflare, Inc.",
+   "path": ""
+  },
+  {
+   "name": "OpenVPN 2.6.12-I001 amd64",
+   "publisher": "OpenVPN, Inc.",
+   "path": ""
+  },
+  {
+   "name": "WireGuard",
+   "publisher": "WireGuard LLC",
+   "path": ""
+  },
+  {
+   "name": "Tailscale",
+   "publisher": "Tailscale Inc.",
+   "path": ""
+  },
+  {
+   "name": "Radmin VPN 1.4",
+   "publisher": "Famatech Corp.",
+   "path": "C:\\Program Files (x86)\\Radmin VPN\\RvRvpnGui.exe"
+  },
+  {
+   "name": "Hamachi",
+   "publisher": "LogMeIn, Inc.",
+   "path": ""
+  },
+  {
+   "name": "Bitwarden",
+   "publisher": "Bitwarden Inc.",
+   "path": ""
+  },
+  {
+   "name": "1Password",
+   "publisher": "AgileBits Inc.",
+   "path": ""
+  },
+  {
+   "name": "KeePass Password Safe 2.57",
+   "publisher": "Dominik Reichl",
+   "path": ""
+  },
+  {
+   "name": "Dashlane",
+   "publisher": "Dashlane SAS",
+   "path": ""
+  },
+  {
+   "name": "Malwarebytes version 5.1.10.141",
+   "publisher": "Malwarebytes",
+   "path": "C:\\Program Files\\Malwarebytes\\Anti-Malware\\MBAMService.exe"
+  },
+  {
+   "name": "Avast Free Antivirus",
+   "publisher": "Avast Software",
+   "path": ""
+  },
+  {
+   "name": "AVG AntiVirus FREE",
+   "publisher": "AVG Technologies",
+   "path": ""
+  },
+  {
+   "name": "Norton 360",
+   "publisher": "Gen Digital Inc.",
+   "path": ""
+  },
+  {
+   "name": "McAfee LiveSafe",
+   "publisher": "McAfee, LLC",
+   "path": ""
+  },
+  {
+   "name": "Kaspersky",
+   "publisher": "Kaspersky",
+   "path": ""
+  },
+  {
+   "name": "Bitdefender Total Security",
+   "publisher": "Bitdefender",
+   "path": ""
+  },
+  {
+   "name": "ESET Security",
+   "publisher": "ESET, spol. s r.o.",
+   "path": ""
+  },
+  {
+   "name": "Sophos Home",
+   "publisher": "Sophos Limited",
+   "path": ""
+  },
+  {
+   "name": "Avira Security",
+   "publisher": "Avira Operations GmbH",
+   "path": ""
+  },
+  {
+   "name": "Spybot - Search & Destroy",
+   "publisher": "Safer-Networking Ltd.",
+   "path": ""
+  },
+  {
+   "name": "HitmanPro",
+   "publisher": "Sophos",
+   "path": ""
+  },
+  {
+   "name": "CCleaner",
+   "publisher": "Piriform Software Ltd",
+   "path": ""
+  },
+  {
+   "name": "Revo Uninstaller 2.5.5",
+   "publisher": "VS Revo Group, Ltd.",
+   "path": ""
+  },
+  {
+   "name": "IObit Uninstaller",
+   "publisher": "IObit",
+   "path": ""
+  },
+  {
+   "name": "Glary Utilities 6.13",
+   "publisher": "Glarysoft Ltd",
+   "path": ""
+  },
+  {
+   "name": "TreeSize Free V4.7.2",
+   "publisher": "JAM Software",
+   "path": ""
+  },
+  {
+   "name": "WinDirStat 1.1.2",
+   "publisher": "WinDirStat Team",
+   "path": ""
+  },
+  {
+   "name": "CPUID CPU-Z 2.10",
+   "publisher": "CPUID, Inc.",
+   "path": ""
+  },
+  {
+   "name": "HWiNFO64",
+   "publisher": "Martin Malik - REALiX",
+   "path": ""
+  },
+  {
+   "name": "MSI Afterburner 4.6.5",
+   "publisher": "MSI Co., LTD",
+   "path": ""
+  },
+  {
+   "name": "CrystalDiskInfo 9.4.4",
+   "publisher": "Crystal Dew World",
+   "path": ""
+  },
+  {
+   "name": "Samsung Magician",
+   "publisher": "Samsung Electronics",
+   "path": ""
+  },
+  {
+   "name": "Rufus 4.5",
+   "publisher": "Pete Batard",
+   "path": ""
+  },
+  {
+   "name": "balenaEtcher",
+   "publisher": "Balena Inc.",
+   "path": ""
+  },
+  {
+   "name": "OBS Studio",
+   "publisher": "OBS Project",
+   "path": "C:\\Program Files\\obs-studio\\bin\\64bit\\obs64.exe"
+  },
+  {
+   "name": "Streamlabs Desktop",
+   "publisher": "General Workings, Inc.",
+   "path": ""
+  },
+  {
+   "name": "ShareX",
+   "publisher": "ShareX Team",
+   "path": "C:\\Program Files\\ShareX\\ShareX.exe"
+  },
+  {
+   "name": "Greenshot",
+   "publisher": "Greenshot",
+   "path": ""
+  },
+  {
+   "name": "Snagit 2024",
+   "publisher": "TechSmith Corporation",
+   "path": ""
+  },
+  {
+   "name": "Camtasia 2024",
+   "publisher": "TechSmith Corporation",
+   "path": ""
+  },
+  {
+   "name": "Lightshot-5.5.0.7",
+   "publisher": "Skillbrains",
+   "path": ""
+  },
+  {
+   "name": "Audacity 3.6.4",
+   "publisher": "Audacity Team",
+   "path": ""
+  },
+  {
+   "name": "GIMP 2.10.38",
+   "publisher": "The GIMP Team",
+   "path": ""
+  },
+  {
+   "name": "Inkscape",
+   "publisher": "Inkscape",
+   "path": ""
+  },
+  {
+   "name": "Blender",
+   "publisher": "Blender Foundation",
+   "path": ""
+  },
+  {
+   "name": "Krita (x64) 5.2.3",
+   "publisher": "Krita Foundation",
+   "path": ""
+  },
+  {
+   "name": "Paint.NET",
+   "publisher": "dotPDN LLC",
+   "path": ""
+  },
+  {
+   "name": "Canva",
+   "publisher": "Canva",
+   "path": ""
+  },
+  {
+   "name": "Figma",
+   "publisher": "Figma, Inc.",
+   "path": ""
+  },
+  {
+   "name": "DaVinci Resolve",
+   "publisher": "Blackmagic Design",
+   "path": ""
+  },
+  {
+   "name": "CapCut",
+   "publisher": "Bytedance Pte. Ltd.",
+   "path": ""
+  },
+  {
+   "name": "HandBrake 1.8.2",
+   "publisher": "HandBrake Team",
+   "path": ""
+  },
+  {
+   "name": "K-Lite Codec Pack 18.5.0 Basic",
+   "publisher": "KLCP",
+   "path": ""
+  },
+  {
+   "name": "PotPlayer-64 bit",
+   "publisher": "Kakao Corp.",
+   "path": ""
+  },
+  {
+   "name": "foobar2000 v2.1.5",
+   "publisher": "Peter Pawlowski",
+   "path": ""
+  },
+  {
+   "name": "Plex Media Server",
+   "publisher": "Plex, Inc.",
+   "path": ""
+  },
+  {
+   "name": "Kodi",
+   "publisher": "XBMC Foundation",
+   "path": ""
+  },
+  {
+   "name": "qBittorrent",
+   "publisher": "The qBittorrent project",
+   "path": ""
+  },
+  {
+   "name": "uTorrent",
+   "publisher": "BitTorrent Inc.",
+   "path": ""
+  },
+  {
+   "name": "Free Download Manager",
+   "publisher": "Softdeluxe",
+   "path": ""
+  },
+  {
+   "name": "Internet Download Manager",
+   "publisher": "Tonec Inc.",
+   "path": ""
+  },
+  {
+   "name": "Git",
+   "publisher": "The Git Development Community",
+   "path": "C:\\Program Files\\Git\\cmd\\git.exe"
+  },
+  {
+   "name": "GitHub Desktop",
+   "publisher": "GitHub, Inc.",
+   "path": ""
+  },
+  {
+   "name": "Python 3.12.6 (64-bit)",
+   "publisher": "Python Software Foundation",
+   "path": ""
+  },
+  {
+   "name": "Node.js",
+   "publisher": "Node.js Foundation",
+   "path": ""
+  },
+  {
+   "name": "Java 8 Update 421 (64-bit)",
+   "publisher": "Oracle Corporation",
+   "path": ""
+  },
+  {
+   "name": "Eclipse Temurin JDK with Hotspot 21.0.4+7 (x64)",
+   "publisher": "Eclipse Adoptium",
+   "path": ""
+  },
+  {
+   "name": "IntelliJ IDEA Community Edition 2024.2",
+   "publisher": "JetBrains s.r.o.",
+   "path": ""
+  },
+  {
+   "name": "PyCharm Community Edition 2024.2",
+   "publisher": "JetBrains s.r.o.",
+   "path": ""
+  },
+  {
+   "name": "Android Studio",
+   "publisher": "Google LLC",
+   "path": ""
+  },
+  {
+   "name": "Docker Desktop",
+   "publisher": "Docker Inc.",
+   "path": ""
+  },
+  {
+   "name": "Oracle VM VirtualBox 7.1.0",
+   "publisher": "Oracle and/or its affiliates",
+   "path": ""
+  },
+  {
+   "name": "VMware Workstation",
+   "publisher": "Broadcom Inc.",
+   "path": ""
+  },
+  {
+   "name": "PuTTY release 0.81 (64-bit)",
+   "publisher": "Simon Tatham",
+   "path": ""
+  },
+  {
+   "name": "WinSCP 6.3.5",
+   "publisher": "Martin Prikryl",
+   "path": ""
+  },
+  {
+   "name": "FileZilla 3.67.1",
+   "publisher": "Tim Kosse",
+   "path": ""
+  },
+  {
+   "name": "Postman x86_64 11.12.0",
+   "publisher": "Postman",
+   "path": ""
+  },
+  {
+   "name": "MySQL Workbench 8.0 CE",
+   "publisher": "Oracle Corporation",
+   "path": ""
+  },
+  {
+   "name": "XAMPP",
+   "publisher": "Bitnami",
+   "path": ""
+  },
+  {
+   "name": "Wireshark 4.4.0 x64",
+   "publisher": "The Wireshark developer community",
+   "path": ""
+  },
+  {
+   "name": "Npcap",
+   "publisher": "Nmap Project",
+   "path": ""
+  },
+  {
+   "name": "Arduino IDE",
+   "publisher": "Arduino SA",
+   "path": ""
+  },
+  {
+   "name": "MATLAB R2024a",
+   "publisher": "MathWorks",
+   "path": ""
+  },
+  {
+   "name": "R for Windows 4.4.1",
+   "publisher": "R Core Team",
+   "path": ""
+  },
+  {
+   "name": "RStudio",
+   "publisher": "Posit Software",
+   "path": ""
+  },
+  {
+   "name": "Zotero",
+   "publisher": "Corporation for Digital Scholarship",
+   "path": ""
+  },
+  {
+   "name": "Mendeley Reference Manager",
+   "publisher": "Elsevier Ltd",
+   "path": ""
+  },
+  {
+   "name": "Anaconda3 2024.06-1 (Python 3.12.4 64-bit)",
+   "publisher": "Anaconda, Inc.",
+   "path": ""
+  },
+  {
+   "name": "Google Earth Pro",
+   "publisher": "Google",
+   "path": ""
+  },
+  {
+   "name": "SketchUp 2024",
+   "publisher": "Trimble Inc.",
+   "path": ""
+  },
+  {
+   "name": "AutoCAD 2025 - English",
+   "publisher": "Autodesk",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Power BI Desktop",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Tableau Public 2024.2",
+   "publisher": "Tableau Software",
+   "path": ""
+  },
+  {
+   "name": "PowerToys (Preview) x64",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Everything 1.4.1.1026 (x64)",
+   "publisher": "voidtools",
+   "path": ""
+  },
+  {
+   "name": "AutoHotkey",
+   "publisher": "AutoHotkey Foundation LLC",
+   "path": ""
+  },
+  {
+   "name": "Ditto",
+   "publisher": "Scott Brogden",
+   "path": ""
+  },
+  {
+   "name": "f.lux",
+   "publisher": "f.lux Software LLC",
+   "path": ""
+  },
+  {
+   "name": "Wallpaper Engine",
+   "publisher": "Wallpaper Engine Team",
+   "path": ""
+  },
+  {
+   "name": "Rainmeter",
+   "publisher": "Rainmeter",
+   "path": ""
+  },
+  {
+   "name": "Twinkle Tray",
+   "publisher": "Xander Frangos",
+   "path": ""
+  },
+  {
+   "name": "NVDA",
+   "publisher": "NV Access",
+   "path": "C:\\Program Files (x86)\\NVDA\\nvda.exe"
+  },
+  {
+   "name": "JAWS 2024",
+   "publisher": "Freedom Scientific",
+   "path": "C:\\Program Files\\Freedom Scientific\\JAWS\\2024\\jfw.exe"
+  },
+  {
+   "name": "ZoomText 2024",
+   "publisher": "Freedom Scientific",
+   "path": ""
+  },
+  {
+   "name": "Dragon Professional 16",
+   "publisher": "Nuance Communications Inc.",
+   "path": ""
+  },
+  {
+   "name": "Read&Write",
+   "publisher": "Texthelp",
+   "path": ""
+  },
+  {
+   "name": "Kurzweil 3000",
+   "publisher": "Kurzweil Education",
+   "path": ""
+  },
+  {
+   "name": "Speechify",
+   "publisher": "Speechify Inc.",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Family Safety",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Respondus LockDown Browser",
+   "publisher": "Respondus",
+   "path": ""
+  },
+  {
+   "name": "Safe Exam Browser",
+   "publisher": "ETH Zurich",
+   "path": ""
+  },
+  {
+   "name": "Cisco Secure Client - AnyConnect VPN",
+   "publisher": "Cisco Systems, Inc.",
+   "path": ""
+  },
+  {
+   "name": "GlobalProtect",
+   "publisher": "Palo Alto Networks",
+   "path": ""
+  },
+  {
+   "name": "FortiClient VPN",
+   "publisher": "Fortinet Technologies Inc",
+   "path": ""
+  },
+  {
+   "name": "Citrix Workspace 2405",
+   "publisher": "Citrix Systems, Inc.",
+   "path": ""
+  },
+  {
+   "name": "VMware Horizon Client",
+   "publisher": "Broadcom Inc.",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Intune Management Extension",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Lateral Thinking Puzzles",
+   "publisher": "Lateral Games",
+   "path": ""
+  },
+  {
+   "name": "Supremely Good Notes",
+   "publisher": "SGN Software",
+   "path": ""
+  },
+  {
+   "name": "Atari Vault",
+   "publisher": "Atari",
+   "path": ""
+  },
+  {
+   "name": "Spectrum Analyzer Pro",
+   "publisher": "AudioTools",
+   "path": ""
+  },
+  {
+   "name": "Pandora",
+   "publisher": "Pandora Media, LLC",
+   "path": ""
+  },
+  {
+   "name": "Revealer Photo Viewer",
+   "publisher": "PhotoSoft",
+   "path": ""
+  },
+  {
+   "name": "Elite Dangerous",
+   "publisher": "Frontier Developments",
+   "path": ""
+  },
+  {
+   "name": "Family Tree Maker 2024",
+   "publisher": "Software MacKiev",
+   "path": ""
+  },
+  {
+   "name": "Big Brother Bingo",
+   "publisher": "FunGames Ltd",
+   "path": ""
+  },
+  {
+   "name": "Remote Mouse",
+   "publisher": "Remote Mouse",
+   "path": ""
+  },
+  {
+   "name": "Unified Remote",
+   "publisher": "Unified Intents AB",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Mouse and Keyboard Center",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Wacom Tablet",
+   "publisher": "Wacom Technology Corp.",
+   "path": ""
+  },
+  {
+   "name": "Garmin Express",
+   "publisher": "Garmin Ltd or its subsidiaries",
+   "path": ""
+  },
+  {
+   "name": "Fitbit Connect",
+   "publisher": "Fitbit Inc.",
+   "path": ""
+  },
+  {
+   "name": "Samsung DeX",
+   "publisher": "Samsung Electronics Co., Ltd.",
+   "path": ""
+  },
+  {
+   "name": "Phone Link",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Smart Switch",
+   "publisher": "Samsung Electronics Co., Ltd.",
+   "path": ""
+  },
+  {
+   "name": "Xiaomi Mi PC Suite",
+   "publisher": "Xiaomi Inc.",
+   "path": ""
+  },
+  {
+   "name": "Kies3",
+   "publisher": "Samsung Electronics Co., Ltd.",
+   "path": ""
+  },
+  {
+   "name": "LDPlayer",
+   "publisher": "XUANZHI INTERNATIONAL CO., LIMITED",
+   "path": ""
+  },
+  {
+   "name": "BlueStacks App Player",
+   "publisher": "BlueStacks",
+   "path": ""
+  },
+  {
+   "name": "WSL",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Windows Subsystem for Android\u2122",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Mobile Plans",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Clipchamp",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  },
+  {
+   "name": "Microsoft Copilot",
+   "publisher": "Microsoft Corporation",
+   "path": ""
+  }
+ ]
+}

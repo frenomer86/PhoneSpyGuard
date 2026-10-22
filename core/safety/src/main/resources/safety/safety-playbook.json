@@ -1,0 +1,75 @@
+{
+  "cards": [
+    {
+      "id": "GEN-EMERGENCY", "situation": "GENERAL", "priority": 0,
+      "title": "If you are in danger right now",
+      "body": "If you feel unsafe, contact your local emergency number straight away. This app gives general safety information; it is not a substitute for help from the police or a trained advocate."
+    },
+    {
+      "id": "GEN-SAFE-DEVICE", "situation": "GENERAL", "priority": 10,
+      "title": "Use a safer device to get help",
+      "body": "If someone may be watching this phone, look up help on a device they can't see — a friend's phone, a library or work computer — and in a private browser window. What you type here could be read."
+    },
+    {
+      "id": "GEN-TRUST", "situation": "GENERAL", "priority": 20,
+      "title": "Trust what you notice",
+      "body": "If the person seems to know things they shouldn't — where you were, who you messaged — that is worth taking seriously, even if a scan finds nothing. Spyware can hide, and control doesn't always need an app."
+    },
+    {
+      "id": "SUS-QUIET", "situation": "SUSPECT_MONITORED", "priority": 5,
+      "title": "Don't change your routine suddenly",
+      "body": "If you think you're being monitored, acting differently all at once can signal that you know. Keep to your normal pattern while you plan your next steps with someone you trust."
+    },
+    {
+      "id": "SUS-DOCUMENT", "situation": "SUSPECT_MONITORED", "priority": 15,
+      "title": "Write down what's happening",
+      "body": "Note the dates and details of anything that makes you uneasy. A record helps an advocate, the police or a lawyer understand the pattern later."
+    },
+    {
+      "id": "BEF-NO-TIP-OFF", "situation": "BEFORE_REMOVING", "priority": 1,
+      "title": "Removing spyware can tip the person off",
+      "body": "When monitoring software is removed, the person watching often notices — the alerts stop. If they are someone who could become dangerous, that moment can be risky. Plan removal with a domestic-abuse advocate before you act."
+    },
+    {
+      "id": "BEF-EVIDENCE-FIRST", "situation": "BEFORE_REMOVING", "priority": 2,
+      "title": "Save the proof before you clean up",
+      "body": "Export your evidence timeline and take screenshots first. Once an app is removed, the proof it was there can be gone, and you may need it for the police, a court or your phone company."
+    },
+    {
+      "id": "BEF-SAFETY-PLAN", "situation": "BEFORE_REMOVING", "priority": 3,
+      "title": "Have a safety plan ready",
+      "body": "Decide where you'll be and who you'll be with when you make changes, and have a way to call for help. A local domestic-abuse service can help you build a plan that fits your situation."
+    },
+    {
+      "id": "CON-PASSWORDS", "situation": "CONFIRMED_SPYWARE", "priority": 30,
+      "title": "Change passwords from a safe device",
+      "body": "Assume your passwords may be known. From a device the person hasn't touched, change the passwords for your email, cloud account and messaging, and turn on two-step verification."
+    },
+    {
+      "id": "CON-ACCOUNTS", "situation": "CONFIRMED_SPYWARE", "priority": 35,
+      "title": "Check who else is signed in",
+      "body": "Run the account check in this app. Spyware is often paired with someone logged into your accounts, so look for sessions, linked devices and mail forwarding you didn't set up."
+    },
+    {
+      "id": "PHN-VERIFIED-NUMBER", "situation": "PHONE_FRAUD", "priority": 5,
+      "title": "Call your bank on a number you trust",
+      "body": "If money or your SIM may be at risk, call your bank or operator using the number on your card or their official app — never a number from the message that worried you."
+    },
+    {
+      "id": "PHN-CANCEL-FORWARD", "situation": "PHONE_FRAUD", "priority": 10,
+      "title": "Turn off call forwarding",
+      "body": "If your calls or texts are being forwarded, your codes could be reaching someone else. Use the forwarding check in this app to see and cancel it, then tell your operator."
+    }
+  ],
+  "support": [
+    { "name": "Local emergency services", "contact": "Your country's emergency number", "kind": "EMERGENCY", "country": "INTL", "note": "e.g. 112 in much of the world, 911 in North America, 999 in the UK and Ghana." },
+    { "name": "National Domestic Abuse Helpline (Refuge)", "contact": "0808 2000 247", "kind": "DOMESTIC_ABUSE_HOTLINE", "country": "GB", "note": "24-hour, free." },
+    { "name": "Report Fraud (formerly Action Fraud)", "contact": "0300 123 2040", "kind": "CYBERCRIME_REPORT", "country": "GB", "note": "UK reporting for fraud and cybercrime; renamed from Action Fraud on 4 Dec 2025, number unchanged." },
+    { "name": "National Domestic Violence Hotline", "contact": "1-800-799-7233", "kind": "DOMESTIC_ABUSE_HOTLINE", "country": "US", "note": "24-hour; text START to 88788." },
+    { "name": "FBI IC3", "contact": "ic3.gov", "kind": "CYBERCRIME_REPORT", "country": "US", "note": "Internet Crime Complaint Center." },
+    { "name": "DOVVSU (Domestic Violence & Victim Support Unit)", "contact": "18555", "kind": "DOMESTIC_ABUSE_HOTLINE", "country": "GH", "note": "Ghana Police DOVVSU toll-free short code." },
+    { "name": "Cyber Security Authority — report a cybercrime", "contact": "292", "kind": "CYBERCRIME_REPORT", "country": "GH", "note": "Ghana CSA 24-hour point of contact; call or text the short code." },
+    { "name": "Orange Support Centre — domestic and gender-based violence", "contact": "0800 111 222", "kind": "DOMESTIC_ABUSE_HOTLINE", "country": "GH", "note": "Free GBV support line (Royal Danish Embassy in Ghana). Matches the iPhone companion." },
+    { "name": "Ghana Police Service — emergency", "contact": "191", "kind": "DOMESTIC_ABUSE_HOTLINE", "country": "GH", "note": "Police emergency line; also 18555/112." }
+  ]
+}

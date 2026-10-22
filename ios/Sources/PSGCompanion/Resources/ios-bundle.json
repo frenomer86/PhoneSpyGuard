@@ -1,0 +1,149 @@
+{
+  "version": 5,
+  "expires": "2027-04-01T00:00:00Z",
+  "_note": "iPhone companion rules. Same format, parser and scoring as the Android and desktop bundles; the 'ios' block is an iPhone extension that the Kotlin and Rust parsers ignore. Release values in ios.releases must be refreshed with every bundle release; the full indicator set is the separately signed ios-indicators.json.",
+  "rules": [
+    {
+      "id": "PSG-IOS-DEV-001", "version": 1, "severity": "high", "contribution": "risk",
+      "title": "No passcode is set",
+      "when": { "fact": "device.passcode_set", "eq": false },
+      "evidence": ["settings"],
+      "explain": "Without a passcode, anyone who picks up this iPhone can read your messages, install a monitoring profile or change your Apple Account settings in a few minutes.",
+      "steps": ["set_passcode"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-002", "version": 1, "severity": "medium", "contribution": "risk",
+      "title": "An iOS update is waiting",
+      "when": { "fact": "device.os_update_available", "eq": true },
+      "evidence": ["settings"],
+      "explain": "Your iPhone is not on the newest release of its iOS version. Updates close the security holes that spyware uses to get in.",
+      "steps": ["update_ios"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-003", "version": 1, "severity": "medium", "contribution": "risk",
+      "title": "This iPhone runs an older iOS version",
+      "when": { "fact": "device.os_majors_behind", "gte": 1 },
+      "evidence": ["settings"],
+      "explain": "Apple fixes most security problems first in the newest iOS version. If your iPhone can update to it, do.",
+      "steps": ["update_ios"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-004", "version": 1, "severity": "high", "contribution": "strong",
+      "title": "A profile or device management you don't recognise",
+      "when": { "fact": "device.profile_found", "eq": "unrecognised" },
+      "evidence": ["settings", "answers"],
+      "explain": "A configuration profile can route your internet traffic through someone else's server, trust their certificates so they can read secure websites, and on a supervised iPhone, control the phone. Monitoring services use profiles because iPhone apps cannot spy on other apps.",
+      "steps": ["read_safety_guidance", "export_evidence", "remove_profile", "change_apple_password"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-005", "version": 1, "severity": "low", "contribution": "innocent",
+      "title": "The profile is from your work or school",
+      "when": { "fact": "device.profile_found", "eq": "employer" },
+      "explain": "You said the profile was installed by your employer or school. They can see some activity on a managed iPhone, so ask them what it covers.",
+      "explains": [], "log": false
+    },
+    {
+      "id": "PSG-IOS-DEV-006", "version": 1, "severity": "medium", "contribution": "risk",
+      "title": "Web traffic goes through a proxy",
+      "when": { "fact": "device.http_proxy_set", "eq": true },
+      "evidence": ["settings"],
+      "explain": "Your iPhone sends web traffic through a proxy server. Proxies are used by workplaces, but also to watch which websites someone visits.",
+      "steps": ["check_wifi_proxy", "remove_profile"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-011", "version": 1, "severity": "low", "contribution": "innocent",
+      "title": "The proxy may come with your work or school profile",
+      "when": { "all": [ { "fact": "device.http_proxy_set", "eq": true }, { "fact": "device.work_profile_present", "eq": true } ] },
+      "explain": "You said a profile on this iPhone is from your work or school, and such profiles often set a proxy. This explains the proxy only, nothing else the check finds. If you left that job or school, remove the profile.",
+      "explains": ["PSG-IOS-DEV-006"], "log": false
+    },
+    {
+      "id": "PSG-IOS-DEV-007", "version": 2, "severity": "high", "contribution": "strong",
+      "title": "Signs this iPhone has been jailbroken",
+      "when": { "all": [ { "fact": "device.jailbreak_signs", "gte": 1 }, { "not": { "fact": "device.owner_jailbroke", "eq": true } } ] },
+      "evidence": ["settings"],
+      "explain": "A jailbreak removes the iPhone's protections. Full-featured iPhone stalkerware needs one, so if you did not do this yourself, someone else may have had your phone.",
+      "steps": ["read_safety_guidance", "export_evidence", "update_ios", "restore_iphone"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-008", "version": 2, "severity": "medium", "contribution": "risk",
+      "title": "This iPhone is jailbroken",
+      "when": { "all": [ { "fact": "device.jailbreak_signs", "gte": 1 }, { "fact": "device.owner_jailbroke", "eq": true } ] },
+      "evidence": ["settings"],
+      "explain": "You said you jailbroke this iPhone yourself, so the traces are expected. A jailbroken iPhone has lost the protections that keep spyware out, and anything installed from jailbreak stores can read your messages, so this still counts against the phone.",
+      "steps": ["update_ios", "restore_iphone"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-009", "version": 1, "severity": "high", "contribution": "strong",
+      "title": "A debugger is attached to this app",
+      "when": { "fact": "device.debugger_attached", "eq": true },
+      "evidence": ["integrity"],
+      "explain": "Something is attached to Phone Spy Guard and could change what it shows you. Developers do this while testing; on a normal iPhone it should never happen.",
+      "steps": ["restart_and_recheck", "deep_check_from_pc"], "log": true
+    },
+    {
+      "id": "PSG-IOS-DEV-010", "version": 1, "severity": "critical", "contribution": "strong",
+      "title": "Apple sent you a threat notification",
+      "when": { "fact": "device.threat_notification", "eq": true },
+      "evidence": ["answers"],
+      "explain": "Apple only sends these when it believes mercenary spyware such as Pegasus was aimed at your account. Take it seriously even if nothing else looks wrong.",
+      "steps": ["turn_on_lockdown", "contact_expert_helpline", "deep_check_from_pc", "update_ios"], "log": true
+    },
+    {
+      "id": "PSG-IOS-IOC-001", "version": 1, "severity": "critical", "contribution": "confirm",
+      "title": "Matches a published spyware indicator",
+      "when": { "fact": "proc.indicator_match", "eq": true },
+      "evidence": ["diagnostics"],
+      "explain": "A process in your iPhone's diagnostic records matches a name or path that researchers have published for mercenary spyware such as Pegasus.",
+      "steps": ["read_safety_guidance", "export_evidence", "contact_expert_helpline", "turn_on_lockdown", "deep_check_from_pc"], "log": true
+    },
+    {
+      "id": "PSG-IOS-SHUT-001", "version": 1, "severity": "high", "contribution": "strong",
+      "title": "A program ran from a folder spyware uses",
+      "when": { "fact": "proc.in_staging_dir", "eq": true },
+      "evidence": ["diagnostics"],
+      "explain": "A program that delayed a restart was running from a hidden system folder where Apple's own software does not run, but where Pegasus, Reign and Predator infections have been found.",
+      "steps": ["read_safety_guidance", "export_evidence", "contact_expert_helpline", "deep_check_from_pc"], "log": true
+    },
+    {
+      "id": "PSG-IOS-SHUT-002", "version": 1, "severity": "medium", "contribution": "risk",
+      "title": "A program ran from an unusual place",
+      "when": { "fact": "proc.outside_known_paths", "eq": true },
+      "evidence": ["diagnostics"],
+      "explain": "A program that delayed a restart was not part of iOS or an App Store app. This can have an innocent cause, so it is worth an expert's look rather than alarm.",
+      "steps": ["send_to_expert", "deep_check_from_pc"], "log": true
+    },
+    {
+      "id": "PSG-IOS-PS-001", "version": 1, "severity": "high", "contribution": "strong",
+      "title": "A program was running from a folder spyware uses",
+      "when": { "fact": "proc.running_in_staging_dir", "eq": true },
+      "evidence": ["diagnostics"],
+      "explain": "When the diagnostic archive was made, a program was running from a hidden system folder where Apple's own software does not run, but where Pegasus, Reign and Predator infections have been found.",
+      "steps": ["read_safety_guidance", "export_evidence", "contact_expert_helpline", "deep_check_from_pc"], "log": true
+    },
+    {
+      "id": "PSG-IOS-PS-002", "version": 1, "severity": "medium", "contribution": "risk",
+      "title": "A program was running from an unusual place",
+      "when": { "fact": "proc.running_outside_known_paths", "eq": true },
+      "evidence": ["diagnostics"],
+      "explain": "When the diagnostic archive was made, a program was running that is not part of iOS or an App Store app. This can have an innocent cause, so it is worth an expert's look rather than alarm.",
+      "steps": ["send_to_expert", "deep_check_from_pc"], "log": true
+    }
+  ],
+  "ios": {
+    "releases": {"_note": "Ordered oldest to newest; 'latest' is the newest iPhone build of each line, from https://support.apple.com/en-us/100100 on 2026-10-22. Refresh at every bundle release.", "majors": ["16", "17", "18", "26", "27"], "latest": {"16": "16.7.16", "17": "17.7.2", "18": "18.7.10", "26": "26.7.1", "27": "27.0.1"}, "minimumSupported": "16.0"},
+    "stagingDirs": ["/private/var/db/", "/private/var/tmp/"],
+    "knownPathPrefixes": [
+      "/System/", "/usr/", "/bin/", "/sbin/", "/Applications/", "/Developer/", "/AppleInternal/",
+      "/private/var/containers/Bundle/Application/", "/var/containers/Bundle/Application/",
+      "/private/preboot/Cryptexes/", "/System/Cryptexes/"
+    ],
+    "indicators": {
+      "source": "Core Pegasus names from Amnesty Tech (2021) and Kaspersky's shutdown.log research (2024); the full published set ships in the signed ios-indicators.json.",
+      "processNames": ["bh", "roleaccountd", "stagingd", "msgacntd", "fservernetd", "launchrexd", "ABSCarryLog", "aggregatenotd", "otpgrefd", "boardframed"],
+      "pathPrefixes": ["/private/var/db/com.apple.xpc.roleaccountd.staging/"],
+      "fileNames": [],
+      "domains": []
+    }
+  }
+}

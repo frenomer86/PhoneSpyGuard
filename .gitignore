@@ -1,0 +1,47 @@
+# Gradle / Kotlin
+.gradle/
+.kotlin/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+local.properties
+captures/
+
+# Rust
+target/
+
+# Swift / Xcode
+.build/
+.swiftpm/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.ipa
+Payload/
+
+# IDEs and OS files
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Release binaries belong in GitHub Releases, not in git
+*.apk
+*.aab
+*.exe
+*.msi
+*.dmg
+outputs/
+desktop/dist/
+
+# Signing material and secrets: never commit
+*.keystore
+*.jks
+*.p12
+*.p8
+*.pem
+*.key
+*.key.json
+dev-keys/
+.env
+.env.*

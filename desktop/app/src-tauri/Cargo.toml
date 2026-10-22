@@ -1,0 +1,58 @@
+[package]
+name = "phone-spy-guard-desktop"
+description = "Phone Spy Guard for Windows: the Tauri app."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "phone-spy-guard"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+psg-core.workspace = true
+serde_json.workspace = true
+
+[dependencies]
+psg-core.workspace = true
+psg-windows.workspace = true
+psg-scam.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+ed25519-dalek.workspace = true
+base64.workspace = true
+sha2.workspace = true
+rand_core.workspace = true
+time.workspace = true
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-notification = "2"
+# Rule updates over HTTPS, checked against the certificates Windows trusts.
+ureq = { version = "3", default-features = false, features = ["rustls", "platform-verifier"] }
+
+[dev-dependencies]
+psg-windows = { workspace = true, features = ["fixtures"] }
+
+[target.'cfg(windows)'.dependencies]
+# The device key lives in Windows Credential Manager (DPAPI, per user).
+keyring = { version = "3", features = ["windows-native"] }
+winreg = "0.52"
+# DPAPI for the local store, Windows Hello / password check before answers
+# that lower a finding.
+windows-future = "0.3"
+windows = { version = "0.62", features = [
+    "Foundation",
+    "Security_Credentials_UI",
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_Security",
+    "Win32_Security_Credentials",
+    "Win32_Security_Cryptography",
+    "Win32_System_Com",
+    "Win32_System_WinRT",
+] }
+
+[features]
+default = ["custom-protocol"]
+# Serve the UI from the files embedded in the binary (what release builds use).
+custom-protocol = ["tauri/custom-protocol"]
