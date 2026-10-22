@@ -1,0 +1,26 @@
+[
+  {
+    "expires": "2027-10-01T00:00:00Z",
+    "logged": "2026-10-22",
+    "rules": 29,
+    "sha256": "7e798ffd1ee5fe3eb0a97ce85e8cc282a874902c9f13dd63a4cc3d67e69a7411",
+    "signedBy": [
+      "build-a33ca8c4-1",
+      "build-6d2bb235-2",
+      "build-cc2e6814-3"
+    ],
+    "version": 1
+  },
+  {
+    "expires": "2027-10-01T00:00:00Z",
+    "logged": "2026-10-22",
+    "rules": 32,
+    "sha256": "f7de29cfde977508c21d579c0d4404dba166aaec800ebb49a6c0d8e4a9454ade",
+    "signedBy": [
+      "build-a10f981b-1",
+      "build-b90242da-2",
+      "build-bc17f3d0-3"
+    ],
+    "version": 2
+  }
+]

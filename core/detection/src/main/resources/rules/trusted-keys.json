@@ -1,0 +1,17 @@
+{
+  "threshold": 2,
+  "keys": [
+    {
+      "keyId": "release-1",
+      "publicKey": "MCowBQYDK2VwAyEAPLV2Dk5hwc2ugW7RzGg3G5aMZKdcOVKCtMqZdHzcmXE="
+    },
+    {
+      "keyId": "release-2",
+      "publicKey": "MCowBQYDK2VwAyEAX0dJ10X/B16/Y31cicRNqzhZkt6Yl8E26g/YFHDgiYc="
+    },
+    {
+      "keyId": "release-3",
+      "publicKey": "MCowBQYDK2VwAyEAcJvqgASL7C/W7RQdqK+bdcLzgZy44g3pPytVr5umJi0="
+    }
+  ]
+}

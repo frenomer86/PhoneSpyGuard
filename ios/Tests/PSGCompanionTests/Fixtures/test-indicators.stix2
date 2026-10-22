@@ -1,0 +1,36 @@
+{
+ "type": "bundle",
+ "id": "bundle--test",
+ "objects": [
+  {
+   "type": "malware",
+   "id": "malware--1",
+   "name": "TestSpy",
+   "is_family": true
+  },
+  {
+   "type": "indicator",
+   "id": "indicator--1",
+   "pattern_type": "stix",
+   "pattern": "[process:name='helper']"
+  },
+  {
+   "type": "indicator",
+   "id": "indicator--2",
+   "pattern_type": "stix",
+   "pattern": "[domain-name:value='evil-cdn.example']"
+  },
+  {
+   "type": "indicator",
+   "id": "indicator--3",
+   "pattern_type": "stix",
+   "pattern": "[url:value='https://track.badlink.example/x?y=1']"
+  },
+  {
+   "type": "indicator",
+   "id": "indicator--4",
+   "pattern_type": "stix",
+   "pattern": "[file:name='payload.dylib' OR process:name='it\\'sd']"
+  }
+ ]
+}

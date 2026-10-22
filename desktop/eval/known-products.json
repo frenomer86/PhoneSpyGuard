@@ -1,0 +1,530 @@
+{
+ "about": "Known products as their installers name them in Settings > Apps, including a renamed install that keeps the vendor as publisher. Each must be identified as its indicator.",
+ "cases": [
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPYRIX",
+   "name": "Spyrix Free Keylogger",
+   "publisher": "Spyrix Inc.",
+   "path": "C:\\ProgramData\\Spyrix\\spfree.exe"
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPYRIX",
+   "name": "Spyrix Personal Monitor 12.1",
+   "publisher": "Spyrix Inc.",
+   "path": "C:\\ProgramData\\pm\\pm.exe"
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPYRIX",
+   "name": "Windows Security Helper",
+   "publisher": "Spyrix Inc.",
+   "path": "C:\\ProgramData\\wsh\\wsh.exe"
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-REFOG",
+   "name": "REFOG Personal Monitor",
+   "publisher": "REFOG",
+   "path": "C:\\ProgramData\\MPK\\MPK.exe"
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-REFOG",
+   "name": "REFOG Keylogger 7.6",
+   "publisher": "Refog Inc.",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-KIDLOGGER",
+   "name": "KidLogger PRO",
+   "publisher": "",
+   "path": "C:\\Program Files (x86)\\KidLogger\\KidLogger.exe"
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-ARDAMAX",
+   "name": "Ardamax Keylogger 5.3",
+   "publisher": "Ardamax Software",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-REVEALER",
+   "name": "Revealer Keylogger Free 3.0",
+   "publisher": "Logixoft",
+   "path": "C:\\Program Files (x86)\\Revealer Keylogger Free\\rvlkl.exe"
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-ELITE",
+   "name": "Elite Keylogger",
+   "publisher": "WideStep Security Software",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPYAGENT",
+   "name": "SpyAgent 11",
+   "publisher": "Spytech Software and Design, Inc.",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-REALTIMESPY",
+   "name": "Realtime-Spy",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-NETVIZOR",
+   "name": "NetVizor Client",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPECTOR",
+   "name": "Spector Pro 7.0",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPECTOR",
+   "name": "Spector 360 Recorder",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-EBLASTER",
+   "name": "eBlaster 6.0",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-WEBWATCHER",
+   "name": "WebWatcher",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-PCPANDORA",
+   "name": "PC Pandora 7",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SENTRYPC",
+   "name": "SentryPC",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-WOLFEYE",
+   "name": "Wolfeye Remote Screen",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-HOVERWATCH",
+   "name": "Hoverwatch",
+   "publisher": "Refog Inc.",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-FLEXISPY",
+   "name": "FlexiSPY PC",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-ACTUALKL",
+   "name": "Actual Keylogger 3.2",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-AIOKL",
+   "name": "All In One Keylogger",
+   "publisher": "Relytec",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-FAMILYKL",
+   "name": "Family Keylogger",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-KGB",
+   "name": "KGB Spy",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-KGB",
+   "name": "KGB Keylogger 5.2",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-BESTXKL",
+   "name": "Best Free Keylogger",
+   "publisher": "BestXsoftware",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-SPYTECH-REALTIME",
+   "name": "SpyBuddy 2013",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "monitoring",
+   "indicator": "MON-IAMBIGBROTHER",
+   "name": "I Am Big Brother",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-ANYDESK",
+   "name": "AnyDesk",
+   "publisher": "AnyDesk Software GmbH",
+   "path": "C:\\Program Files (x86)\\AnyDesk\\AnyDesk.exe"
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-TEAMVIEWER",
+   "name": "TeamViewer",
+   "publisher": "TeamViewer Germany GmbH",
+   "path": "C:\\Program Files\\TeamViewer\\TeamViewer.exe"
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-TEAMVIEWER",
+   "name": "TeamViewer Host",
+   "publisher": "TeamViewer",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-GOTO",
+   "name": "GoTo Resolve Unattended",
+   "publisher": "GoTo Technologies USA, Inc.",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-GOTO",
+   "name": "LogMeIn",
+   "publisher": "LogMeIn, Inc.",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-SPLASHTOP",
+   "name": "Splashtop Streamer",
+   "publisher": "Splashtop Inc.",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-RUSTDESK",
+   "name": "RustDesk",
+   "publisher": "Purslane Ltd",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-ULTRAVIEWER",
+   "name": "UltraViewer version 6.6.130",
+   "publisher": "DucFabulous",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-SCREENCONNECT",
+   "name": "ScreenConnect Client (a1b2c3d4e5f6)",
+   "publisher": "ConnectWise, LLC",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-CRD",
+   "name": "Chrome Remote Desktop Host",
+   "publisher": "Google LLC",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-AMMYY",
+   "name": "Ammyy Admin",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-SUPREMO",
+   "name": "Supremo",
+   "publisher": "Nanosystems S.r.l.",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-REMOTEPC",
+   "name": "RemotePC",
+   "publisher": "IDrive Inc.",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-ZOHO",
+   "name": "Zoho Assist - Unattended Remote Access",
+   "publisher": "Zoho Corporation",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-AEROADMIN",
+   "name": "AeroAdmin",
+   "publisher": "AeroAdmin LLC",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-RADMIN",
+   "name": "Radmin Server 3.5.2.1",
+   "publisher": "Famatech",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-TIGHTVNC",
+   "name": "TightVNC",
+   "publisher": "GlavSoft LLC.",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-ULTRAVNC",
+   "name": "UltraVNC 1.4.3.6",
+   "publisher": "uvnc bvba",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-REALVNC",
+   "name": "VNC Server 7.12.0",
+   "publisher": "RealVNC",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-DWSERVICE",
+   "name": "DWAgent",
+   "publisher": "DWSNET O\u00dc",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-ATERA",
+   "name": "AteraAgent",
+   "publisher": "Atera Networks",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-NETSUPPORT",
+   "name": "NetSupport Manager (12.10)",
+   "publisher": "NetSupport Ltd",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-REMOTEUTILITIES",
+   "name": "Remote Utilities - Host",
+   "publisher": "Remote Utilities LLC",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-SIMPLEHELP",
+   "name": "SimpleHelp Remote Access",
+   "publisher": "SimpleHelp Ltd",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-HOPTOSUPPORT",
+   "name": "HopToDesk",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "remote_access",
+   "indicator": "RA-IPERIUS",
+   "name": "Iperius Remote",
+   "publisher": "Enter Srl",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-QUSTODIO",
+   "name": "Qustodio",
+   "publisher": "Qustodio",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-NETNANNY",
+   "name": "Net Nanny",
+   "publisher": "Net Nanny",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-NORTONFAMILY",
+   "name": "Norton Family",
+   "publisher": "Gen Digital Inc.",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-KSK",
+   "name": "Kaspersky Safe Kids",
+   "publisher": "Kaspersky",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-FAMISAFE",
+   "name": "FamiSafe",
+   "publisher": "Wondershare",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-MOBICIP",
+   "name": "Mobicip",
+   "publisher": "Mobicip LLC",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-TERAMIND",
+   "name": "Teramind Agent",
+   "publisher": "Teramind Inc.",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-ACTIVTRAK",
+   "name": "ActivTrak Agent",
+   "publisher": "Birch Grove Software, Inc.",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-HUBSTAFF",
+   "name": "Hubstaff",
+   "publisher": "Netsoft Holdings, LLC",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-TIMEDOCTOR",
+   "name": "Time Doctor 2",
+   "publisher": "Time Doctor",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-DESKTIME",
+   "name": "DeskTime",
+   "publisher": "Draugiem Group",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-CONTROLIO",
+   "name": "Controlio",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-VERIATO",
+   "name": "Veriato Cerebral Agent",
+   "publisher": "Veriato",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-INTERGUARD",
+   "name": "InterGuard",
+   "publisher": "Awareness Technologies",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-KICKIDLER",
+   "name": "Kickidler Grabber",
+   "publisher": "Kickidler",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-STAFFCOP",
+   "name": "StaffCop Standard",
+   "publisher": "Atom Security",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-CURRENTWARE",
+   "name": "BrowseReporter Client",
+   "publisher": "CurrentWare Inc.",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-WORKTIME",
+   "name": "WorkTime Corporate",
+   "publisher": "Nestersoft Inc.",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-CLEVERCONTROL",
+   "name": "CleverControl",
+   "publisher": "",
+   "path": ""
+  },
+  {
+   "list": "oversight",
+   "indicator": "OVR-SOFTACTIVITY",
+   "name": "SoftActivity Monitor",
+   "publisher": "Deep Software Inc.",
+   "path": ""
+  }
+ ]
+}

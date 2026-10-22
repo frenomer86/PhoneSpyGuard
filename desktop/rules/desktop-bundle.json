@@ -1,0 +1,1869 @@
+{
+  "version": 2,
+  "expires": "2027-10-01T00:00:00Z",
+  "platform": "windows",
+  "comment": "Phone Spy Guard desktop rule bundle. Same format as the phone bundle; 'indicators' is a desktop extension the Kotlin parser ignores.",
+  "rules": [
+    {
+      "id": "PSG-PC-KNOWN-001",
+      "version": 1,
+      "severity": "critical",
+      "contribution": "confirm",
+      "title": "Known monitoring software or keylogger",
+      "when": {
+        "fact": "pc.known_monitoring_match",
+        "eq": true
+      },
+      "evidence": [
+        "identity",
+        "arrival",
+        "activity"
+      ],
+      "explain": "This program matches a known monitoring product or keylogger by its name, publisher or file hash. Programs like this are sold to secretly record another person's screen, keystrokes and messages.",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence",
+        "uninstall_program",
+        "change_passwords"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-RAT-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Remote-access tool installed",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.remote_access_tool",
+            "eq": true
+          },
+          {
+            "not": {
+              "fact": "pc.unattended_access",
+              "eq": true
+            }
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "This tool lets another computer see and control this PC while it is running. If you did not install it, or a caller asked you to, remove it and call your bank from a number you trust.",
+      "steps": [
+        "uninstall_program",
+        "call_bank"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-RAT-002",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Remote-access tool that lets someone in without you",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.remote_access_tool",
+            "eq": true
+          },
+          {
+            "fact": "pc.unattended_access",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "arrival",
+        "activity"
+      ],
+      "explain": "This remote-access tool is set up for unattended access: someone who has its password can connect and control this PC at any time, even when you are not at the keyboard. Scammers who pose as support staff or a bank often leave tools like this behind.",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence",
+        "uninstall_program",
+        "call_bank",
+        "change_passwords"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-OVERSIGHT-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Parental-control or employee-monitoring software",
+      "when": {
+        "fact": "pc.oversight_tool",
+        "eq": true
+      },
+      "evidence": [
+        "identity",
+        "arrival",
+        "activity"
+      ],
+      "explain": "This product is sold openly to watch a child's or an employee's computer: the sites you visit, your messages and often your screen. On a PC an adult uses for themselves, it means someone else can see what you do here. If your employer or school manages this PC, ask them what it records.",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence",
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-AUTO-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Unsigned program that starts with Windows",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.kind",
+            "eq": "autostart"
+          },
+          {
+            "fact": "pc.signature",
+            "in": [
+              "unsigned",
+              "invalid"
+            ]
+          },
+          {
+            "fact": "pc.user_writable_path",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "This program starts automatically when you sign in, is not signed by its publisher, and lives in a folder any program you run can write to. Many legitimate tools do this, but so does most spyware.",
+      "steps": [
+        "review_app",
+        "disable_autostart"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-AUTO-002",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "New unsigned program set to start with Windows",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.kind",
+            "eq": "autostart"
+          },
+          {
+            "fact": "pc.signature",
+            "in": [
+              "unsigned",
+              "invalid"
+            ]
+          },
+          {
+            "fact": "pc.user_writable_path",
+            "eq": true
+          },
+          {
+            "fact": "pc.new_since_baseline",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "Since the last check, an unsigned program in a user folder was set to start every time Windows starts. If you did not just install something, treat this as someone setting up a way back in.",
+      "steps": [
+        "review_app",
+        "disable_autostart",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-AUTO-003",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Hidden WMI start-up trigger",
+      "when": {
+        "fact": "pc.autostart_location",
+        "eq": "wmi"
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "A WMI event subscription runs a command automatically when something happens on this PC. Home PCs almost never have one; it is a favourite hiding place for spyware because it does not show in Task Manager's start-up list.",
+      "steps": [
+        "export_evidence",
+        "remove_wmi_subscription"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-AUTO-004",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Program hijacking a Windows tool",
+      "when": {
+        "fact": "pc.autostart_location",
+        "eq": "ifeo"
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "Windows has been told to run a different program whenever a built-in tool starts. This trick is used to keep spyware running or to open a back door at the sign-in screen.",
+      "steps": [
+        "export_evidence",
+        "remove_ifeo_debugger"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-AUTO-005",
+      "version": 1,
+      "severity": "low",
+      "contribution": "risk",
+      "title": "New program set to start automatically",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.kind",
+            "eq": "autostart"
+          },
+          {
+            "fact": "pc.new_since_baseline",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "arrival"
+      ],
+      "explain": "A program was added to start automatically since the last check. This is usually an app you just installed; if it is not, look closer.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-SIG-001",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Program whose signature has been tampered with",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.signature",
+            "eq": "invalid"
+          },
+          {
+            "any": [
+              {
+                "fact": "pc.kind",
+                "eq": "autostart"
+              },
+              {
+                "fact": "pc.kind",
+                "eq": "process"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "identity"
+      ],
+      "explain": "This program carries a publisher signature that no longer matches the file, which means the file was changed after it was signed.",
+      "steps": [
+        "export_evidence",
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-PROC-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Unsigned program running from a user folder",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.kind",
+            "eq": "process"
+          },
+          {
+            "fact": "pc.signature",
+            "eq": "unsigned"
+          },
+          {
+            "fact": "pc.user_writable_path",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "activity"
+      ],
+      "explain": "This running program is not signed by any publisher and runs from a folder that any program can write to.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-EXT-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Browser extension that can read every website",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.ext_all_sites",
+            "eq": true
+          },
+          {
+            "fact": "pc.ext_outside_store",
+            "eq": false
+          },
+          {
+            "fact": "pc.ext_force_installed",
+            "eq": false
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "powers"
+      ],
+      "explain": "This extension can read and change everything on every website you visit, including your email, bank and passwords as you type them. Many popular extensions ask for this, so keep it only if you know and use it.",
+      "steps": [
+        "review_extension"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-EXT-002",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Extension from outside the store that can read every website",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.ext_all_sites",
+            "eq": true
+          },
+          {
+            "fact": "pc.ext_outside_store",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "powers",
+        "arrival"
+      ],
+      "explain": "This extension did not come from the browser's store and can read and change everything on every website. Monitoring tools install extensions like this to capture messages and passwords.",
+      "steps": [
+        "remove_extension",
+        "change_passwords",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-EXT-003",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Extension forced on by a policy",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.ext_force_installed",
+            "eq": true
+          },
+          {
+            "fact": "pc.ext_all_sites",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "identity",
+        "powers",
+        "arrival"
+      ],
+      "explain": "A policy forces this extension on and stops you removing it. On a work PC that is normal; on a personal PC it means someone changed the browser's policies.",
+      "steps": [
+        "remove_browser_policy",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-CERT-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Root certificate added for your account",
+      "when": {
+        "fact": "pc.root_cert_user_added",
+        "eq": true
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "A trusted root certificate was added to your Windows account. Whoever holds its private key can read your encrypted web traffic. Some security and developer tools add one; if you do not recognise it, remove it.",
+      "steps": [
+        "remove_root_cert"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-PROXY-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Web traffic sent through a proxy",
+      "when": {
+        "any": [
+          {
+            "fact": "pc.proxy_remote",
+            "eq": true
+          },
+          {
+            "fact": "pc.pac_url_set",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "Windows is set to send your web traffic through another computer. Combined with an added certificate, that computer can read everything you browse.",
+      "steps": [
+        "reset_proxy"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-INTERCEPT-001",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Set up to read your encrypted web traffic",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.root_cert_user_added",
+            "eq": true
+          },
+          {
+            "any": [
+              {
+                "fact": "pc.proxy_remote",
+                "eq": true
+              },
+              {
+                "fact": "pc.pac_url_set",
+                "eq": true
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "An added root certificate and a proxy together are exactly what is needed to read and change your encrypted web traffic.",
+      "steps": [
+        "remove_root_cert",
+        "reset_proxy",
+        "change_passwords",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-DNS-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Unusual DNS server",
+      "when": {
+        "fact": "pc.dns_unusual",
+        "eq": true
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "This PC looks up website addresses using a server that is neither your router nor a well-known public service. A hostile DNS server can send you to fake versions of real sites.",
+      "steps": [
+        "reset_dns"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-HOSTS-001",
+      "version": 1,
+      "severity": "low",
+      "contribution": "risk",
+      "title": "Hosts file redirects some websites",
+      "when": {
+        "fact": "pc.hosts_redirects",
+        "gt": 0
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "The Windows hosts file sends some website names to fixed addresses. Ad blockers and developer tools do this; spyware and scammers do too.",
+      "steps": [
+        "review_hosts"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-HOSTS-002",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Hosts file redirects bank or security websites",
+      "when": {
+        "fact": "pc.hosts_redirects_sensitive",
+        "eq": true
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "The hosts file sends a bank, email, or security-update website to an address that is not its own. This is used to block antivirus updates or show you a fake login page.",
+      "steps": [
+        "reset_hosts",
+        "change_passwords",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-RDP-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Remote Desktop is turned on",
+      "when": {
+        "fact": "pc.rdp_enabled",
+        "eq": true
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "Remote Desktop lets someone with an account's password sign in to this PC from another computer. Turn it off unless you use it.",
+      "steps": [
+        "disable_rdp"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-ADMIN-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Extra administrator accounts",
+      "when": {
+        "fact": "pc.extra_admins",
+        "gt": 0
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "This PC has administrator accounts besides yours. An administrator can install monitoring software and read every account's files.",
+      "steps": [
+        "review_admins"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-ACCT-001",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "A hidden account can sign in to this PC",
+      "when": {
+        "fact": "pc.hidden_accounts",
+        "gt": 0
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "An enabled account on this PC is hidden from the sign-in screen, so you would never see it there. Someone who knows its password can sign in to it, including over Remote Desktop, and an administrator account can install monitoring software. Windows does not create hidden accounts like this for people.",
+      "steps": [
+        "review_accounts"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-ACCT-002",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "The built-in Administrator or Guest account is turned on",
+      "when": {
+        "any": [
+          {
+            "fact": "pc.builtin_admin_enabled",
+            "eq": true
+          },
+          {
+            "fact": "pc.guest_enabled",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "Windows keeps the built-in Administrator and Guest accounts switched off. Someone turned one on, which gives another way into this PC.",
+      "steps": [
+        "review_accounts"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-ACCT-003",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Windows signs in automatically",
+      "when": {
+        "fact": "pc.auto_logon",
+        "eq": true
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "This PC signs in to an account by itself when it starts, so anyone who turns it on gets in without a password. If the password is stored for this, any program on the PC can read it.",
+      "steps": [
+        "disable_auto_logon"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-DEF-001",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Microsoft Defender is switched off",
+      "when": {
+        "any": [
+          {
+            "fact": "pc.defender_realtime_off",
+            "eq": true
+          },
+          {
+            "fact": "pc.defender_disabled_by_policy",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "Microsoft Defender's real-time protection is off and no other antivirus is registered. Spyware often switches it off first.",
+      "steps": [
+        "turn_on_defender",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-DEF-002",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Antivirus exclusions",
+      "when": {
+        "fact": "pc.defender_exclusions",
+        "gt": 0
+      },
+      "evidence": [
+        "settings"
+      ],
+      "explain": "Defender has been told to skip some folders, files or programs. Spyware adds exclusions so it is never scanned.",
+      "steps": [
+        "remove_exclusion"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-CAM-001",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Unsigned program used your camera or microphone",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.kind",
+            "eq": "camera_mic"
+          },
+          {
+            "fact": "pc.packaged_app",
+            "eq": false
+          },
+          {
+            "fact": "pc.signature",
+            "in": [
+              "unsigned",
+              "invalid"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "activity"
+      ],
+      "explain": "A program that is not signed by any publisher used your camera or microphone.",
+      "steps": [
+        "review_app",
+        "block_camera_mic"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-CAM-002",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Program from a user folder used your camera or microphone",
+      "when": {
+        "all": [
+          {
+            "fact": "pc.kind",
+            "eq": "camera_mic"
+          },
+          {
+            "fact": "pc.packaged_app",
+            "eq": false
+          },
+          {
+            "fact": "pc.signature",
+            "in": [
+              "unsigned",
+              "invalid"
+            ]
+          },
+          {
+            "fact": "pc.user_writable_path",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "activity"
+      ],
+      "explain": "An unsigned program running from a user folder used your camera or microphone. Spyware records through the camera and microphone this way.",
+      "steps": [
+        "block_camera_mic",
+        "export_evidence",
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PC-INNOCENT-001",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "You said you set this up",
+      "when": {
+        "fact": "pc.owner_trusted",
+        "eq": true
+      },
+      "evidence": [],
+      "explain": "You told Phone Spy Guard you set this up yourself.",
+      "steps": [],
+      "log": false,
+      "explains": [
+        "PSG-PC-RAT-001",
+        "PSG-PC-RAT-002",
+        "PSG-PC-AUTO-001",
+        "PSG-PC-AUTO-002",
+        "PSG-PC-AUTO-005",
+        "PSG-PC-PROC-001",
+        "PSG-PC-EXT-001",
+        "PSG-PC-EXT-002",
+        "PSG-PC-CERT-001",
+        "PSG-PC-PROXY-001",
+        "PSG-PC-INTERCEPT-001",
+        "PSG-PC-DNS-001",
+        "PSG-PC-HOSTS-001",
+        "PSG-PC-RDP-001",
+        "PSG-PC-ADMIN-001",
+        "PSG-PC-DEF-002",
+        "PSG-PC-CAM-001",
+        "PSG-PC-OVERSIGHT-001",
+        "PSG-PC-ACCT-001",
+        "PSG-PC-ACCT-002",
+        "PSG-PC-ACCT-003"
+      ]
+    },
+    {
+      "id": "PSG-PC-INNOCENT-002",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Managed by your employer or school",
+      "when": {
+        "fact": "pc.managed_by_employer",
+        "eq": true
+      },
+      "evidence": [],
+      "explain": "This PC is joined to an organisation, which explains settings that an IT department sets.",
+      "steps": [],
+      "log": false,
+      "explains": [
+        "PSG-PC-RAT-001",
+        "PSG-PC-RAT-002",
+        "PSG-PC-EXT-001",
+        "PSG-PC-EXT-003",
+        "PSG-PC-CERT-001",
+        "PSG-PC-PROXY-001",
+        "PSG-PC-INTERCEPT-001",
+        "PSG-PC-DNS-001",
+        "PSG-PC-RDP-001",
+        "PSG-PC-ADMIN-001",
+        "PSG-PC-DEF-002",
+        "PSG-PC-OVERSIGHT-001",
+        "PSG-PC-ACCT-002",
+        "PSG-PC-ACCT-003"
+      ]
+    },
+    {
+      "id": "PSG-PC-INNOCENT-003",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Another antivirus is protecting this PC",
+      "when": {
+        "fact": "pc.third_party_av",
+        "eq": true
+      },
+      "evidence": [],
+      "explain": "Defender switches its real-time protection off when another antivirus product takes over.",
+      "steps": [],
+      "log": false,
+      "explains": [
+        "PSG-PC-DEF-001"
+      ]
+    }
+  ],
+  "indicators": {
+    "monitoring": [
+      {
+        "id": "MON-SPYRIX",
+        "name": "Spyrix",
+        "names": [
+          "spyrix"
+        ],
+        "publishers": [
+          "spyrix"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-REFOG",
+        "name": "Refog",
+        "names": [
+          "refog"
+        ],
+        "publishers": [
+          "refog"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-KIDLOGGER",
+        "name": "KidLogger",
+        "names": [
+          "kidlogger"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-ARDAMAX",
+        "name": "Ardamax Keylogger",
+        "names": [
+          "ardamax"
+        ],
+        "publishers": [
+          "ardamax"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-REVEALER",
+        "name": "Revealer Keylogger",
+        "names": [
+          "revealerkeylogger"
+        ],
+        "publishers": [
+          "logixoft"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-ELITE",
+        "name": "Elite Keylogger",
+        "names": [
+          "elitekeylogger"
+        ],
+        "publishers": [
+          "widestep"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-SPYAGENT",
+        "name": "Spytech SpyAgent",
+        "names": [
+          "spyagent",
+          "spytech"
+        ],
+        "publishers": [
+          "spytech"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-REALTIMESPY",
+        "name": "Realtime-Spy",
+        "names": [
+          "realtimespy"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-NETVIZOR",
+        "name": "NetVizor",
+        "names": [
+          "netvizor"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-SPECTOR",
+        "name": "Spector",
+        "names": [
+          "spectorpro",
+          "spector360"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-EBLASTER",
+        "name": "eBlaster",
+        "names": [
+          "eblaster"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-WEBWATCHER",
+        "name": "WebWatcher",
+        "names": [
+          "webwatcher"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-PCPANDORA",
+        "name": "PC Pandora",
+        "names": [
+          "pcpandora"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-SENTRYPC",
+        "name": "SentryPC",
+        "names": [
+          "sentrypc"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-WOLFEYE",
+        "name": "Wolfeye",
+        "names": [
+          "wolfeye"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-HOVERWATCH",
+        "name": "Hoverwatch",
+        "names": [
+          "hoverwatch"
+        ],
+        "publishers": [
+          "refog"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-FLEXISPY",
+        "name": "FlexiSPY",
+        "names": [
+          "flexispy"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-ACTUALKL",
+        "name": "Actual Keylogger",
+        "names": [
+          "actualkeylogger"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-AIOKL",
+        "name": "All In One Keylogger",
+        "names": [
+          "allinonekeylogger"
+        ],
+        "publishers": [
+          "relytec"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-FAMILYKL",
+        "name": "Family Keylogger",
+        "names": [
+          "familykeylogger"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-KGB",
+        "name": "KGB Spy",
+        "names": [
+          "kgbspy",
+          "kgbkeylogger"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-BESTXKL",
+        "name": "BestXsoftware Keylogger",
+        "names": [
+          "bestxsoftware"
+        ],
+        "publishers": [
+          "bestxsoftware"
+        ],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-SPYTECH-REALTIME",
+        "name": "SpyBuddy",
+        "names": [
+          "spybuddy"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      },
+      {
+        "id": "MON-IAMBIGBROTHER",
+        "name": "iAmBigBrother",
+        "names": [
+          "iambigbrother"
+        ],
+        "publishers": [],
+        "services": [],
+        "sha256": [],
+        "removal": ""
+      }
+    ],
+    "remote_access": [
+      {
+        "id": "RA-ANYDESK",
+        "name": "AnyDesk",
+        "names": [
+          "anydesk"
+        ],
+        "publishers": [
+          "anydesk"
+        ],
+        "services": [
+          "anydesk"
+        ],
+        "sha256": [],
+        "removal": "Open AnyDesk, choose Settings > Security and turn off unattended access, then uninstall it from Settings > Apps."
+      },
+      {
+        "id": "RA-TEAMVIEWER",
+        "name": "TeamViewer",
+        "names": [
+          "teamviewer"
+        ],
+        "publishers": [
+          "teamviewer"
+        ],
+        "services": [
+          "teamviewer"
+        ],
+        "sha256": [],
+        "removal": "Uninstall TeamViewer from Settings > Apps. If you use it, remove any 'easy access' or assigned account in its options."
+      },
+      {
+        "id": "RA-GOTO",
+        "name": "GoTo / LogMeIn",
+        "names": [
+          "gotoassist",
+          "gotomypc",
+          "gotoresolve",
+          "logmein",
+          "logmeinrescue"
+        ],
+        "publishers": [],
+        "services": [
+          "logmein",
+          "lmiguardiansvc",
+          "gotoassist",
+          "gotomypc",
+          "gotoresolve"
+        ],
+        "sha256": [],
+        "removal": "Uninstall the GoTo or LogMeIn product from Settings > Apps."
+      },
+      {
+        "id": "RA-SPLASHTOP",
+        "name": "Splashtop",
+        "names": [
+          "splashtop"
+        ],
+        "publishers": [
+          "splashtop"
+        ],
+        "services": [
+          "splashtopremoteservice"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Splashtop Streamer from Settings > Apps."
+      },
+      {
+        "id": "RA-RUSTDESK",
+        "name": "RustDesk",
+        "names": [
+          "rustdesk"
+        ],
+        "publishers": [
+          "purslane"
+        ],
+        "services": [
+          "rustdesk"
+        ],
+        "sha256": [],
+        "removal": "Uninstall RustDesk from Settings > Apps."
+      },
+      {
+        "id": "RA-ULTRAVIEWER",
+        "name": "UltraViewer",
+        "names": [
+          "ultraviewer"
+        ],
+        "publishers": [
+          "ducfabulous"
+        ],
+        "services": [
+          "ultraviewservice"
+        ],
+        "sha256": [],
+        "removal": "Uninstall UltraViewer from Settings > Apps."
+      },
+      {
+        "id": "RA-SCREENCONNECT",
+        "name": "ScreenConnect (ConnectWise Control)",
+        "names": [
+          "screenconnect",
+          "connectwisecontrol"
+        ],
+        "publishers": [
+          "connectwise"
+        ],
+        "services": [
+          "screenconnectclient"
+        ],
+        "sha256": [],
+        "removal": "Uninstall 'ScreenConnect Client' from Settings > Apps. Scammers use this tool very often."
+      },
+      {
+        "id": "RA-CRD",
+        "name": "Chrome Remote Desktop",
+        "names": [
+          "chromeremotedesktop",
+          "chromoting"
+        ],
+        "publishers": [],
+        "services": [
+          "chromoting"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Chrome Remote Desktop Host from Settings > Apps and remove this PC at remotedesktop.google.com."
+      },
+      {
+        "id": "RA-AMMYY",
+        "name": "Ammyy Admin",
+        "names": [
+          "ammyy"
+        ],
+        "publishers": [],
+        "services": [
+          "ammyyadmin"
+        ],
+        "sha256": [],
+        "removal": "Delete AA_v3.exe and remove its service."
+      },
+      {
+        "id": "RA-SUPREMO",
+        "name": "Supremo",
+        "names": [
+          "supremo"
+        ],
+        "publishers": [
+          "nanosystems"
+        ],
+        "services": [
+          "supremoservice"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Supremo from Settings > Apps."
+      },
+      {
+        "id": "RA-REMOTEPC",
+        "name": "RemotePC",
+        "names": [
+          "remotepc"
+        ],
+        "publishers": [],
+        "services": [
+          "remotepcservice",
+          "rpcservice"
+        ],
+        "sha256": [],
+        "removal": "Uninstall RemotePC from Settings > Apps."
+      },
+      {
+        "id": "RA-ZOHO",
+        "name": "Zoho Assist",
+        "names": [
+          "zohoassist",
+          "zohomeeting"
+        ],
+        "publishers": [],
+        "services": [
+          "zohoassist",
+          "zaservice"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Zoho Assist from Settings > Apps."
+      },
+      {
+        "id": "RA-AEROADMIN",
+        "name": "AeroAdmin",
+        "names": [
+          "aeroadmin"
+        ],
+        "publishers": [
+          "aeroadmin"
+        ],
+        "services": [
+          "aeroadmin"
+        ],
+        "sha256": [],
+        "removal": "Uninstall AeroAdmin and delete AeroAdmin.exe."
+      },
+      {
+        "id": "RA-RADMIN",
+        "name": "Radmin",
+        "names": [
+          "radminserver"
+        ],
+        "publishers": [],
+        "services": [
+          "rserver3"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Radmin Server from Settings > Apps."
+      },
+      {
+        "id": "RA-TIGHTVNC",
+        "name": "TightVNC",
+        "names": [
+          "tightvnc"
+        ],
+        "publishers": [
+          "glavsoft"
+        ],
+        "services": [
+          "tvnserver"
+        ],
+        "sha256": [],
+        "removal": "Uninstall TightVNC from Settings > Apps."
+      },
+      {
+        "id": "RA-ULTRAVNC",
+        "name": "UltraVNC",
+        "names": [
+          "ultravnc"
+        ],
+        "publishers": [
+          "uvnc"
+        ],
+        "services": [
+          "uvncservice",
+          "uvnc_service"
+        ],
+        "sha256": [],
+        "removal": "Uninstall UltraVNC from Settings > Apps."
+      },
+      {
+        "id": "RA-REALVNC",
+        "name": "RealVNC",
+        "names": [
+          "realvnc",
+          "vncserver"
+        ],
+        "publishers": [
+          "realvnc"
+        ],
+        "services": [
+          "vncserver"
+        ],
+        "sha256": [],
+        "removal": "Uninstall VNC Server from Settings > Apps."
+      },
+      {
+        "id": "RA-DWSERVICE",
+        "name": "DWService",
+        "names": [
+          "dwagent",
+          "dwservice"
+        ],
+        "publishers": [],
+        "services": [
+          "dwagent"
+        ],
+        "sha256": [],
+        "removal": "Uninstall DWAgent from Settings > Apps."
+      },
+      {
+        "id": "RA-ATERA",
+        "name": "Atera",
+        "names": [
+          "atera"
+        ],
+        "publishers": [
+          "atera"
+        ],
+        "services": [
+          "ateraagent"
+        ],
+        "sha256": [],
+        "removal": "Uninstall AteraAgent from Settings > Apps."
+      },
+      {
+        "id": "RA-NETSUPPORT",
+        "name": "NetSupport Manager",
+        "names": [
+          "netsupport",
+          "client32"
+        ],
+        "publishers": [
+          "netsupport"
+        ],
+        "services": [
+          "client32"
+        ],
+        "sha256": [],
+        "removal": "Uninstall NetSupport Manager. If you never installed it, treat it as malware: it is widely abused by criminals."
+      },
+      {
+        "id": "RA-REMOTEUTILITIES",
+        "name": "Remote Utilities",
+        "names": [
+          "remoteutilities",
+          "rutserv"
+        ],
+        "publishers": [
+          "remote utilities",
+          "usoris"
+        ],
+        "services": [
+          "rmanservice"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Remote Utilities Host from Settings > Apps."
+      },
+      {
+        "id": "RA-SIMPLEHELP",
+        "name": "SimpleHelp",
+        "names": [
+          "simplehelp"
+        ],
+        "publishers": [
+          "simplehelp"
+        ],
+        "services": [
+          "simplehelpremoteaccess"
+        ],
+        "sha256": [],
+        "removal": "Uninstall SimpleHelp from Settings > Apps."
+      },
+      {
+        "id": "RA-HOPTOSUPPORT",
+        "name": "HopToDesk",
+        "names": [
+          "hoptodesk"
+        ],
+        "publishers": [],
+        "services": [
+          "hoptodesk"
+        ],
+        "sha256": [],
+        "removal": "Uninstall HopToDesk from Settings > Apps."
+      },
+      {
+        "id": "RA-IPERIUS",
+        "name": "Iperius Remote",
+        "names": [
+          "iperiusremote"
+        ],
+        "publishers": [],
+        "services": [
+          "iperiusremote"
+        ],
+        "sha256": [],
+        "removal": "Uninstall Iperius Remote from Settings > Apps."
+      }
+    ],
+    "note": "Publisher strings are matched as substrings of a program's publisher or Authenticode signer, so only list publishers whose every product belongs in the list. Name tokens match at a word start of the normalised name.",
+    "oversight": [
+      {
+        "id": "OVR-QUSTODIO",
+        "name": "Qustodio",
+        "names": [
+          "qustodio"
+        ],
+        "publishers": [
+          "qustodio"
+        ],
+        "sha256": [],
+        "services": [
+          "qengine",
+          "qustodio"
+        ],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-NETNANNY",
+        "name": "Net Nanny",
+        "names": [
+          "netnanny"
+        ],
+        "publishers": [
+          "net nanny"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-NORTONFAMILY",
+        "name": "Norton Family",
+        "names": [
+          "nortonfamily",
+          "nortononlinefamily"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [
+          "nofservice"
+        ],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-KSK",
+        "name": "Kaspersky Safe Kids",
+        "names": [
+          "kasperskysafekids",
+          "safekids"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-FAMISAFE",
+        "name": "FamiSafe",
+        "names": [
+          "famisafe"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-BARK",
+        "name": "Bark",
+        "names": [
+          "barkdesktop"
+        ],
+        "publishers": [
+          "bark technologies"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-MOBICIP",
+        "name": "Mobicip",
+        "names": [
+          "mobicip"
+        ],
+        "publishers": [
+          "mobicip"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-CIRCLE",
+        "name": "Circle Parental Controls",
+        "names": [
+          "circleparental",
+          "circlehome"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-KIDSWATCHER",
+        "name": "KidsWatcher / Kids Monitor",
+        "names": [
+          "kidswatcher"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-TERAMIND",
+        "name": "Teramind",
+        "names": [
+          "teramind"
+        ],
+        "publishers": [
+          "teramind"
+        ],
+        "sha256": [],
+        "services": [
+          "tmagent",
+          "teramind"
+        ],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-ACTIVTRAK",
+        "name": "ActivTrak",
+        "names": [
+          "activtrak",
+          "svctcom"
+        ],
+        "publishers": [
+          "birch grove",
+          "activtrak"
+        ],
+        "sha256": [],
+        "services": [
+          "svctcom"
+        ],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-HUBSTAFF",
+        "name": "Hubstaff",
+        "names": [
+          "hubstaff"
+        ],
+        "publishers": [
+          "netsoft holdings",
+          "hubstaff"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-TIMEDOCTOR",
+        "name": "Time Doctor",
+        "names": [
+          "timedoctor"
+        ],
+        "publishers": [
+          "time doctor",
+          "staff.com"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-DESKTIME",
+        "name": "DeskTime",
+        "names": [
+          "desktime"
+        ],
+        "publishers": [
+          "draugiem"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-INSIGHTFUL",
+        "name": "Insightful (Workpuls)",
+        "names": [
+          "workpuls",
+          "insightfulworkforce"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-CONTROLIO",
+        "name": "Controlio",
+        "names": [
+          "controlio"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-VERIATO",
+        "name": "Veriato / Cerebral",
+        "names": [
+          "veriato",
+          "cerebral"
+        ],
+        "publishers": [
+          "veriato",
+          "awareness technologies"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-INTERGUARD",
+        "name": "InterGuard",
+        "names": [
+          "interguard"
+        ],
+        "publishers": [
+          "awareness technologies"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-KICKIDLER",
+        "name": "Kickidler",
+        "names": [
+          "kickidler"
+        ],
+        "publishers": [
+          "kickidler"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-STAFFCOP",
+        "name": "StaffCop",
+        "names": [
+          "staffcop"
+        ],
+        "publishers": [
+          "atom security"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-CURRENTWARE",
+        "name": "CurrentWare",
+        "names": [
+          "browsereporter",
+          "accesspatrol",
+          "bossbrowser",
+          "enforcive"
+        ],
+        "publishers": [
+          "currentware"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-WORKTIME",
+        "name": "WorkTime",
+        "names": [
+          "worktime",
+          "nestersoft"
+        ],
+        "publishers": [
+          "nestersoft"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-EMPMONITOR",
+        "name": "EmpMonitor",
+        "names": [
+          "empmonitor"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-CLEVERCONTROL",
+        "name": "CleverControl",
+        "names": [
+          "clevercontrol"
+        ],
+        "publishers": [],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      },
+      {
+        "id": "OVR-SOFTACTIVITY",
+        "name": "SoftActivity / Monitor",
+        "names": [
+          "softactivity"
+        ],
+        "publishers": [
+          "softactivity",
+          "deep software"
+        ],
+        "sha256": [],
+        "services": [],
+        "removal": "Export the evidence timeline first. Then uninstall it in Settings > Apps; most of these ask for the account password set by whoever installed it, which is itself worth noting in the timeline."
+      }
+    ]
+  }
+}

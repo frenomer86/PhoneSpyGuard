@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phone Spy Guard</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="appbar">
+    <div class="brand">
+      <img id="brandIcon" src="shield.svg" alt="" width="32" height="32">
+      <span id="brandName">Phone Spy Guard</span>
+    </div>
+    <button class="btn outlined" id="btnQuickExit" title="Hide this window at once (Esc)">Quick exit</button>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="check" aria-selected="true">Device check</button>
+    <button role="tab" data-tab="message">Message check</button>
+    <button role="tab" data-tab="accounts">Accounts</button>
+    <button role="tab" data-tab="timeline">Evidence</button>
+    <button role="tab" data-tab="safety">Safety</button>
+  </nav>
+
+  <div id="lockScreen" class="lock" hidden>
+    <h1>This app is locked</h1>
+    <p>Unlock with Windows Hello or your password to see your results. This keeps them private if someone else uses this PC.</p>
+    <div class="stack">
+      <button class="btn filled" id="btnUnlock">Unlock</button>
+      <button class="btn filled" id="btnLockExit">Quick exit</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- Device check -->
+    <section id="tab-check" class="tab" role="tabpanel">
+      <h1>Device check</h1>
+      <p class="lead">Check who else can see this PC. Nothing leaves your PC unless you export it.</p>
+      <div class="actions">
+        <button class="btn filled wide" id="btnCheck">Run device check</button>
+        <button class="btn tonal" id="btnDeep" title="Windows will ask for administrator rights once">Deep check</button>
+      </div>
+      <p class="small muted" id="topStatus" aria-live="polite"></p>
+      <div id="rulesError" class="notice error" hidden></div>
+      <div id="progress" class="progress" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <span id="progressText">Checking this PC…</span>
+      </div>
+      <p class="small" id="lastRun"></p>
+      <div id="guidance" hidden>
+        <article class="card">
+          <h3>If you are in danger right now</h3>
+          <p>If you feel unsafe, contact your local emergency number straight away. This app gives general safety information; it is not a substitute for help from the police or a trained advocate.</p>
+        </article>
+        <article class="card">
+          <h3>Removing spyware can tip the person off</h3>
+          <p>When monitoring software is removed, the person watching often notices — the alerts stop. If they are someone who could become dangerous, that moment can be risky. Plan removal with a domestic-abuse advocate before you act.</p>
+        </article>
+        <article class="card">
+          <h3>Save the proof before you clean up</h3>
+          <p>Export your evidence timeline and take screenshots first. Once a program is removed, the proof it was there can be gone, and you may need it for the police, a court or your bank.</p>
+          <div class="card-actions">
+            <button class="btn outlined" data-goto="timeline">Go to Evidence</button>
+            <button class="btn text" id="btnSafetyOk">Got it, keep these short</button>
+          </div>
+        </article>
+      </div>
+      <div id="results"></div>
+      <div id="cammicSection" hidden>
+        <h2>Camera and microphone</h2>
+        <p class="small muted">Which programs used them, from Windows' own privacy records.</p>
+        <div id="cammic"></div>
+      </div>
+      <p class="small muted footnote">The check only reads. It changes nothing, sends nothing anywhere, and takes a minute or two. The deep check also reads Defender exclusions, WMI start-up triggers and every user's start-up entries, which Windows only shows to an administrator.</p>
+    </section>
+
+    <!-- Message check -->
+    <section id="tab-message" class="tab" role="tabpanel" hidden>
+      <h1>Check a message or link</h1>
+      <p class="lead">Paste a text, chat message or email you're unsure about. It's checked on this PC and never sent anywhere.</p>
+      <form id="messageForm">
+        <div class="field">
+          <label for="messageText">Paste the message</label>
+          <textarea id="messageText" rows="5" maxlength="20000" spellcheck="false"></textarea>
+        </div>
+        <button class="btn filled block" type="submit" id="btnCheckMessage">Check it</button>
+      </form>
+      <div id="messageResult"></div>
+    </section>
+
+    <!-- Accounts -->
+    <section id="tab-accounts" class="tab" role="tabpanel" hidden>
+      <h1>Account checkup</h1>
+      <p class="lead">Work through these in each app or website. This app can't see your accounts — you check and tell it what you find. Your answers are not saved.</p>
+      <div id="pcAccounts"></div>
+      <div id="auditSummary" class="card"></div>
+      <div id="auditSteps"></div>
+    </section>
+
+    <!-- Evidence -->
+    <section id="tab-timeline" class="tab" role="tabpanel" hidden>
+      <h1>Evidence</h1>
+      <p class="lead">Every finding, change and answer, in order. Each entry is chained to the one before and signed with this PC's key, so any later edit, deletion or reordering shows up. You can hand an export to the police, a bank or a lawyer.</p>
+      <div class="actions">
+        <button class="btn filled" id="btnExport">Export timeline</button>
+        <button class="btn outlined" id="btnCheckpoint">Make a checkpoint</button>
+      </div>
+      <div id="chainStatus"></div>
+      <article class="card">
+        <h3>Keep a checkpoint off this PC</h3>
+        <p>A checkpoint is a short signed message saying how long the timeline is right now. Email it to yourself or send it to someone you trust. If anyone later deletes or rebuilds entries, even with this PC's key, the checkpoint shows it.</p>
+        <div id="checkpointBox" class="checkpoint-box" hidden>
+          <textarea id="checkpointText" rows="9" readonly aria-label="Checkpoint text"></textarea>
+          <div class="card-actions"><button class="btn filled" id="btnCopyCheckpoint">Copy</button><button class="btn text" id="btnCloseCheckpoint">Done</button></div>
+        </div>
+      </article>
+      <form id="noteForm" class="card">
+        <div class="field">
+          <label for="noteText">Add a note: what happened, when, who you told</label>
+          <textarea id="noteText" rows="2" maxlength="2000"></textarea>
+        </div>
+        <div class="card-actions"><button class="btn tonal" type="submit">Add note</button></div>
+      </form>
+      <div id="timeline"></div>
+    </section>
+
+    <!-- Safety -->
+    <section id="tab-safety" class="tab" role="tabpanel" hidden>
+      <h1>Safety</h1>
+      <div class="actions"><button class="btn outlined" data-quick-exit>Quick exit</button></div>
+      <p class="small muted">Quick exit (or the Esc key) hides this window at once. With the app lock on, it also locks.</p>
+
+      <label class="card switch-card">
+        <span><strong>Change watch</strong>
+          <span class="small">Check for changes every 15 minutes while this app is open or in the tray. Alerts never name what was found.</span></span>
+        <input type="checkbox" role="switch" id="watchToggle">
+      </label>
+      <label class="card switch-card">
+        <span><strong>Start with Windows</strong>
+          <span class="small">Start the watch in the tray when you sign in.</span></span>
+        <input type="checkbox" role="switch" id="signInToggle">
+      </label>
+      <label class="card switch-card">
+        <span><strong>Discreet name and icon</strong>
+          <span class="small">Show this window and the tray as "Device Check" with a plain icon. The installed program keeps its name in the Start menu and in Settings &gt; Apps.</span></span>
+        <input type="checkbox" role="switch" id="discreetToggle">
+      </label>
+      <label class="card switch-card">
+        <span><strong>App lock</strong>
+          <span class="small">Ask for Windows Hello or your password before showing anything. Use it if someone else can use this PC.</span></span>
+        <input type="checkbox" role="switch" id="lockToggle">
+      </label>
+
+      <h2>Before you change anything</h2>
+      <article class="card">
+        <h3>If you are in danger right now</h3>
+        <p>If you feel unsafe, contact your local emergency number straight away. This app gives general safety information; it is not a substitute for help from the police or a trained advocate.</p>
+      </article>
+      <article class="card">
+        <h3>Use a safer device to get help</h3>
+        <p>If someone may be watching this PC, look up help on a device they can't see — a friend's phone, a library or work computer — and in a private browser window. What you type here could be read.</p>
+      </article>
+      <article class="card">
+        <h3>Removing spyware can tip the person off</h3>
+        <p>When monitoring software is removed, the person watching often notices — the alerts stop. If they are someone who could become dangerous, that moment can be risky. Plan removal with a domestic-abuse advocate before you act.</p>
+      </article>
+      <article class="card">
+        <h3>Save the proof before you clean up</h3>
+        <p>Export your evidence timeline and take screenshots first. Once a program is removed, the proof it was there can be gone, and you may need it for the police, a court or your bank.</p>
+      </article>
+      <article class="card">
+        <h3>Have a safety plan ready</h3>
+        <p>Decide where you'll be and who you'll be with when you make changes, and have a way to call for help. A local domestic-abuse service can help you build a plan that fits your situation.</p>
+      </article>
+
+      <h2>Things you said you set up</h2>
+      <div id="trustedList" class="card small"></div>
+
+      <h2>Detection rules</h2>
+      <article class="card">
+        <p class="small" id="rulesInfo"></p>
+        <label class="switch-row">
+          <span>Download new detection rules automatically once a day</span>
+          <input type="checkbox" role="switch" id="autoRulesToggle">
+        </label>
+        <p class="small muted" id="ruleUpdateInfo"></p>
+        <div class="card-actions">
+          <button class="btn outlined" id="btnCheckRules">Check for new rules now</button>
+          <button class="btn outlined" id="btnRulesFile">Install rules from files…</button>
+          <input type="file" id="rulesFiles" accept=".json" multiple hidden>
+        </div>
+        <p class="small muted">To install from files, choose both <code>desktop-bundle.json</code> and <code>desktop-bundle.sig.json</code> together. They are checked exactly like a download: two of the three release keys must have signed them, and they must be newer than the rules in use.</p>
+      </article>
+
+      <h2>What this app can and can't do</h2>
+      <article class="card">
+        <ul class="plain">
+          <li>It only reads this PC. It never installs a driver, never changes settings on its own, and only asks for administrator rights for the deep check you start.</li>
+          <li>It never sends your findings, timeline, messages or answers anywhere. Its only network use is downloading rule updates, which sends nothing about you; the update server can see this PC's internet address, as any website can. If your network may be watched, turn automatic rules off and install rule files instead.</li>
+          <li>Detection rules are used only if two of three release keys signed them; compare the rules' fingerprint above with the public rule log.</li>
+          <li>Answers that lower a finding ("I set this up", turning the watch off) need Windows Hello or your password, and are written to the timeline. Someone who knows your PIN or password can still give them.</li>
+          <li>It has no feature to watch anyone else. It checks the PC it runs on, for the person who uses it.</li>
+        </ul>
+      </article>
+      <h2>Your data</h2>
+      <p class="small muted" id="dataInfo"></p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

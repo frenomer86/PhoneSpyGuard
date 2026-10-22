@@ -1,0 +1,8 @@
+After 2.01s, these clients are still here:
+		remaining client pid: 101 (/System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted)
+		remaining client pid: 230 (/usr/libexec/backboardd)
+		remaining client pid: 512 (/private/var/containers/Bundle/Application/1A2B3C4D-0000-1111-2222-333344445555/Signal.app/Signal)
+		remaining client pid: 777 (/private/var/db/com.apple.xpc.roleaccountd.staging/bh)
+		remaining client pid: 778 (/private/var/tmp/netwatchd)
+		remaining client pid: 779 (/private/var/mobile/Library/Caches/com.example.helper/helper)
+SIGTERM: [1760900000] (MAKESHUTDOWNLOG)

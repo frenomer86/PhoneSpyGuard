@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Exposes only the evidence-export folder in the app cache to the share sheet
+     via FileProvider (review N6). Nothing else on the device is shared. -->
+<paths>
+    <cache-path name="evidence" path="evidence/" />
+</paths>

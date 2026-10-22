@@ -1,0 +1,201 @@
+# Every push and pull request:
+#   - linux:  the Swift package tests on Linux (fast, no Mac needed)
+#   - macos:  the same tests on macOS, then the app
+#             built for the Simulator and as an unsigned device .ipa
+#             (artifact "unsigned-ipa", for sideloading with Sideloadly or
+#             AltStore and a free Apple ID)
+#
+# Run by hand with "release" ticked: a signed App Store build. It stops
+# unless the release conditions hold (see the "Release checks" step) and
+# needs these repository secrets and variables:
+#   secrets.IOS_DIST_CERT_P12        base64 of the distribution certificate (.p12)
+#   secrets.IOS_DIST_CERT_PASSWORD   its password
+#   secrets.ASC_KEY_ID, secrets.ASC_ISSUER_ID, secrets.ASC_KEY_P8
+#                                    an App Store Connect API key (Admin or App Manager)
+#   vars.IOS_TEAM_ID                 the Apple developer team id
+#   vars.PSG_RULES_BASE_URL          https:// folder serving the signed rule files
+name: iOS
+on:
+  push:
+    paths: ["ios/**", "desktop/conformance/**", "desktop/rules/**", ".github/workflows/ios.yml"]
+  pull_request:
+    paths: ["ios/**", "desktop/conformance/**", "desktop/rules/**", ".github/workflows/ios.yml"]
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Make a signed App Store build"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    container: swift:6.0.3-noble
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - name: Swift tests (core, conformance, companion)
+        run: swift test
+
+  macos:
+    runs-on: macos-15
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Tools
+        run: |
+          xcodebuild -version
+          brew install xcodegen
+
+      - name: Swift tests (core, conformance, companion)
+        run: swift test
+
+      - name: Generate the Xcode project
+        run: cd App && xcodegen generate
+
+      - name: Build for the iOS Simulator (Debug)
+        run: |
+          set -o pipefail
+          xcodebuild -project App/PhoneSpyGuard.xcodeproj -scheme PhoneSpyGuard \
+            -destination 'generic/platform=iOS Simulator' -configuration Debug \
+            -derivedDataPath build-sim CODE_SIGNING_ALLOWED=NO build | tee build-sim.log | grep -E "error:|warning:|BUILD" || true
+          grep -q "BUILD SUCCEEDED" build-sim.log
+
+      # Release configuration: rules keyed "development" are refused. The
+      # bundled files are signed with single-use build keys, so it runs.
+      - name: Build an unsigned device app (Release)
+        env:
+          PSG_RULES_BASE_URL: ${{ vars.PSG_RULES_BASE_URL }}
+        run: |
+          set -o pipefail
+          xcodebuild -project App/PhoneSpyGuard.xcodeproj -scheme PhoneSpyGuard \
+            -sdk iphoneos -configuration Release -derivedDataPath build \
+            PSG_RULES_BASE_URL="$PSG_RULES_BASE_URL" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build | tee build.log | grep -E "error:|warning:|BUILD" || true
+          grep -q "BUILD SUCCEEDED" build.log
+          app=build/Build/Products/Release-iphoneos/PhoneSpyGuard.app
+          mkdir -p Payload
+          cp -R "$app" Payload/
+          zip -qr PhoneSpyGuard-unsigned.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-ipa
+          path: ios/PhoneSpyGuard-unsigned.ipa
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-logs
+          path: ios/*.log
+
+  release:
+    if: github.event_name == 'workflow_dispatch' && inputs.release
+    needs: [linux, macos]
+    runs-on: macos-15
+    timeout-minutes: 60
+    environment: release
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      # A store build must take rule updates signed at the key ceremony, so
+      # it must trust the ceremony's release keys, not single-use build keys
+      # (whose private halves no longer exist), and it must know where the
+      # signed updates are served.
+      - name: Release checks
+        env:
+          PSG_RULES_BASE_URL: ${{ vars.PSG_RULES_BASE_URL }}
+        run: |
+          keys=Sources/PSGCompanion/Resources/trusted-keys.json
+          if grep -q '"once-' "$keys"; then
+            echo "::error::$keys holds single-use build keys. Run the key ceremony (desktop/rules/KEY-CEREMONY.md), then psg-ios-check trust and sign."
+            exit 1
+          fi
+          if grep -q '"development": *true' "$keys"; then
+            echo "::error::$keys lists development keys."
+            exit 1
+          fi
+          case "$PSG_RULES_BASE_URL" in
+            https://*) ;;
+            *) echo "::error::Set the repository variable PSG_RULES_BASE_URL to the https:// folder that serves the signed rule files."; exit 1 ;;
+          esac
+          swift run -c release psg-ios-check verify Sources/PSGCompanion/Resources/ios-bundle.json "$keys"
+
+      # Signing uses an App Store Connect API key (Admin or App Manager), so
+      # Xcode makes or fetches the app's profile itself; the distribution
+      # certificate comes from secrets.
+      - name: Install the signing certificate and API key
+        env:
+          CERT: ${{ secrets.IOS_DIST_CERT_P12 }}
+          CERT_PASSWORD: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          kc="$RUNNER_TEMP/signing.keychain-db"
+          kcpass="$(uuidgen)"
+          security create-keychain -p "$kcpass" "$kc"
+          security set-keychain-settings -lut 3600 "$kc"
+          security unlock-keychain -p "$kcpass" "$kc"
+          echo "$CERT" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -P "$CERT_PASSWORD" -A -t cert -f pkcs12 -k "$kc"
+          security set-key-partition-list -S apple-tool:,apple: -k "$kcpass" "$kc" >/dev/null
+          security list-keychains -d user -s "$kc" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/cert.p12"
+          echo "$ASC_KEY_P8" > "$RUNNER_TEMP/asc.p8"
+
+      - name: Archive and export for App Store Connect
+        env:
+          PSG_RULES_BASE_URL: ${{ vars.PSG_RULES_BASE_URL }}
+          TEAM_ID: ${{ vars.IOS_TEAM_ID }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          set -o pipefail
+          brew install xcodegen
+          (cd App && xcodegen generate)
+          auth=(-allowProvisioningUpdates -authenticationKeyPath "$RUNNER_TEMP/asc.p8"
+                -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+          xcodebuild -project App/PhoneSpyGuard.xcodeproj -scheme PhoneSpyGuard \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath build/PhoneSpyGuard.xcarchive "${auth[@]}" \
+            DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            PSG_RULES_BASE_URL="$PSG_RULES_BASE_URL" archive
+          /usr/libexec/PlistBuddy -c "Add :method string app-store-connect" \
+            -c "Add :teamID string $TEAM_ID" -c "Add :signingStyle string automatic" build/ExportOptions.plist
+          xcodebuild -exportArchive -archivePath build/PhoneSpyGuard.xcarchive "${auth[@]}" \
+            -exportOptionsPlist build/ExportOptions.plist -exportPath build/export
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-store-ipa
+          path: ios/build/export/*.ipa
+          if-no-files-found: error
+
+      - name: Remove the signing keychain
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/signing.keychain-db" || true
+          rm -f "$RUNNER_TEMP/asc.p8"

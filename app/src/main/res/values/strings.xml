@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Phone Spy Guard</string>
+    <!-- Neutral label shown when the owner turns on the discreet launcher (FR-SAF-05). -->
+    <string name="discreet_name">System Services</string>
+</resources>

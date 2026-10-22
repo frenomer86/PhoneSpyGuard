@@ -1,0 +1,7 @@
+.build/
+.swiftpm/
+App/PhoneSpyGuard.xcodeproj/
+App/Resources/Info.plist
+build/
+Payload/
+*.ipa

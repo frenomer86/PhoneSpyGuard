@@ -1,0 +1,215 @@
+{
+  "comment": "Scoring conformance bundle: the phone launch rules plus 'explains' on INNOCENT rules (security review H5).",
+  "version": 1,
+  "expires": "2027-01-01T00:00:00Z",
+  "rules": [
+    {
+      "id": "PSG-KNOWN-001",
+      "version": 1,
+      "severity": "critical",
+      "contribution": "confirm",
+      "title": "Known stalkerware app",
+      "when": {
+        "fact": "app.known_stalkerware_match",
+        "eq": true
+      },
+      "evidence": [
+        "identity",
+        "arrival",
+        "powers",
+        "activity"
+      ],
+      "explain": "This app matches a known stalkerware product by its signing certificate or package. Apps like this are sold to monitor another person's phone.",
+      "steps": [
+        "read_safety_guidance",
+        "remove_device_admin",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-PROOF-001",
+      "version": 1,
+      "severity": "critical",
+      "contribution": "confirm",
+      "title": "Someone opened your canary link",
+      "when": {
+        "fact": "app.proof_test_fired",
+        "eq": true
+      },
+      "evidence": [
+        "proof_tests"
+      ],
+      "explain": "A private link placed in your own notes was opened from a device that is not yours, which means someone is reading your messages.",
+      "steps": [
+        "read_safety_guidance",
+        "export_evidence"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-014",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Hidden app that can read your screen",
+      "when": {
+        "all": [
+          {
+            "fact": "app.accessibility_enabled",
+            "eq": true
+          },
+          {
+            "fact": "app.has_launcher_icon",
+            "eq": false
+          },
+          {
+            "fact": "app.install_source",
+            "in": [
+              "sideload",
+              "unknown"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "arrival",
+        "powers",
+        "activity",
+        "data_leaving"
+      ],
+      "explain": "This app can read everything on your screen and what you type, it was installed from outside an app store, and it hides its icon. Legitimate apps rarely do all three.",
+      "steps": [
+        "remove_accessibility",
+        "remove_device_admin",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-BEH-021",
+      "version": 1,
+      "severity": "high",
+      "contribution": "strong",
+      "title": "Screen reader that uploads while your screen is off",
+      "when": {
+        "all": [
+          {
+            "fact": "app.accessibility_enabled",
+            "eq": true
+          },
+          {
+            "fact": "app.uploads_screen_off",
+            "eq": true
+          }
+        ]
+      },
+      "evidence": [
+        "powers",
+        "activity",
+        "data_leaving"
+      ],
+      "explain": "This app can read your screen and sent data out while your screen was off, a pattern typical of monitoring apps.",
+      "steps": [
+        "remove_accessibility",
+        "uninstall"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-RISK-002",
+      "version": 1,
+      "severity": "medium",
+      "contribution": "risk",
+      "title": "Keyboard app with broad access",
+      "when": {
+        "fact": "app.is_keyboard",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "A keyboard app can see everything you type. This one has not been seen misbehaving, but it is worth a look if you did not install it yourself.",
+      "steps": [
+        "review_app"
+      ],
+      "log": true
+    },
+    {
+      "id": "PSG-INNOCENT-001",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Screen reader you turned on",
+      "when": {
+        "fact": "app.is_screen_reader",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This app's accessibility access is explained by its being a screen reader. That explains reading the screen, not sending data out while the screen is off.",
+      "steps": [],
+      "log": false,
+      "explains": [
+        "PSG-BEH-014"
+      ]
+    },
+    {
+      "id": "PSG-INNOCENT-002",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Parental-control app",
+      "when": {
+        "fact": "app.is_parental_control",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This is a known parental-control product. On your own phone that explains nothing: it is the finding.",
+      "steps": [],
+      "log": false,
+      "explains": []
+    },
+    {
+      "id": "PSG-INNOCENT-003",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Keyboard from the phone maker",
+      "when": {
+        "fact": "app.is_system_keyboard",
+        "eq": true
+      },
+      "evidence": [
+        "powers"
+      ],
+      "explain": "This keyboard came with the phone.",
+      "steps": [],
+      "log": false,
+      "explains": [
+        "PSG-RISK-002"
+      ]
+    },
+    {
+      "id": "PSG-INNOCENT-004",
+      "version": 1,
+      "severity": "low",
+      "contribution": "innocent",
+      "title": "Test: names a confirm rule",
+      "when": {
+        "fact": "app.test_explains_confirm",
+        "eq": true
+      },
+      "evidence": [],
+      "explain": "Conformance only: a CONFIRM signal can never be explained.",
+      "steps": [],
+      "log": false,
+      "explains": [
+        "PSG-KNOWN-001"
+      ]
+    }
+  ]
+}

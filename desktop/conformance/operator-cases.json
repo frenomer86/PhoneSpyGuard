@@ -1,0 +1,31 @@
+{
+  "description": "Leaf operator semantics. Each case is one condition ('when'), a set of facts, and whether it matches. Both engines must agree.",
+  "cases": [
+    { "when": { "fact": "a", "exists": true }, "facts": { "a": false }, "matches": true },
+    { "when": { "fact": "a", "exists": true }, "facts": {}, "matches": false },
+    { "when": { "fact": "a", "eq": true }, "facts": { "a": true }, "matches": true },
+    { "when": { "fact": "a", "eq": "true" }, "facts": { "a": true }, "matches": true },
+    { "when": { "fact": "a", "eq": 5 }, "facts": { "a": 5 }, "matches": true },
+    { "when": { "fact": "a", "eq": "5" }, "facts": { "a": 5 }, "matches": true },
+    { "when": { "fact": "a", "eq": 5 }, "facts": { "a": "5" }, "matches": false },
+    { "when": { "fact": "a", "eq": "x" }, "facts": { "a": "x" }, "matches": true },
+    { "when": { "fact": "a", "eq": "x" }, "facts": { "a": "X" }, "matches": false },
+    { "when": { "fact": "a", "in": ["x", "y"] }, "facts": { "a": "y" }, "matches": true },
+    { "when": { "fact": "a", "in": ["x", "y"] }, "facts": { "a": ["y"] }, "matches": false },
+    { "when": { "fact": "a", "in": [1, 2] }, "facts": { "a": "2" }, "matches": true },
+    { "when": { "fact": "a", "contains": "y" }, "facts": { "a": ["x", "y"] }, "matches": true },
+    { "when": { "fact": "a", "contains": "y" }, "facts": { "a": "y" }, "matches": false },
+    { "when": { "fact": "a", "gt": 3 }, "facts": { "a": 4 }, "matches": true },
+    { "when": { "fact": "a", "gt": 3 }, "facts": { "a": 3 }, "matches": false },
+    { "when": { "fact": "a", "gte": 3 }, "facts": { "a": 3 }, "matches": true },
+    { "when": { "fact": "a", "lt": 3 }, "facts": { "a": 2 }, "matches": true },
+    { "when": { "fact": "a", "lte": 3 }, "facts": { "a": 4 }, "matches": false },
+    { "when": { "fact": "a", "gt": 3 }, "facts": { "a": "4" }, "matches": false },
+    { "when": { "fact": "a", "gt": 3 }, "facts": {}, "matches": false },
+    { "when": { "all": [] }, "facts": {}, "matches": true },
+    { "when": { "any": [] }, "facts": {}, "matches": false },
+    { "when": { "not": { "fact": "a", "exists": true } }, "facts": {}, "matches": true },
+    { "when": { "all": [ { "fact": "a", "eq": true }, { "any": [ { "fact": "b", "eq": 1 }, { "fact": "c", "eq": 2 } ] } ] }, "facts": { "a": true, "c": 2 }, "matches": true },
+    { "when": { "all": [ { "fact": "a", "eq": true }, { "not": { "fact": "b", "exists": true } } ] }, "facts": { "a": true, "b": 0 }, "matches": false }
+  ]
+}

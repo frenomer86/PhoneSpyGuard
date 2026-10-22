@@ -1,0 +1,207 @@
+{
+  "description": "Shared scoring conformance cases. Both the Kotlin DetectionEngine and the Rust psg-core engine must produce exactly these verdicts for scoring-bundle.json. An INNOCENT rule explains only the rule ids in its 'explains' list; the verdict is taken from the unexplained signals; CONFIRM is never explained.",
+  "bundle": "scoring-bundle.json",
+  "cases": [
+    {
+      "name": "nothing matches",
+      "facts": {
+        "app.package": "com.example.notes"
+      },
+      "confidence": "UNLIKELY",
+      "matched": []
+    },
+    {
+      "name": "known stalkerware is confirmed",
+      "facts": {
+        "app.known_stalkerware_match": true
+      },
+      "confidence": "CONFIRMED",
+      "matched": [
+        "PSG-KNOWN-001"
+      ]
+    },
+    {
+      "name": "confirmed is never excused by an innocent explanation",
+      "facts": {
+        "app.known_stalkerware_match": true,
+        "app.is_parental_control": true
+      },
+      "confidence": "CONFIRMED",
+      "matched": [
+        "PSG-KNOWN-001",
+        "PSG-INNOCENT-002"
+      ]
+    },
+    {
+      "name": "an innocent rule that names a confirm rule still cannot explain it",
+      "facts": {
+        "app.known_stalkerware_match": true,
+        "app.test_explains_confirm": true
+      },
+      "confidence": "CONFIRMED",
+      "matched": [
+        "PSG-KNOWN-001",
+        "PSG-INNOCENT-004"
+      ]
+    },
+    {
+      "name": "hidden sideloaded screen access is very likely",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload"
+      },
+      "confidence": "VERY_LIKELY",
+      "matched": [
+        "PSG-BEH-014"
+      ]
+    },
+    {
+      "name": "same app from the store is not flagged",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "play_store"
+      },
+      "confidence": "UNLIKELY",
+      "matched": []
+    },
+    {
+      "name": "two strong signals stay very likely",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "unknown",
+        "app.uploads_screen_off": true
+      },
+      "confidence": "VERY_LIKELY",
+      "matched": [
+        "PSG-BEH-014",
+        "PSG-BEH-021"
+      ]
+    },
+    {
+      "name": "a screen reader explains its screen access",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload",
+        "app.is_screen_reader": true
+      },
+      "confidence": "UNLIKELY",
+      "matched": [
+        "PSG-BEH-014",
+        "PSG-INNOCENT-001"
+      ]
+    },
+    {
+      "name": "a screen reader does not explain uploads while the screen is off",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.uploads_screen_off": true,
+        "app.is_screen_reader": true
+      },
+      "confidence": "VERY_LIKELY",
+      "matched": [
+        "PSG-BEH-021",
+        "PSG-INNOCENT-001"
+      ]
+    },
+    {
+      "name": "one strong signal explained and one not stays very likely",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload",
+        "app.uploads_screen_off": true,
+        "app.is_screen_reader": true
+      },
+      "confidence": "VERY_LIKELY",
+      "matched": [
+        "PSG-BEH-014",
+        "PSG-BEH-021",
+        "PSG-INNOCENT-001"
+      ]
+    },
+    {
+      "name": "explained strong signal with an open risk is possible",
+      "facts": {
+        "app.accessibility_enabled": true,
+        "app.has_launcher_icon": false,
+        "app.install_source": "sideload",
+        "app.is_screen_reader": true,
+        "app.is_keyboard": true
+      },
+      "confidence": "POSSIBLE",
+      "matched": [
+        "PSG-BEH-014",
+        "PSG-RISK-002",
+        "PSG-INNOCENT-001"
+      ]
+    },
+    {
+      "name": "keyboard alone is possible",
+      "facts": {
+        "app.is_keyboard": true
+      },
+      "confidence": "POSSIBLE",
+      "matched": [
+        "PSG-RISK-002"
+      ]
+    },
+    {
+      "name": "parental control explains nothing",
+      "facts": {
+        "app.is_keyboard": true,
+        "app.is_parental_control": true
+      },
+      "confidence": "POSSIBLE",
+      "matched": [
+        "PSG-RISK-002",
+        "PSG-INNOCENT-002"
+      ]
+    },
+    {
+      "name": "the phone maker's keyboard is explained",
+      "facts": {
+        "app.is_keyboard": true,
+        "app.is_system_keyboard": true
+      },
+      "confidence": "UNLIKELY",
+      "matched": [
+        "PSG-RISK-002",
+        "PSG-INNOCENT-003"
+      ]
+    },
+    {
+      "name": "an innocent rule alone is unlikely",
+      "facts": {
+        "app.is_parental_control": true
+      },
+      "confidence": "UNLIKELY",
+      "matched": [
+        "PSG-INNOCENT-002"
+      ]
+    },
+    {
+      "name": "eq is same-type only: text 'true' is not boolean true",
+      "facts": {
+        "app.is_keyboard": "true"
+      },
+      "confidence": "UNLIKELY",
+      "matched": []
+    },
+    {
+      "name": "proof test fired is confirmed",
+      "facts": {
+        "app.proof_test_fired": true,
+        "app.is_keyboard": true
+      },
+      "confidence": "CONFIRMED",
+      "matched": [
+        "PSG-PROOF-001",
+        "PSG-RISK-002"
+      ]
+    }
+  ]
+}

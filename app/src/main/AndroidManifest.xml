@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      Phone Spy Guard requests only what the checks need. It deliberately holds
+      NONE of the powers stalkerware abuses: no accessibility, device-admin,
+      SMS, call-log, contacts, location, microphone or camera permissions. A
+      fully compromised copy of this app still cannot spy on anyone (see the
+      spec's "Permissions and why each is needed", page 26).
+    -->
+
+    <!-- List installed apps so they can be matched against stalkerware
+         (FR-DEV-01). Declared with the antivirus purpose per Play policy. -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <!-- Call-forwarding indicator and SIM service state (FR-PHN). -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- Show alerts. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Resume the change watch after a reboot (NFR-REL-02). -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Download signed rule updates; no detection data is ever uploaded. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- See whether a VPN is active, a watch item (FR-DEV-04). Normal permission;
+         it reveals only that some VPN is up, never its traffic. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- App lock before results/export are shown (NFR-SEC-06, review C4). -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <application
+        android:name=".PhoneSpyGuardApp"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PhoneSpyGuard">
+
+        <!--
+          The launcher entry is an activity-alias, so the owner can switch to a
+          neutral name and icon if an abuser checks their phone (FR-SAF-05): the
+          app disables the real-name alias and enables the discreet one at run
+          time. MainActivity itself is not a launcher, so exactly one icon shows.
+        -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <activity-alias
+            android:name=".Launcher"
+            android:targetActivity=".MainActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherDiscreet"
+            android:targetActivity=".MainActivity"
+            android:label="@string/discreet_name"
+            android:icon="@mipmap/ic_launcher_discreet"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- Shares the evidence export as a file, so nothing large or sensitive
+             goes through the share sheet as inline text (review N6). -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <receiver
+            android:name=".watch.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

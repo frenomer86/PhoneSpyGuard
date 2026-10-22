@@ -1,0 +1,19 @@
+[package]
+name = "psg-core"
+description = "Phone Spy Guard desktop detection core: the Rust twin of core:detection and core:evidence."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+# No OS dependencies: this crate must build and test on any platform, like the
+# Kotlin core modules (NFR-MNT-01).
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+ed25519-dalek.workspace = true
+sha2.workspace = true
+base64.workspace = true
+time.workspace = true
+
+[dev-dependencies]
+rand_core.workspace = true

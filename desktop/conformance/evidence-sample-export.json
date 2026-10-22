@@ -1,0 +1,60 @@
+{
+  "description": "A timeline written by the Rust desktop core with a fixed test key. The Kotlin EvidenceLog.verify must report it Intact, and Intact must turn to Broken if any byte of an entry changes.",
+  "entries": [
+    {
+      "details": {
+        "confidence": "VERY_LIKELY",
+        "rules": "PSG-PC-RAT-002",
+        "subject": "program:anydesk"
+      },
+      "entryHash": "cafac0586b617ba4cc6ddeae99a8d4e46e2678db7f5843dd1adf2ba92a0fa7c2",
+      "keyId": "conformance-test-key",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "seq": 0,
+      "signature": "HmIrpggLo4PqpxcHFR93CREn6TTS8BXv2Zw5qjPtb7zwu2ZdoSXvfIvJtkRHdhIk3Vka3uJani2RXyB0Ll/1AA==",
+      "summary": "AnyDesk is set for unattended access",
+      "timestampMillis": 1761126475000,
+      "type": "FINDING"
+    },
+    {
+      "details": {
+        "note": "a=b; c\\d\nline two",
+        "path": "C:\\Users\\owner\\AppData\\Roaming\\upd\\upd.exe"
+      },
+      "entryHash": "e3fb5ef10d1baf14407c75c542603166e64e516019e66cd9a271170a0d548114",
+      "keyId": "conformance-test-key",
+      "prevHash": "cafac0586b617ba4cc6ddeae99a8d4e46e2678db7f5843dd1adf2ba92a0fa7c2",
+      "seq": 1,
+      "signature": "/nsB/pPBFeLXKt+nc2KTwdIsTZwiOOcxcpq2usBPMaZ56Vyp3edDG0QEUM3sC897v39ZbjfNxB5bNarMskJ1Bw==",
+      "summary": "New autostart entry: Run key \"Updater\"",
+      "timestampMillis": 1761126535000,
+      "type": "CHANGE"
+    },
+    {
+      "details": {
+        "answer": "i_did_not"
+      },
+      "entryHash": "be879f6bccae1a23f95523841dd6037d22afce9a839eed39075272ed962cc584",
+      "keyId": "conformance-test-key",
+      "prevHash": "e3fb5ef10d1baf14407c75c542603166e64e516019e66cd9a271170a0d548114",
+      "seq": 2,
+      "signature": "0ENOiJPdxOtYISCF4oFjE5mIkprwWA0/QlLT6uQMwdYWrCQtegW0n6ueiKIXlfxwFbKU/Nd5Yox8yTxnkVM5Cw==",
+      "summary": "Owner answered: I did not install this",
+      "timestampMillis": 1761126595000,
+      "type": "ANSWER"
+    },
+    {
+      "details": {},
+      "entryHash": "21d73e25f3c928a9f949d47eac605067d8f18e12d1db98ca75146927f6d5903d",
+      "keyId": "conformance-test-key",
+      "prevHash": "be879f6bccae1a23f95523841dd6037d22afce9a839eed39075272ed962cc584",
+      "seq": 3,
+      "signature": "sXGx7ferLVCDgCf5mvEhRrOE9OpNHWAe1TXp6RhREMJY0x1A4C7PwViKcP/rVE9O9XChKEKcycKEwKdqG2B/Aw==",
+      "summary": "Watch was stopped for 2 h 10 min",
+      "timestampMillis": 1761126655000,
+      "type": "WATCH_GAP"
+    }
+  ],
+  "keyId": "conformance-test-key",
+  "publicKeyX509": "MCowBQYDK2VwAyEAGX9rI+FshTLGq8g4+s1ep4m+DHaykgM0A5v6iz02jWE="
+}
